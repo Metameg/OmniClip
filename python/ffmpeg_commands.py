@@ -134,7 +134,7 @@ def build_transitions(video_clips, target_duration, fadeout_duration, size):
     resized_clips = _resize_clips(video_clips, size)
 
     # If any clip has no audio, add silent audio component to it
-    for clip in resized_clips:
+    for i, clip in enumerate(resized_clips):
         if not _has_audio(clip):
             print("\n\n\n\n", clip, "is being silenced...")
             resized_clips[i] = _insert_silent(clip)
