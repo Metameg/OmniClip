@@ -1,0 +1,173 @@
+<div id="fine-tuning-options">
+    <div class="gradient-background-overlay p-3">
+        <label for="quote-category" class="form-label">Quote Category</label>
+        <p class="m-1 mt-3">I want to:</p>
+        <div class="btn-group btn-group-sm" role="group" aria-label="Quote Methods">
+            <input id="quote-AI-btn" type="radio" class="btn-check quote-method-btn" name="quote-method"  autocomplete="off">
+            <label class="btn btn-outline-warning" for="quote-AI-btn" >Generate using AI<i class='bx bxs-magic-wand' style="color: #7056ff"></i></label>
+        
+            <input id="quote-category-btn" type="radio" class="btn-check quote-method-btn" name="quote-method" autocomplete="off">
+            <label class="btn btn-outline-warning" for="quote-category-btn" >Choose from Category</label>
+        
+            <input id="quote-manual-btn" type="radio" class="btn-check quote-method-btn" name="quote-method"  autocomplete="off">
+            <label class="btn btn-outline-warning" for="quote-manual-btn">Write it Myself</label>
+        </div>
+
+        
+        <div id="quote-AI-content" class="d-none">
+            
+            <p class="mt-2">Give ChatGPT a prompt for your quote.</p>
+            
+            <div class="form-floating">
+                
+                <textarea id="prompt" class="form-control quote-textarea"></textarea>
+                <label for="prompt">Type your prompt here</label>
+    
+                <button type="button" id="AIretry-btn" class="btn btn-light mt-2">Try Again</button>
+                <button type="button" id="gpt-btn-loading" class="btn btn-primary mt-2">Submit{% include 'partials/btn-spinner.html' %}</button>
+        
+            </div>       
+        </div>
+
+        <div id="quote-category-content" class="d-none">
+            <div class="form-check">
+                <input type="hidden" id="same-category-value" value="true" >
+                <input id="same-category" class="form-check-input mt-3 mx-2" type="checkbox" value="true" checked >
+                <label for="same-category" class="form-check-label mt-3" style="font-weight: 400;" >Use the same as Clip-Pack Category
+                    <strong> (Currently <span id="selected-category-span" style="color: #15860b">Random</span>)</strong></label>
+            </div>
+        
+            <input type="hidden" id="quote-category-value" value="Random" >
+            <select id="quote-category" class="form-select mt-2" aria-label="Quote Category" disabled>
+                {% include 'partials/quote-categories.html' %}
+            </select>
+
+            <button type="button" id="category-btn-loading" class="btn btn-primary mt-2">Submit{% include 'partials/btn-spinner.html' %}</button>
+        </div>
+
+        <div id="quote-manual-content" class="d-none mt-2">
+            <p>Write out your quote here.</p>
+            <div class="form-floating">
+                <textarea id="quote-manual" class="form-control quote-textarea" ></textarea>
+                <label for="quote-manual">Type your quote here</label>
+            </div>
+
+            <button type="button" id="manual-confirm-btn" class="btn btn-primary mt-2">Use</button>
+            <button type="button" id="manual-retry-btn" class="btn btn-light mt-2">Try Again</button>
+        </div>
+
+        <div class="p-3">
+            <h5 class="mt-3">Your Quote:</h3>
+            <p id="quote-response" class="mt-2" style="word-wrap: break-word"></p>
+            <div class="valid-feedback">
+                Looks good! We will use this quote for your video.
+            </div>
+        </div>
+        
+        <input type="hidden" id="quote-val" name="quoteVal" value="">
+    </div>
+    
+
+    <label for="watermark-opacity-range" class="form-label mt-3">Watermark Opacity</label>
+    <div id="watermark-opacity-container" class="slider-container">
+        <input id="watermark-opacity-range" class="form-range"  type="range" min="0" max="1" step="0.01" value="1">
+        <input type="number" id="watermark-opacity-val" class="form-control ml-2" name="watermarkOpacity" min="0" max="1" step="0.01" value="1" style="width: 70px;">
+    </div>
+    
+    <label for="fade-duration-range" class="form-label">Fade Duration</label>
+    <div id="fade-duration-container" class="slider-container">
+        <input id="fade-duration-range" class="form-range"  type="range" min="0" max="5" step="0.1" value="1">
+        <input type="number" id="fade-duration-val" class="form-control ml-2" name="fadeoutDuration" min="0" max="5" step="0.1" value="1" style="width: 70px;">
+    </div>
+
+    <!-- <div class="form-check mb-3">
+        <input type="hidden" name="blackWhiteBln" id="black-white-value" value="false">
+        <input id="black-white" class="form-check-input" type="checkbox">
+        <label for="black-white" class="form-check-label" >Black & White</label>
+    </div> -->
+
+    <div id="voice-container">
+        <label for="voice-val">Voice</label>
+        <p class="d-inline-flex gap-1">
+            <input id="voice-val" type="text" class="form-control" value="Callum">
+            <button id="voice-select-btn" class="btn btn-light" type="button">
+                Select Voice
+            </button>
+        </p>
+        <div class="invalid-feedback">
+            Make sure the folder includes at least one image file (.png, .jpeg, etc.)
+        </div>
+    </div>
+    <div class="collapse" id="collapse-voices">
+        <button id="voice-btn-close" type="button" class="btn-close" aria-label="Close"></button>
+        <div class="voices-body card card-body text-center">
+            <label>Select AI voice to read your quote.</label>
+            {% for voice in voices %}
+                <div class="voice">
+                    <div>
+                        {% if voice.name == 'Callum' %}
+                            <input class="m-2" type="radio" name="voice" value="{{ voice.name }}" checked/>
+                        {% else %}    
+                            <input class="m-2" type="radio" name="voice" value="{{ voice.name }}"/>
+                        {% endif %}
+                        
+                        <strong>{{ voice.name }}</strong>
+                    </div>
+                    <audio controls>
+                        <source src="{{ voice.audio }}" type="audio/mp3">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <h6>Font Options</h6>
+    <div id="font-options" class="gradient-background-overlay d-flex">
+        <label for="font-style" class="form-label">Font</label>
+        <select id="font-style" class="form-select font-dropdown" name="fontStyle" aria-label="Font Style">
+            <option value="Arial" selected>Arial</option>
+            <option value="Verdana">Verdana</option>
+            <option value="Helvetica">Helvetica</option>
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Courier New">Courier New</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Palatino">Palatino</option>
+            <option value="Garamond">Garamond</option>
+            <option value="Bookman">Bookman</option>
+            <option value="Comic Sans MS">Comic Sans MS</option>
+            <option value="Trebuchet MS">Trebuchet MS</option>
+            <option value="Arial Black">Arial Black</option>
+            <option value="Impact">Impact</option>
+            <option value="Tahoma">Tahoma</option>
+            <option value="Geneva">Geneva</option>
+        </select>
+        <label for="font-size" class="form-label">Font Size</label>
+        <select id="font-size" class="form-select font-dropdown" name="fontSize" aria-label="Font Size">
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12" selected>12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="16">16</option>
+            <option value="24">24</option>
+            <option value="32">32</option>
+            <option value="48">48</option>
+        </select>
+        <label for="font-stroke" class="form-label">Font Stroke</label>
+        <select id="font-stroke" class="form-select font-dropdown" name="fontStroke" aria-label="Font Stroke">
+            <option value="100">Thin</option>
+            <option value="300" selected>Normal</option>
+            <option value="500">Medium</option>
+            <option value="600">Bold</option>
+            <option value="800">Extra-Bold</option>
+        </select>
+    </div>
+
+    
+
+
+    
+</div>

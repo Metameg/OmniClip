@@ -1,0 +1,16 @@
+frontend/node_modules
+static/dist/index.html
+static/dist/bundle-index.js.LICENSE.txt
+.npm
+package.json
+__pycache__
+@lilaspeach
+overlays
+stockaudio
+venv
+.env
+audio_uploads/*
+video_uploads/*
+watermark_uploads/*
+output/*
+temp/*

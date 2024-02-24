@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="about-container">
+    <div class="header">
+        <img src="{{ url_for('static', filename='images/background.svg')}}" alt="About Us Image">
+    </div>
+    <div class="content">
+        <p>
+            Welcome to our About Us page. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Nulla facilisi. Curabitur et leo ut justo fermentum varius vel non turpis.
+            Aenean nec turpis vitae nisl ultricies luctus. Integer vestibulum quam vel justo eleifend,
+            vel suscipit sapien congue.
+        </p>
+    </div>
+</div>
+
+{% endblock %}
+
+{% set include_footer = true %}

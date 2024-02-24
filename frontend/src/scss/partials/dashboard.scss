@@ -1,0 +1,18 @@
+@import '../variables.scss';
+
+.dashboard-row {
+    width: 100%;
+    margin: 0;
+}
+
+.dashboard-card {
+    color: $font-color-primary;
+    background-color: $background-gradient-overlay-color;
+    min-width: 132px;
+    height: 350px;
+}
+
+.dashboard-sub-section {
+    color: $font-color-primary;
+    background-color: $background-gradient-overlay-color;
+}

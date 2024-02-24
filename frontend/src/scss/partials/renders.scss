@@ -1,0 +1,21 @@
+@import "../_variables.scss";
+
+.render-card {
+    color: $font-color-primary;
+    background: $background-gradient;
+    min-width: 190px;
+    border: 1px solid $border-color-primary;
+    border-radius: inherit;
+    padding: 10px;
+}
+
+.video-component {
+    min-width: 160px;
+    min-height: 127px;
+}
+
+@media (max-width : 990px) {
+    .render-card {
+        flex-direction: column;
+    }  
+}

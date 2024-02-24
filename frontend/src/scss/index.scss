@@ -1,0 +1,213 @@
+@import "./_variables.scss";
+
+body {
+    background: $background-color-primary;
+}
+
+.container-fluid { 
+    padding-right: 60px;   
+}
+
+.navbar-collapse {
+    flex-grow: inherit;
+}
+
+.video-container {
+    border-radius: 3px;
+    border: 1px solid rgba( 255, 255, 255, 0.15 );
+    overflow: hidden;
+    margin: 25px 0; 
+}
+
+.video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.logo {
+    display: flex;
+    align-items: center;
+}
+.logo p {
+    margin-left: 10px;
+    font-weight: 700;
+    color: $font-color-primary;
+}
+
+.discord {
+    background: $discord-btn-color;
+    width: 85px;
+    border: 0;
+    margin-left: auto;
+    height: 45px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    color: $font-color-primary;
+    align-items: center;
+    border-radius: 9999px;
+}
+
+#index-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px;
+    margin: 25px;
+    margin-bottom: 100px;
+}
+
+main h2 {
+    background: $discord-btn-color;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 14px;
+    font-style: normal;
+    align-self: center;
+    width: max-content;
+    font-weight: 600;
+    line-height: 17px;
+    letter-spacing: 4.2px;
+    text-transform: uppercase;
+}
+
+.main-text {
+    color: $font-color-primary;
+    text-align: center;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 46.8px;
+    letter-spacing: -0.022px;
+}
+.sub-text {
+    color: $font-color-primary;
+    text-align: center;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30.6px;
+    letter-spacing: -0.014px;
+    margin-bottom: 50px;
+    width: 50vw;
+}
+
+.display {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: 50vw;
+}
+
+.hero-section {
+    width: 100%;
+    margin-top: 25px;
+    height: max-content;
+}
+
+.hero-image {
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.hero-logo {
+    width: 100%;
+    height: 100%;
+    background: url('../images/circle.svg') center/cover no-repeat;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#waitlistForm {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 35px;
+}
+.display {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: 50vw;
+}
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: black;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: $font-color-primary;
+    border-radius: 5px;
+}
+#emailInput {
+    background-color: transparent;
+    border: 1px solid $border-color-primary;
+    padding: 10px;
+    margin-right: 10px;
+    width: 50%;
+    resize: none;
+    height: 90%;
+    border-radius: 5px;
+    color: $font-color-primary;
+    outline: none;
+    box-sizing: border-box;
+}
+#submitEmailBtn {
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid $border-color-primary;
+    padding: 0 10px;
+    border-radius: 5px;
+    color: $font-color-primary;
+    outline: none;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#responseMessageDiv {
+    position: fixed;
+    display: flex;
+    opacity: 0;
+    color: $font-color-primary;
+    background: rgba( 23, 23, 23, 1 );
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur( 20px );
+    -webkit-backdrop-filter: blur( 20px );
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    width: fit-content;  
+    bottom: 25px;
+    align-items: center;
+    padding: 0 20px 0 10px;
+    left: 0;
+    height: 50px;
+    z-index: 102;
+    border-radius: 10px;
+    right: 0;
+    margin: 0 auto;
+    transition: opacity 0.2s ease-in-out;
+}
+
+@media (max-width : 762px) {
+    .display {
+        flex-direction: column;
+    }  
+}

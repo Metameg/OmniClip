@@ -1,0 +1,45 @@
+<div class="sub-profile">
+    <h2 class="text-center rounded">Recent Renders</h2>
+    <div class="m-3 d-flex justify-content-between">
+        <p class="m-2"><small>Videos removed after <span class="text-danger"> <strong>14 days.</strong></span></small></p>
+        <div>
+            <label class="p-3" for="time-period">Show videos from:</label>
+            <select id="time-period" name="time-period">
+                <option value="1hour">Last 1 hour</option>
+                <option value="12hours">Last 12 hours</option>
+                <option value="today">Today</option>
+                <option value="yesterday">Yesterday</option>
+                <option value="week">This week</option>
+                <option value="2weeks">Last 2 weeks</option>
+            </select>
+        </div>
+    </div>
+    <ul class="list-group m-2 p-3">
+        <li class="render-card d-flex justify-content-between mb-4 lazy" data-src="content1.html">
+            <video src="#" class="object-fit-cover border rounded video-component"
+                alt="output video 1" controls>
+            </video>
+            <div class="video-details">
+                <p>Created on Jan. 27, 2023 - 17:19:36</p>
+                <p>Generated from Parameters</p>
+                <p><strong>Succeeded!</strong></p>
+                <span class="text-danger"><small>14 days remaining</small></span>
+                <button class="btn btn-danger m-2">Delete Now</button>
+            </div>
+            
+        </li>
+        <li class="render-card d-flex justify-content-between mb-4 lazy" data-src="content2.html">
+            <video  src="#" class="object-fit-cover border rounded video-component"
+                alt="output video 1" controls>
+            </video>
+            <div class="video-details text-center position-relative">
+                <p>Created on Jan. 27, 2023 - 17:28:46</p>
+                <p>Generated from Prompt</p>
+                <p><strong>Succeeded!</strong></p> 
+                <span class="text-danger"><small>14 days remaining</small></span>
+                <button class="btn btn-danger m-2">Delete Now</button>
+            </div>
+        </li>
+        <!-- Add more list items as needed -->
+    </ul>
+</div>

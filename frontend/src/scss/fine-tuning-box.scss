@@ -1,0 +1,99 @@
+@import "_variables.scss";
+
+.gradient-background-overlay {
+    background-color: $background-gradient-overlay-color;
+    border: 1px dashed $section-divider-color;
+    padding: 25px
+}
+#fine-tuning-options {
+    font-size: small;
+    font-weight: 600;
+}
+
+#font-options {
+    flex-direction: row;
+}
+
+@media (max-width: 1200px) {
+    #font-options {
+        flex-direction: column;
+    }
+}
+.font-dropdown {
+    height: 45px;
+    width: 150px;
+    margin: 0px 10px;
+}
+
+#voice-container {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    font-size: medium;
+}
+
+.voices-body {
+    color: $font-color-primary;
+    height: 152px; 
+    overflow-y: scroll;
+    background-color: $background-color-secondary;
+}
+
+#voice-val {
+    min-width: 120px;
+    height: 40px;
+}
+
+.gap-1 > button {
+    height: 40px;
+    font-size: 1rem;
+    text-wrap: nowrap;
+}
+
+#collapse-voices {
+    position: relative;
+    height: 150px;
+}
+
+#voice-btn-close {
+    position: absolute;
+    background-color: $font-color-primary;
+    z-index: 1;
+    padding: 5px;
+    margin: 5px;
+}
+.quote-textarea {
+    height: 100px!important;
+}
+
+@media (min-width: 795px) {
+    .quote-textarea {
+        width: 50%;
+    }
+}
+
+#gpt-btn-loading, #category-btn-loading {
+    display: flex;
+    padding-right: 1em;
+    padding-left: -1em;
+}
+#AIretry-btn, #manual-retry-btn{
+    display: none;
+}
+
+.voice {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex: 1 1 30%; 
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid #ffffff;
+    border-radius: 50px;
+}
+
+.voice > audio {
+    margin-left: 20px;
+    width: 210px;
+    min-width: 120px;
+} 

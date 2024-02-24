@@ -1,0 +1,49 @@
+@import "./variables.scss";
+@import "./partials/dashboard.scss";
+@import "./partials/renders.scss";
+@import "./partials/subscription.scss";
+@import "./partials/setting.scss";
+
+.dark-hover:hover {
+    color: $background-color-secondary;
+}
+.dark-hover {
+    color: $font-color-primary;
+}
+
+.sub-profile {
+    color: $font-color-primary;
+    background-color: $background-color-secondary;
+    h2 {
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-weight: 500;
+        line-height: 1.2;
+        color: $font-color-primary;
+        background-color: $background-gradient-overlay-color;
+        width: 66%;
+        margin: 0 auto;
+        border-bottom: 2px solid $section-divider-color;
+        border-right: 2px solid $section-divider-color;
+        border-left: 2px solid $section-divider-color;
+    }
+}
+
+
+@media (max-width: 575px) {
+    #nav-lg-screen {
+        display: none;
+    }
+    #offcanvas-btn {
+        display: block;
+    }
+
+}
+@media (min-width: 576px) {
+    #nav-lg-screen {
+        display: flex;
+    }
+    #offcanvas-btn, #offcanvas {
+        display: none;
+    }
+
+}

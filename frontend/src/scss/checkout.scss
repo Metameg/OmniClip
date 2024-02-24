@@ -1,0 +1,42 @@
+.product-line-price {
+    float: right;
+    clear: left;
+    width: auto;
+    margin-top: 10px;
+}
+
+.product .product-line-price:before {
+    content: 'Item Total: $';
+}
+
+.product-title {
+    font-size: 36px;
+    margin-right: 20px;
+    font-weight: bold;
+}
+.product-description {
+    margin: 5px 20px 5px 0;
+    line-height: 1.4em;
+}
+
+.totals .totals-item{ 
+    width: 100%;
+    margin-bottom: 10px;
+}
+        
+.totals > label {
+    width: 79%;
+    text-align: right;
+}
+
+.totals-value {
+    float: right;
+    width: 21%;
+    text-align: right;
+}
+
+.totals-item-total {
+    border-top: solid 2px #000000;
+    font-weight: bold;
+}
+    

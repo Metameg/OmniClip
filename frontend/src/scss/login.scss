@@ -1,0 +1,29 @@
+@import "./_variables.scss";
+
+.bg-holder {
+    /* position: absolute; */
+    width: 100%;
+    min-height: 100%;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.divider-content-center  {
+    margin: 1.5rem;
+    text-align: center;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.signup-sub-container {
+    color: $font-color-primary;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

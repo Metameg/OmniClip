@@ -1,0 +1,7 @@
+@import "../variables.scss";
+
+.subscription-card {
+    color: $font-color-primary;
+    background-color: $background-gradient-overlay-color;
+    min-width: 158px;
+}
