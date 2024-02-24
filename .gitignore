@@ -2,7 +2,6 @@ frontend/node_modules
 static/dist/index.html
 static/dist/bundle-index.js.LICENSE.txt
 .npm
-package.json
 __pycache__
 @lilaspeach
 overlays
