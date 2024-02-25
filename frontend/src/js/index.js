@@ -21,8 +21,7 @@ $(document).ready(function(){
     if (window.location.pathname.startsWith('/create-content')) {
         configureRenderForm();
         configureQuoteGenerator();
-    }
-    
+    }  
 }); 
 
 

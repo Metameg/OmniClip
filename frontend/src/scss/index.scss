@@ -4,8 +4,12 @@ body {
     background: $background-color-primary;
 }
 
+.navbar-header {
+    min-width: 300px;
+}
 .container-fluid { 
-    padding-right: 60px;   
+    padding-right: 60px; 
+    min-width: 300px;  
 }
 
 .navbar-collapse {

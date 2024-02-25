@@ -13,11 +13,18 @@ module.exports = merge(common, {
             {
                 test: /\.scss$/i,
                 use: [
+                    'style-loader',
                     'css-loader',
                     'postcss-loader',
                     'sass-loader'
                 ]
             }
         ]
-    },     
+    },   
+    devServer: {
+        hot: true
+    } 
+    // output: {
+    //     publicPath: path.resolve(__dirname, '..', 'static', 'dist')
+    // }
 });
