@@ -277,29 +277,46 @@ def add_voice_over(video, voice):
     # print(ffmpeg_command_str)
     return outpath
 
-def add_text(video, quote, font_style, font_size):
+def add_text(video, quote, font_style, font_size, srt_file=None):
         text_out = os.path.join(utils.get_root_path(), 'temp', f'text_video.mp4')
-        
-        ffmpeg_command = [
+        if srt_file:
+            ffmpeg_command = [
             'ffmpeg',
             # '-hide_banner',
             # '-loglevel',
             # 'quiet',
             '-i', video,
-            '-filter_complex',
-            f"drawtext=text='{quote}':fontfile={font_style}:fontsize={font_size}:fontcolor=#000000:box=1:boxcolor=black@0.0:boxborderw=5:x=(W-text_w)/2:y=(H-text_h)/2:enable='between(t,0,5)'[text];[0:v][text]overlay=0:0",
+            '-vf',
+            f"subtitles='{srt_file}':force_style='FontFile={font_style}:FontSize={font_size}:PrimaryColour=#000000,Alignment=2:box=1:boxcolor=black@0.0:boxborderw=5:x=(W-text_w)/2:y=(H-text_h)/2:enable='between(t,0,5)'[text];[0:v][text]overlay=0:0",
             '-c:v', 'libx264',
             '-c:a', 'aac',
             '-y',
             '-strict', 'experimental',
             text_out
         ]
+        else:
+            ffmpeg_command = [
+                'ffmpeg',
+                # '-hide_banner',
+                # '-loglevel',
+                # 'quiet',
+                '-i', video,
+                '-filter_complex',
+                f"drawtext=text='{quote}':fontfile={font_style}:fontsize={font_size}:fontcolor=#000000:box=1:boxcolor=black@0.0:boxborderw=5:x=(W-text_w)/2:y=(H-text_h)/2:enable='between(t,0,5)'[text];[0:v][text]overlay=0:0",
+                '-c:v', 'libx264',
+                '-c:a', 'aac',
+                '-y',
+                '-strict', 'experimental',
+                text_out
+            ]
 
         
         subprocess.run(ffmpeg_command)
         # ffmpeg_command_str = ' '.join(map(str, ffmpeg_command))
         # print(ffmpeg_command_str)
         return text_out
+
+
 
 
 
