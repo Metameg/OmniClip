@@ -2,11 +2,11 @@ import os
 import subprocess
 import random
 # from AutoEditor import AutoEditor
-from . import utils
+from . import utilities
 
 def _resize_img(img, size):
-        extension = utils.get_file_extension(img)
-        out_path = os.path.join(utils.get_root_path(), 'temp', f'img_resize{extension}')
+        extension = utilities.get_file_extension(img)
+        out_path = os.path.join(utilities.get_root_path(), 'temp', f'img_resize{extension}')
 
         ffmpeg_command = [
                 'ffmpeg',
@@ -30,7 +30,7 @@ def _resize_clips(clips, size):
     resize_paths = []
 
     for i, clip in enumerate(clips, 1):
-        resize_out = os.path.join(utils.get_root_path(), 'temp', f'resize{i}.mp4')
+        resize_out = os.path.join(utilities.get_root_path(), 'temp', f'resize{i}.mp4')
         ffmpeg_command = [
                         'ffmpeg',
                         '-hide_banner',
@@ -60,7 +60,7 @@ def _get_length(filename):
     return float(result.stdout)
 
 def _concat_audios(audios):
-    outpath = os.path.join(utils.get_root_path(), 'temp', f'audios_concat.mp3')
+    outpath = os.path.join(utilities.get_root_path(), 'temp', f'audios_concat.mp3')
 
     inputs = ''
     filter_complex = ''
@@ -92,8 +92,8 @@ def _has_audio(file_path):
 def _insert_silent(file_path):
     file_name_with_extension = os.path.basename(file_path)
     file_name, extension = os.path.splitext(file_name_with_extension)
-    out_path = os.path.join(utils.get_root_path(), 'temp', f'{file_name}_silent{extension}')
-    silent_path = os.path.join(utils.get_root_path(), 'static', 'media', 'silence.mp3')
+    out_path = os.path.join(utilities.get_root_path(), 'temp', f'{file_name}_silent{extension}')
+    silent_path = os.path.join(utilities.get_root_path(), 'static', 'media', 'silence.mp3')
 
     ffmpeg_command = [
             'ffmpeg',
@@ -129,7 +129,7 @@ def _get_random_transition():
 
 
 def build_transitions(video_clips, target_duration, fadeout_duration, size):
-    outpath = os.path.join(utils.get_root_path(), 'temp',  'transitions_video.mp4' )
+    outpath = os.path.join(utilities.get_root_path(), 'temp',  'transitions_video.mp4' )
     # Resize clips 
     resized_clips = _resize_clips(video_clips, size)
 
@@ -193,12 +193,12 @@ def build_transitions(video_clips, target_duration, fadeout_duration, size):
 
 
 def add_audio(video, audios, duration):
-    outpath = os.path.join(utils.get_root_path(), 'temp', f'transition_with_audio.mp4')
+    outpath = os.path.join(utilities.get_root_path(), 'temp', f'transition_with_audio.mp4')
 
     # Set relative paths to audio files
     input_files = []
     for file in audios:
-        input_files.append(os.path.join(utils.get_root_path(), file))
+        input_files.append(os.path.join(utilities.get_root_path(), file))
     # Concatenate audios to single mp3
     audio = _concat_audios(input_files)
     
@@ -222,7 +222,7 @@ def add_audio(video, audios, duration):
     return outpath
     
 def add_watermark(img, video):
-    outpath = os.path.join(utils.get_root_path(), 'temp', f'watermark_video.mp4')
+    outpath = os.path.join(utilities.get_root_path(), 'temp', f'watermark_video.mp4')
     size = '300:180'
     img_resized = _resize_img(img, size)
     ffmpeg_command = [
@@ -251,7 +251,7 @@ def add_watermark(img, video):
     
 def add_voice_over(video, voice):
 
-    outpath = os.path.join(utils.get_root_path(), 'temp', f'voice_video.mp4')
+    outpath = os.path.join(utilities.get_root_path(), 'temp', f'voice_video.mp4')
     
     ffmpeg_command = [
         'ffmpeg',
@@ -277,9 +277,11 @@ def add_voice_over(video, voice):
     # print(ffmpeg_command_str)
     return outpath
 
-def add_text(video, quote, font_style, font_size, srt_file=None):
-        text_out = os.path.join(utils.get_root_path(), 'temp', f'text_video.mp4')
-        if srt_file:
+
+def add_text(video, font_style, font_size, ass_file=None, quote=None):
+        text_out = os.path.join(utilities.get_root_path(), 'temp', f'text_video.mp4')
+        if ass_file:
+            print("\n\n\n\n\nass_file ffmpeg: ", ass_file, "\n\n\n\n\n")
             ffmpeg_command = [
             'ffmpeg',
             # '-hide_banner',
@@ -287,11 +289,9 @@ def add_text(video, quote, font_style, font_size, srt_file=None):
             # 'quiet',
             '-i', video,
             '-vf',
-            f"subtitles='{srt_file}':force_style='FontFile={font_style}:FontSize={font_size}:PrimaryColour=#000000,Alignment=2:box=1:boxcolor=black@0.0:boxborderw=5:x=(W-text_w)/2:y=(H-text_h)/2:enable='between(t,0,5)'[text];[0:v][text]overlay=0:0",
-            '-c:v', 'libx264',
-            '-c:a', 'aac',
+            f"ass='{ass_file}",
+            '-c:a', 'copy',
             '-y',
-            '-strict', 'experimental',
             text_out
         ]
         else:

@@ -10,7 +10,7 @@ from python.AutoEditor import AutoEditor
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime
-import python.utils
+import python.utilities
 
 app = Flask(__name__)
 load_dotenv()
@@ -227,7 +227,10 @@ def render():
     # font_size = 64
     font_style = form_data['fontStyle']
     
-    editor = AutoEditor('output', video_uploads_dir, 'audio_uploads', watermark_uploads_dir, 0.5, target_duration, 'freedom', font_size, font_stroke, quote_val, voice)
+    editor = AutoEditor('output', video_uploads_dir, 'audio_uploads', 
+                        watermark_uploads_dir, 0.5, target_duration, 
+                        'freedom', font_size, font_stroke, 
+                        quote=quote_val, voice=voice, subtitle_ass=True)
     videopaths = generate_videos(editor, numvideos)
 
     return render_template('partials/video-container.html', videopaths=videopaths)

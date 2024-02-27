@@ -54,6 +54,7 @@ export function configureRenderForm() {
         
     });
 
+
     // function postFormData() {
     //     var renderData = new FormData($('#' + renderForm)[0]);
     //     $('#video-content').html('');
