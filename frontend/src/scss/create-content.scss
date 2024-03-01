@@ -92,7 +92,7 @@
 
 #sliders, #submit-section {
     border-top: solid 2px $section-divider-color;
-    margin-top: 20px;;
+    margin-top: 20px;
 }
 
 .slider-container {
@@ -103,7 +103,7 @@
 }
 
 #total-length-container {
-    background-color: #1e1e1e;
+    background-color: $background-color-primary;
     border-top: solid 2px $border-color-primary;
     border-bottom: solid 2px $border-color-primary;
     border-radius: 25px;

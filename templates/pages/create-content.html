@@ -1,7 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<!-- <section class="hero-section"> -->
+    <div style="position: relative;">
+        <div class="hero-image">
+            <img style="overflow-x: hidden;" src="static/images/waves-background.svg" alt="" height="300">
+        </div>
+        <img src="static/images/circle.svg" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);" alt="">
+        <div class="hero-logo">
+            <div>
+                <img src="static/images/video-track.svg" width="80px" alt="">
+            </div>
+        </div>
+    </div>
+<!-- </section> -->
 <h2 id="instructions-params">Fill out the information below for a fully customized video.</h2>
 
 <div id="main-container-params">
@@ -112,7 +124,7 @@
 
             <div id="fine-tuning" class="mb-3">
                 <h3 class="param-header">Fine-Tuning (Optional)</h3>
-                {% include 'partials/fine-tuning-options.html' %}
+                {% include 'partials/fine-tuning-box.html' %}
             </div>
         </section>
 

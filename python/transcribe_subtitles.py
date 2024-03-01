@@ -26,7 +26,7 @@ def _seconds_to_ass_time(seconds):
     return f"{hours:02}:{minutes:02}:{int(seconds):02}.{centiseconds:02}"
 
 
-def _create_ass_file(data, font_style='arial', font_size=16, font_stroke=None, size='576x524'):
+def _create_ass_file(data, font_style='arial', font_size=16, font_stroke=None, size='576x244'):
     '''
         Writes the data to the .ass file using the fields below. (SOME FIELDS GENERATED via ChatGPT!!!)
     '''

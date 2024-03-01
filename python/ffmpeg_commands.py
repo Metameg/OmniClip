@@ -1,3 +1,4 @@
+import json
 import os
 import subprocess
 import random
@@ -9,18 +10,18 @@ def _resize_img(img, size):
         out_path = os.path.join(utilities.get_root_path(), 'temp', f'img_resize{extension}')
 
         ffmpeg_command = [
-                'ffmpeg',
-                '-hide_banner',
-                '-loglevel',
-                'quiet',
-                '-pix_fmt', 'yuv420p',
-                '-color_range', '2',
-                '-i', img,
-                '-vf',
-                f'scale={size}',
-                '-y',
-                out_path
-            ]
+            'ffmpeg',
+            '-hide_banner',
+            '-loglevel',
+            'quiet',
+            '-pix_fmt', 'yuv420p',
+            '-color_range', '2',
+            '-i', img,
+            '-vf',
+            f'scale={size}',
+            '-y',
+            out_path
+        ]
         
         subprocess.run(ffmpeg_command)
 
@@ -50,14 +51,6 @@ def _resize_clips(clips, size):
 
     return resize_paths
     
-def _get_length(filename):
-    result=subprocess.run(["ffprobe", "-v", "error", "-show_entries",
-                        "format=duration", "-of",
-                        "default=nw=1:nk=1", filename],
-    stdout=subprocess.PIPE,
-    stderr=subprocess.STDOUT)
-    
-    return float(result.stdout)
 
 def _concat_audios(audios):
     outpath = os.path.join(utilities.get_root_path(), 'temp', f'audios_concat.mp3')
@@ -125,13 +118,178 @@ def _get_random_transition():
 
     return random.choice(transitions)
 
+# def get_video_frame_rate(file_path):
+#     ffprobe_command = [
+#         "ffprobe",
+#         "-v", "error",
+#         "-select_streams", "v:0",
+#         "-show_entries", "stream=avg_frame_rate",
+#         "-of", "json",
+#         file_path
+#     ]
+
+#     try:
+#         result = subprocess.run(ffprobe_command, capture_output=True, text=True, check=True)
+#         json_data = json.loads(result.stdout)
+#         avg_frame_rate_str = json_data["streams"][0]["avg_frame_rate"]
+#         numerator, denominator = map(int, avg_frame_rate_str.split('/'))
+#         frame_rate = numerator / denominator
+#         print("\n\n\n\n",frame_rate, "\n\n\n\n")
+#         return frame_rate
+    
+#     except subprocess.CalledProcessError as e:
+#         print(f"Error running ffprobe: {e}")
+#         return None
+
+def preprocess(video_clips, size):
+    processed_paths = []
+    for i, clip in enumerate(video_clips, 1):
+        # old_frame_rate = get_video_frame_rate(clip)
+        
+        outpath = os.path.join(utilities.get_root_path(), 'temp', f'processed{i}.mp4')
+        # processed_video = os.path.join(utilities.get_root_path(), 'temp', f'video_processed{i}.mp4')
+        # processed_audio = os.path.join(utilities.get_root_path(), 'temp', f'audio_processed{i}.mp3')
+
+        ffmpeg_command_video = [
+            'ffmpeg',
+            '-i', clip,
+            '-hide_banner',
+            '-loglevel',
+            'quiet',
+            '-vf', f'scale={size},setsar=1',
+            '-y',
+            '-r', '30',
+            '-c:v', 'libx264',
+            '-c:a', 'aac',
+            '-strict', 'experimental',
+            outpath
+        ]
+        # ffmpeg_command_video = [
+        #     'ffmpeg',
+        #     '-i', clip,
+        #     '-vf', f'[0:v]scale={size},setsar=1[v0];',
+        #     '-r', '30',
+        #     '-y',
+        #     '-c:v', 'libx264',
+        #     '-c:a', 'aac',
+        #     '-strict', 'experimental',
+        #     processed_video
+        # ]
+        subprocess.run(ffmpeg_command_video)
+
+        # ffmpeg_command_audio = [
+        #     'ffmpeg',
+        #     '-i', clip,
+        #     '-vn',
+        #     '-ar', '44100',
+        #     '-ac', '2',
+        #     '-ab', '192k',
+        #     '-y',
+        #     processed_audio
+        # ]
+        # subprocess.run(ffmpeg_command_audio)
+
+        # ffmpeg_command_combined = [
+        #     'ffmpeg',
+        #     '-i', processed_video,
+        #     '-i', processed_audio,
+        #     '-map', '0:v',
+        #     '-map', '1:a',
+        #     '-y',
+        #     '-c:v', 'copy',
+        #     '-c:a', 'copy',
+            
+        #     resize_out
+        # ]
+
+        # ffmpeg_command = [
+        #     'ffmpeg',
+        #     '-i', clip,
+        #     '-filter_complex', f'[0:v]fps=30,scale={size}[vout];[0:a]atempo=1.0[aout]',
+        #     '-map', '[vout]',
+        #     '-map', '[aout]',
+        #     '-y',
+        #     '-c:v', 'libx264',
+        #     '-c:a', 'aac',
+        #     '-strict', 'experimental',
+        #     resize_out
+        # ]
+
+        # subprocess.run(ffmpeg_command_combined)
+        processed_paths.append(outpath)
+
+    return processed_paths
+
+def get_length(filename):
+    result=subprocess.run(["ffprobe", "-v", "error", "-show_entries",
+                        "format=duration", "-of",
+                        "default=nw=1:nk=1", filename],
+    stdout=subprocess.PIPE,
+    stderr=subprocess.STDOUT)
+    
+    return float(result.stdout)
+
+def build_transition_segment(clip1, clip2, fadeout_duration, clip_duration, size, i):
+    outpath = os.path.join(utilities.get_root_path(), 'temp', f'transition_segment{i}.mp4')
+    processed_clips = _resize_clips([clip1, clip2], size)
+    # clip_duration = get_length(clip1)
+    transition = _get_random_transition()
+    OFS = clip_duration - fadeout_duration
+    print("\n\n\n", "clip_duration:", clip_duration, "OFS:", OFS, "\n\n\n")
+    ffmpeg_command = [
+            'ffmpeg',
+            # '-hide_banner',
+            # '-loglevel',
+            # 'quiet',
+            '-i', processed_clips[0],
+            '-i', processed_clips[1],
+            '-filter_complex',
+            f'[0]settb=AVTB,fps=30[v0];[1]settb=AVTB,fps=30[v1]; [0:a]aformat=sample_rates=44100:channel_layouts=stereo[a0]; [1:a]aformat=sample_rates=44100:channel_layouts=stereo[a1]; [v0][v1]xfade=transition={transition}:duration={fadeout_duration}:offset={clip_duration - fadeout_duration},format=yuv420p[vout]; [a0][a1]acrossfade=d={fadeout_duration}[aout]',
+            '-map', "[vout]",
+            '-map', "[aout]",
+            # '-t', f'{clip_duration}',
+            '-y',
+            '-c:v', 'libx264',
+            '-c:a', 'aac',
+            '-strict', 'experimental',
+            outpath
+        ]
+    subprocess.run(ffmpeg_command)
+
+    return outpath
 
 
+def concat_videos(video_clips, outpath):
+    outpath = os.path.join(utilities.get_root_path(), 'temp',  'transitions_video.mp4' )
+    inputs = ''
+    for video in video_clips:
+        inputs += f'-i {video} ' 
+    filter_complex = '"' + f"{''.join([f'[{i}:v:0][{i}:a:0]' for i in range(len(video_clips))])}concat=n={len(video_clips)}:v=1:a=1[vout][aout]" + '"'
+    # ffmpeg_command = [
+    #     'ffmpeg',
+    #     inputs,  
+    #     '-filter_complex', filter_complex,
+    #     '-map', '[vout]',
+    #     '-map', '[aout]',
+    #     '-c:v', 'libx264',
+    #     '-c:a', 'aac',
+    #     outpath
+    # ]
+    command = 'ffmpeg ' + inputs + ' -filter_complex ' + '"' + filter_complex + '"' + " -map [vout] -map [aout] -c:v libx264 -c:a aac -y " + outpath
+    print("\n\n\n", command, "\n\n\n")
+    os.system(command)
+    # ffmpeg_command_str = ' '.join(map(str, ffmpeg_command))
+    # print("\n\n\n", ffmpeg_command_str, "\n\n\n")
+
+    # Run the FFmpeg command
+    # subprocess.run(ffmpeg_command)
+
+    return outpath
 
 def build_transitions(video_clips, target_duration, fadeout_duration, size):
     outpath = os.path.join(utilities.get_root_path(), 'temp',  'transitions_video.mp4' )
     # Resize clips 
-    resized_clips = _resize_clips(video_clips, size)
+    resized_clips = preprocess(video_clips, size)
 
     # If any clip has no audio, add silent audio component to it
     for i, clip in enumerate(resized_clips):
@@ -139,54 +297,131 @@ def build_transitions(video_clips, target_duration, fadeout_duration, size):
             print("\n\n\n\n", clip, "is being silenced...")
             resized_clips[i] = _insert_silent(clip)
 
-    FLV=''
-    FLA=''
-    OFS=0
-    XFD=fadeout_duration
+    # FLV=''
+    # FLA=''
+    # OFS=0
    
-    PDV=''
-    PDA=''
-    FLV = ''
-    FLA = ''
-    inputs = ''
+    # PDV=''
+    # PDA=''
+    # FLV = ''
+    # FLA = ''
+    file = resized_clips[0]
+    inputs = f'-i {file} '
+    XFD=fadeout_duration
+    DUR=get_length(file)
+    OFS=DUR-XFD
+    FCT=1
+    PDV=f"[{FCT}v]"
+    FLV=f"[0:v][1:v]xfade=transition=pixelize:duration={XFD}:offset={OFS}{PDV}"
+    PDA=f"[0a]"
+    FLA=f"[0:a]apad,atrim=0:{DUR}{PDA};"
+    PDC=f"[01a]"
+    FLC=f"[0a][1a]acrossfade=d=0.5{PDC}"
 
     if len(resized_clips) == 1:
-        command = f'ffmpeg -i "{resized_clips[0]}" -t {target_duration} -c:v libx264 -cq 18 -c:a aac -q:a 4 -map_metadata -1 {outpath} -y -hide_banner'
-
+        command = f'ffmpeg -i "{resized_clips[0]}" -t {target_duration} -c:v libx264 -c:a aac -map_metadata -1 {outpath} -y -hide_banner'
+        os.system(command)
     else:
-        for i, file in enumerate(resized_clips):
+        for i in range(1, len(resized_clips)-1):
+        # for i, file in enumerate(resized_clips):
+            file = resized_clips[i]
             transition = _get_random_transition()
-            OFS=OFS+_get_length(file)-XFD
+            DUR = get_length(file)
+            OFS = OFS + DUR - XFD
+            print("\n\n", OFS ,"XFD:", XFD, "file-dur:", DUR)
             
             # Build string for ffmpeg inputs
-            inputs += f'-i {resized_clips[i]} '
+            inputs += f'-i {file} '
+
+            FCT += 1
+            FLV += f";{PDV}[{FCT}:v]xfade=transition=pixelize:duration={XFD}:offset={OFS}"
+            if i < len(resized_clips) - 2:
+                PDV = f"[{FCT}v]"
+            else:
+                PDV = f",format=yuv420p[{FCT}v]"
+            FLV += f"{PDV}"
+
+            PDA = f"[{i}a]"
+            FLA += f"[{i}:a]apad,atrim=0:{DUR}{PDA};"
+
+            FLC += f";{PDC}[{FCT}a]acrossfade=d={XFD}"
+            PDC = f"[0{FCT}a]"
+            FLC += f"{PDC}"
             
             # Pre-process strings for filter_complex
-            PDV += f'[{i}:v]settb=AVTB,fps=30[v{i}];'
-            PDA += f'[{i}:a]aformat=sample_rates=44100:channel_layouts=stereo[a{i}];'
+            # PDV += f'[{i}:v]settb=AVTB,fps=30[v{i}];'
+            # PDA += f'[{i}:a]aformat=sample_rates=44100:channel_layouts=stereo[a{i}];'
 
             # Build xfade string
-            if i == 0:
-                FLV += f'[v{i}][v{i+1}]xfade=transition={transition}:offset={OFS}:duration={XFD}'
-                FLA += f'[a{i}][a{i+1}]acrossfade=d={XFD}'
-            elif i < len(resized_clips)-2:
-                FLV += f'[v{i-1}{i}][v{i+1}]xfade=transition={transition}:offset={OFS}:duration={XFD}'
-                FLA += f'[a{i-1}{i}][a{i+1}]acrossfade=d={XFD}'
-            elif i == len(resized_clips)-2:
-                FLV += f'[v{i-1}{i}][v{i+1}]xfade=transition={transition}:offset={OFS}:duration={XFD}'
-                FLA += f'[a{i-1}{i}][a{i+1}]acrossfade=d={XFD}'
+            # if i == 0:
+            #     FLV += f'[{i}:v][{i+1}:v]xfade=transition={transition}:offset={OFS}:duration={XFD}'
+            #     FLA += f'[{i}:a]atrim=0:{DUR}[{i}A];[{i}A][{i+1}:a]acrossfade=d={XFD}:c1=tri:c2=tri'
+            #     # FLA += f'[{i}:a][{i+1}:a]acrossfade=d={XFD}'
+            # elif i <= len(resized_clips)-2:
+            #     FLV += f'[v{i-1}{i}][{i+1}:v]xfade=transition={transition}:offset={OFS}:duration={XFD}'
+            #     FLA += f'[a{i-1}{i}]atrim=0:{DUR}[{i}A];[{i}A][{i+1}:a]acrossfade=d={XFD}:c1=tri:c2=tri'
+            #     # FLA += f'[a{i-1}{i}][{i+1}:a]acrossfade=d={XFD}:c1=tri:c2=tri'
+
+
+
+
+            # elif i == len(resized_clips)-2:
+            #     FLV += f'[v{i-1}{i}][{i+1}:v]xfade=transition={transition}:offset={OFS}:duration={XFD}'
+            #     FLA += f'[a{i-1}{i}][{i+1}:a]acrossfade=d={XFD}:c1=tri:c2=tri'
+                
+
+
+
+
+
+
+            # if i == 0:
+            #     FLV += f'[v{i}][v{i+1}]xfade=transition={transition}:offset={OFS}:duration={XFD}'
+            #     FLA += f'[a{i}][a{i+1}]acrossfade=d={XFD}'
+                
+            # elif i < len(resized_clips)-2:
+            #     FLV += f'[v{i-1}{i}][v{i+1}]xfade=transition={transition}:offset={OFS}:duration={XFD}'
+            #     FLA += f'[a{i-1}{i}][a{i+1}]acrossfade=d={XFD}'
+                
+            # elif i == len(resized_clips)-2:
+            #     FLV += f'[v{i-1}{i}][v{i+1}]xfade=transition={transition}:offset={OFS}:duration={XFD}'
+            #     FLA += f'[a{i-1}{i}][a{i+1}]acrossfade=d={XFD}'
+                
 
             # Handle clip labels
-            if i == len(resized_clips) - 2:
-                FLV += ',format=yuv420p[vout];'
-                FLA += '[aout];'
-            elif i < len(resized_clips)-2:
-                FLV += f'[v{i}{i+1}];'
-                FLA += f'[a{i}{i+1}];'
+            # if i == len(resized_clips) - 2:
+            #     FLV += ',format=yuv420p[vout];'
+            #     FLA += '[aout];'
+            # elif i < len(resized_clips)-2:
+            #     FLV += f'[v{i}{i+1}];'
+            #     FLA += f'[a{i}{i+1}];'
   
-        command = 'ffmpeg ' + inputs + ' -filter_complex ' + '"' + PDV + FLV + PDA + FLA + '"' + f' -map [vout] -map [aout] -t {target_duration} -c:v libx264 -q:v 18 -c:a aac -q:a 4 -map_metadata -1 {outpath} -y -hide_banner'
+        intermediate_video = os.path.join(utilities.get_root_path(), 'temp', 'intermediate_video.mp4')
+        intermediate_audio= os.path.join(utilities.get_root_path(), 'temp', 'intermediate_audio.m4a')
+        # command_video = 'ffmpeg ' + inputs + ' -filter_complex ' + '"' + FLV + '"' + f' -map [vout] -t {target_duration} -c:v libx264 -an {intermediate_video} -y'
+        # os.system(command_video)
+        # command_audio = 'ffmpeg ' + inputs + ' -filter_complex ' + '"'  + FLA + '"' + f' -map [aout] -t {target_duration} -c:a aac -vn {intermediate_audio} -y'
+        # os.system(command_audio)
+        # command_combined = f'ffmpeg -i {intermediate_video} -i {intermediate_audio} -t {target_duration} -c:v libx264  -c:a aac  -map_metadata -1 {outpath} -y'
 
-    os.system(command)
+        file = resized_clips[-1]
+        inputs += f"-i {file} "
+        DUR = get_length(file)
+        PDA = f"[{i+1}a]"
+        FLA += f"[{i+1}:a]atrim=0:{DUR}{PDA};"
+        PDV =  PDV.replace(",format=yuv420p", "")
+
+        video_cmd = f"ffmpeg {inputs} -filter_complex \"{FLV}\" -map {PDV} -c:v libx264 -cq 20 -an -y {intermediate_video} -hide_banner"
+        print("ffmpeg_video: ", video_cmd)
+        os.system(video_cmd)
+        audio_cmd = f"ffmpeg {inputs} -filter_complex \"{FLA} {FLC}\" -map {PDC} -c:a aac -q:a 4 -y {intermediate_audio} -hide_banner"
+        print("\n\nffmpeg_audio: ", audio_cmd)
+        os.system(audio_cmd)
+        comb_cmd = f"ffmpeg -y -hide_banner -i {intermediate_video} -i {intermediate_audio} -c copy {outpath}"
+        # command_combined = 'ffmpeg ' + inputs + ' -filter_complex ' + '"' +  FLV  +  FLA + '"' + f' -map [vout] -map [aout] -t {target_duration} -c:v libx264  -c:a aac  -map_metadata -1 {outpath} -y'
+        # command = 'ffmpeg ' + inputs + ' -filter_complex ' + '"' + PDV + FLV  + PDA + FLA + '"' + f' -map [vout] -map [aout] -t {target_duration} -c:v libx264  -c:a aac  -map_metadata -1 {outpath} -y -hide_banner'
+        print(comb_cmd)
+        os.system(comb_cmd)
 
     return outpath
 
@@ -281,7 +516,6 @@ def add_voice_over(video, voice):
 def add_text(video, font_style, font_size, ass_file=None, quote=None):
         text_out = os.path.join(utilities.get_root_path(), 'temp', f'text_video.mp4')
         if ass_file:
-            print("\n\n\n\n\nass_file ffmpeg: ", ass_file, "\n\n\n\n\n")
             ffmpeg_command = [
             'ffmpeg',
             # '-hide_banner',

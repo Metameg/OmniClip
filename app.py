@@ -123,8 +123,9 @@ def sanitize_filename(filename):
 def upload_files(files, export_folder):
 
     for file in files:
-        print(file.filename)
         sanitized_filename = sanitize_filename(file.filename)
+       
+        
         # Save the file to the 'uploads' directory with the sanitized filename
         file.save(os.path.join(export_folder, sanitized_filename))
         # print(test_jpeg(file.getvalue()))
@@ -226,9 +227,10 @@ def render():
     font_size = int(form_data['fontSize'])
     # font_size = 64
     font_style = form_data['fontStyle']
+    fade_duration = float(form_data['fadeoutDuration'])
     
     editor = AutoEditor('output', video_uploads_dir, 'audio_uploads', 
-                        watermark_uploads_dir, 0.5, target_duration, 
+                        watermark_uploads_dir, fade_duration, target_duration, 
                         'freedom', font_size, font_stroke, 
                         quote=quote_val, voice=voice, subtitle_ass=True)
     videopaths = generate_videos(editor, numvideos)
