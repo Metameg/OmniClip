@@ -2,7 +2,7 @@
 
 .gradient-background-overlay {
     background-color: $background-gradient-overlay-color;
-    border: 1px dashed $section-divider-color;
+    border: 1px dashed yellow;
     padding: 25px
 }
 #fine-tuning-options {
@@ -34,9 +34,10 @@
 
 .voices-body {
     color: $font-color-primary;
-    height: 152px; 
+    height: 400px;
     overflow-y: scroll;
     background-color: $background-color-secondary;
+    z-index: 1;
 }
 
 #voice-val {
@@ -52,13 +53,13 @@
 
 #collapse-voices {
     position: relative;
-    height: 150px;
+    height: 40px;
 }
 
 #voice-btn-close {
     position: absolute;
     background-color: $font-color-primary;
-    z-index: 1;
+    z-index: 2;
     padding: 5px;
     margin: 5px;
 }
@@ -96,4 +97,24 @@
     margin-left: 20px;
     width: 210px;
     min-width: 120px;
-} 
+}
+
+#mock-video {
+    margin: 0 auto;
+    max-width: 100%;
+    width: 360px;
+    height: 640px;
+    border: 3px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: black;
+    opacity: 0.75;
+}
+
+#aspect-ratio{
+    width: 150px;
+    height: 45px;
+    margin: 0px 10px;
+}
