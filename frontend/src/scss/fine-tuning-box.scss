@@ -46,6 +46,11 @@
     height: 40px;
 }
 
+.voice:hover {
+    cursor: pointer;
+    background-color: rgb(167, 167, 167);
+}
+
 .gap-1 > button {
     height: 40px;
     font-size: 1rem;
