@@ -59,9 +59,14 @@ class AutoEditor():
                 selected_files.append(selection)
 
             # Get duration of selected file and add to duration of selections
-            probe = ffmpeg.probe(os.path.join(folder, selection), show_entries='format=duration')
-            file_duration = float(probe['format']['duration'])
+            # probe = ffmpeg.probe(os.path.join(folder, selection), show_entries='format=duration')
+            selection_path = os.path.join(folder, selection)
+            file_duration = fmpgapi.get_length(selection_path)
             selected_files_duration += file_duration
+            
+            print("file duration: ", file_duration)
+            print("selected_files_duration: ", selected_files_duration)
+            
 
         return selected_files
     
@@ -77,7 +82,9 @@ class AutoEditor():
             return random.choice(files)
        
         random_paths = [os.path.join(folder, file) for file in selected_files]
-
+        for r in random_paths:
+            print(r, '\n')
+            
         return random_paths
 
 
@@ -116,12 +123,30 @@ class AutoEditor():
         # transitions_video = os.path.join(export_folder, 'output', 'final_video.mp4')
 
         start_time = time.time()
-        # Build Video Streams
+        
+        # Randomly Select Video Clips 
         video_clips = self._select_random_files(self.video_folder, True)
         audio_clips = self._select_random_files(self.audio_folder, True)
         
+        # Create Transition Segments
         print("\n\n\n\n\n Transitions render...")
-        transitions_video = fmpgapi.build_transitions(video_clips, self.target_duration, self.fade_duration, '576x1024')
+        transitions_video = fmpgapi.build_transitions(video_clips, self.target_duration, self.fade_duration, '720:1280')
+        # transitions = []
+        # for i in range(len(video_clips)):
+        #     outpath = os.path.join(utilities.get_root_path(), 'temp',  f'segment{i}.mp4' )
+        #     if (i > 0):
+        #         segment = fmpgapi.build_transition_segment(
+        #                                     video_clips[i-1], video_clips[i],
+        #                                     self.fade_duration, '720:1280', outpath
+        #                                     )
+        #         transitions.append(segment)
+            
+        # end_clip_processed = fmpgapi._preprocess([video_clips[-1]], '720:1280')[0]
+        # print(end_clip_processed)
+        # transitions.append(end_clip_processed)
+
+        # # Concatenate segments into final transition video 
+        # transitions_video = fmpgapi.concat_videos(transitions, outpath)
         
         if len(audio_clips) > 0:
             transitions_with_audio = fmpgapi.add_audio(transitions_video, audio_clips, self.target_duration)

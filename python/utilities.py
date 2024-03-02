@@ -46,40 +46,8 @@ def seconds_to_ass_time(seconds):
     minutes = int((seconds % 3600) / 60)
     seconds = seconds % 60
     centiseconds = int((seconds - int(seconds)) * 100)
+    
     return f"{hours:02}:{minutes:02}:{int(seconds):02}.{centiseconds:02}"
 
-
-# Writes the data to the .ass file using the fields below. (SOME FIELDS GENERATED via ChatGPT!!!)
-def create_ass_file(data, font_style='arial', font_size=16, size='576x524'):
-    height = get_substring_after_char(size, 'x')
-
-    marginv = height // 2 if height else 0
-
-    ass_lines = []
-    ass_lines.append("[Script Info]")
-    ass_lines.append("WrapStyle: 0")
-    ass_lines.append("ScaledBorderAndShadow: yes")
-    ass_lines.append("YCbCr Matrix: None")
-    ass_lines.append("")
-    ass_lines.append("[V4+ Styles]")
-    ass_lines.append("Format: Name,Fontname,Fontsize,PrimaryColour,SecondaryColour,OutlineColour,BackColour,Bold," 
-                     "Italic,Underline,StrikeOut,ScaleX,ScaleY,Spacing,Angle,BorderStyle,Outline,Shadow,Alignment,"
-                     "MarginL,MarginR,MarginV,Encoding")
-    ass_lines.append(f"Style: Default,{font_style},{font_size},&HFFFFFF,&H000000,&H000000,&H000000,"
-                     "0,0,0,0,100,100,0,0.00,1,2,2,2,10,10,{marginv},1")
-    ass_lines.append("")
-    ass_lines.append("[Events]")
-    ass_lines.append("Format: Layer,Start,End,Style,Name,MarginL,MarginR,MarginV,Effect,Text")
-
-    # for i, word in enumerate(data["words"]):
-    for word in data["words"]:
-        start_time = seconds_to_ass_time(word["start"])
-        end_time = seconds_to_ass_time(word["end"])
-        text = word["text"]
-        ass_lines.append(f"Dialogue: 0,{start_time},{end_time},Default,,0000,0000,0000,,{text}")
-
-    ass_file = os.path.join(get_root_path(), 'temp', 'subtitles.ass')
-    with open(ass_file, "w") as f:
-        f.write("\n".join(ass_lines))
 
 
