@@ -156,7 +156,7 @@ def preprocess(video_clips, size):
             '-hide_banner',
             '-loglevel',
             'quiet',
-            '-vf', f'scale={size},setsar=1',
+            '-vf', f'scale={size}:force_original_aspect_ratio=decrease,setsar=1',
             '-y',
             '-r', '30',
             '-c:v', 'libx264',
@@ -306,13 +306,14 @@ def build_transitions(video_clips, target_duration, fadeout_duration, size):
     # FLV = ''
     # FLA = ''
     file = resized_clips[0]
+    transition = _get_random_transition()
     inputs = f'-i {file} '
     XFD=fadeout_duration
     DUR=get_length(file)
     OFS=DUR-XFD
     FCT=1
     PDV=f"[{FCT}v]"
-    FLV=f"[0:v][1:v]xfade=transition=pixelize:duration={XFD}:offset={OFS}{PDV}"
+    FLV=f"[0:v][1:v]xfade=transition={transition}:duration={XFD}:offset={OFS}{PDV}"
     PDA=f"[0a]"
     FLA=f"[0:a]apad,atrim=0:{DUR}{PDA};"
     PDC=f"[01a]"
@@ -334,7 +335,7 @@ def build_transitions(video_clips, target_duration, fadeout_duration, size):
             inputs += f'-i {file} '
 
             FCT += 1
-            FLV += f";{PDV}[{FCT}:v]xfade=transition=pixelize:duration={XFD}:offset={OFS}"
+            FLV += f";{PDV}[{FCT}:v]xfade=transition={transition}:duration={XFD}:offset={OFS}"
             if i < len(resized_clips) - 2:
                 PDV = f"[{FCT}v]"
             else:
@@ -443,7 +444,8 @@ def add_audio(video, audios, duration):
         '-i', audio,
         '-map', '0:v',
         '-map', '1:a',
-        '-t', f'{duration}',
+        # '-t', f'{duration}',
+        '-shortest',
         '-c:v', 'copy',
         '-c:a', 'mp3',
         '-strict', 'experimental',
