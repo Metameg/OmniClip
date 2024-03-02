@@ -67,12 +67,6 @@
         <input type="hidden" id="quote-val" name="quoteVal" value="">
     </div>
     
-
-    <label for="watermark-opacity-range" class="form-label mt-3">Watermark Opacity</label>
-    <div id="watermark-opacity-container" class="slider-container">
-        <input id="watermark-opacity-range" class="form-range"  type="range" min="0" max="1" step="0.01" value="1">
-        <input type="number" id="watermark-opacity-val" class="form-control ml-2" name="watermarkOpacity" min="0" max="1" step="0.01" value="1" style="width: 70px;">
-    </div>
     
     <label for="fade-duration-range" class="form-label">Fade Duration</label>
     <div id="fade-duration-container" class="slider-container">
@@ -122,49 +116,7 @@
         </div>
     </div>
 
-    <h6>Font Options</h6>
-    <div id="font-options" class="gradient-background-overlay d-flex">
-        <label for="font-style" class="form-label">Font</label>
-        <select id="font-style" class="form-select font-dropdown" name="fontStyle" aria-label="Font Style">
-            <option value="Arial" selected>Arial</option>
-            <option value="Verdana">Verdana</option>
-            <option value="Helvetica">Helvetica</option>
-            <option value="Times New Roman">Times New Roman</option>
-            <option value="Courier New">Courier New</option>
-            <option value="Georgia">Georgia</option>
-            <option value="Palatino">Palatino</option>
-            <option value="Garamond">Garamond</option>
-            <option value="Bookman">Bookman</option>
-            <option value="Comic Sans MS">Comic Sans MS</option>
-            <option value="Trebuchet MS">Trebuchet MS</option>
-            <option value="Arial Black">Arial Black</option>
-            <option value="Impact">Impact</option>
-            <option value="Tahoma">Tahoma</option>
-            <option value="Geneva">Geneva</option>
-        </select>
-        <label for="font-size" class="form-label">Font Size</label>
-        <select id="font-size" class="form-select font-dropdown" name="fontSize" aria-label="Font Size">
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12" selected>12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="16">16</option>
-            <option value="24">24</option>
-            <option value="32">32</option>
-            <option value="48">48</option>
-        </select>
-        <label for="font-stroke" class="form-label">Font Stroke</label>
-        <select id="font-stroke" class="form-select font-dropdown" name="fontStroke" aria-label="Font Stroke">
-            <option value="100">Thin</option>
-            <option value="300" selected>Normal</option>
-            <option value="500">Medium</option>
-            <option value="600">Bold</option>
-            <option value="800">Extra-Bold</option>
-        </select>
-    </div>
+    {% include 'partials/video-styling-tool.html' %}
 
     
 
