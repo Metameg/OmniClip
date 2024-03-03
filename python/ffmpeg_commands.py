@@ -156,7 +156,7 @@ def preprocess(video_clips, size):
             '-hide_banner',
             '-loglevel',
             'quiet',
-            '-vf', f'scale={size}:force_original_aspect_ratio=decrease,setsar=1',
+            '-vf', f'scale={size},setsar=1',
             '-y',
             '-r', '30',
             '-c:v', 'libx264',
