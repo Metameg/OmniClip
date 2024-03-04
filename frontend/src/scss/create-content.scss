@@ -5,7 +5,7 @@
     background-color: $background-color-secondary;
     padding: 30px;
     border-radius: 14px; 
-    min-width: 490px;
+    min-width: 330px;
 }
 
 .carousel-control-next { 
@@ -42,6 +42,28 @@
 .form-control:disabled {
     background-color: $disabled-color;
 }
+
+
+
+.upload-container{
+    background-color: grey;
+    height: 200px;
+    overflow-y: scroll;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #imports {
     border-top: solid 2px $section-divider-color;
@@ -133,7 +155,7 @@
 
 #fine-tuning {
     color: $font-color-primary;
-    min-width: 448px;
+    min-width: 280px;
     background: $background-gradient;
     padding: 20px;
     border: 2px solid $border-color-primary;

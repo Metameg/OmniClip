@@ -7,14 +7,14 @@ const renderFormDOM = (function () {
             dropdown.disabled = !checkbox.checked;
         });
     }
-    
+
     function notEnableFromCheckbox (checkbox, dropdown) {
         checkbox.addEventListener('change', function () {
             dropdown.disabled = checkbox.checked;
         });
     }
-    
-    function voiceSelect (voice, radios) {        
+
+    function voiceSelect (voice, radios) {
         radios.forEach(function (radioButton) {
             radioButton.addEventListener('click', function () {
                 if (radioButton.checked) {
@@ -34,7 +34,7 @@ const renderFormDOM = (function () {
     }
 
     function showDivFromRadio(radiosClass, divs) {
-        
+
             $(radiosClass).change(function(){
               var selectedDiv = '#' + $(this).attr("id").replace("btn", "content");
               divs.forEach(function(div) {
@@ -42,7 +42,7 @@ const renderFormDOM = (function () {
               })
               $(selectedDiv).removeClass('d-none');
             });
-         
+
     }
 
     function collapseDivFromBtn(closeBtn, div) {
@@ -97,7 +97,7 @@ const renderFormDOM = (function () {
             quoteManualRetryBtn.style.display = 'block';
         });
     }
-    
+
     function quoteRetryListener (input, quoteManualConfirmBtn, quoteManualRetryBtn, quoteValue) {
         quoteManualRetryBtn.addEventListener('click', function() {
             quoteValue.value = '';
@@ -108,18 +108,18 @@ const renderFormDOM = (function () {
         });
     }
 
-    
+
 
 
 
     // Public API
     return {
-        configureDOM: function() {     
+        configureDOM: function() {
             const clippackPath = document.getElementById('clippack-path');
             const manualClippackBln = document.getElementById('clippack-checkbox');
             const manualClippackBlnHidden = document.getElementById('clippack-checkbox-value');
             const clippack = document.getElementById('clippack');
-            const audioPath = document.getElementById('audio-path');    
+            const audioPath = document.getElementById('audio-path');
             const watermarkPath = document.getElementById('watermark-path');
             const totalLength = document.getElementById('total-length-val');
             const numvideos = document.getElementById('num-videos-val');
@@ -146,8 +146,8 @@ const renderFormDOM = (function () {
             const voiceCloseBtn = document.getElementById('voice-btn-close');
             const voiceSelectBtn = document.getElementById('voice-select-btn');
             const voiceCollapse = document.getElementById('collapse-voices');
-            
-            
+
+
             const fontStyle = document.getElementById('font-style');
             const fontSize = document.getElementById('font-size');
             const fontStroke = document.getElementById('font-stroke');
@@ -163,7 +163,7 @@ const renderFormDOM = (function () {
             Validators.slides.validateRange(watermarkOpacityRange, watermarkOpacity, false);
             Validators.slides.validateRange(fadeDurationRange, fadeDuration, false);
             notEnableFromCheckbox(sameCategoryBln, quoteCategory);
-            voiceSelect(voice, voiceRadios, collapseMenu);
+            voiceSelect(voice, voiceRadios);
             Validators.voice.validate(voice);
             syncCatgorySelections(selectedCategorySpan, clippack);
             showDivFromRadio(quoteRadios, quoteRadioDivs);

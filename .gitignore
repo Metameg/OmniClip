@@ -8,8 +8,4 @@ overlays
 stockaudio
 venv
 .env
-audio_uploads/*
-video_uploads/*
-watermark_uploads/*
-output/*
 temp/*

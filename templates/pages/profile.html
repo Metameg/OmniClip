@@ -42,13 +42,13 @@
 
     }
 
-   
+
 </style> -->
 <button id="offcanvas-btn" class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas" style="background-color: #060606;">
     <i class='bx bx-menu' style="font-size: 2rem; color: white;"></i>
 </button>
 <div id="container" class="d-flex p-1 bg-dark" style="height: 100%; min-width: 215px;">
-      
+
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
         <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="height: 100%;">
             <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -126,7 +126,7 @@
 
 
     <div class="tab-content mt-2" id="content-container" style="width: 100%;">
-        
+
         <div id="dashboard-content" class="profile-tab-pane bg-light tab-pane fade show active" aria-labelledby="dashboard-link" style="min-width: 180px;">
             {% include 'partials/profile/dashboard.html' %}
         </div>
@@ -142,27 +142,27 @@
     </div>
 </div>
 <script>const pills = document.getElementById('profile-pills').querySelectorAll('.nav-link');
-    
+
     pills.forEach(pill => {
         pill.addEventListener('click', function(event) {
             event.preventDefault();
-            
+
             // Get the target content div ID
             const contentId = event.target.id.replace('link', 'content');
-            
+
             // Remove 'show' class from all content divs
             document.querySelectorAll('.profile-tab-pane').forEach(content => {
             content.classList.remove('show', 'active');
             });
-            
+
             // Add 'show' class to the selected content div
             document.getElementById(contentId).classList.add('show', 'active');
-            
+
             // Remove 'active' class from all pills
             pills.forEach(p => {
             p.classList.remove('active');
             });
-            
+
             // Add 'active' class to the selected pill
             event.target.classList.add('active');
         });
