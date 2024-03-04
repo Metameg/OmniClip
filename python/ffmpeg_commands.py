@@ -306,13 +306,17 @@ def build_transitions(video_clips, target_duration, fadeout_duration, size):
     # FLV = ''
     # FLA = ''
     file = resized_clips[0]
+    resized_clips_length = len(resized_clips)
     transition = _get_random_transition()
     inputs = f'-i {file} '
     XFD=fadeout_duration
     DUR=get_length(file)
     OFS=DUR-XFD
     FCT=1
+        
     PDV=f"[{FCT}v]"
+    if resized_clips_length <= 2:
+        PDV=",format=yuv420p" + f"[{FCT}v]" 
     FLV=f"[0:v][1:v]xfade=transition={transition}:duration={XFD}:offset={OFS}{PDV}"
     PDA=f"[0a]"
     FLA=f"[0:a]apad,atrim=0:{DUR}{PDA};"
@@ -333,7 +337,7 @@ def build_transitions(video_clips, target_duration, fadeout_duration, size):
             
             # Build string for ffmpeg inputs
             inputs += f'-i {file} '
-
+            
             FCT += 1
             FLV += f";{PDV}[{FCT}:v]xfade=transition={transition}:duration={XFD}:offset={OFS}"
             if i < len(resized_clips) - 2:
@@ -352,50 +356,6 @@ def build_transitions(video_clips, target_duration, fadeout_duration, size):
             # Pre-process strings for filter_complex
             # PDV += f'[{i}:v]settb=AVTB,fps=30[v{i}];'
             # PDA += f'[{i}:a]aformat=sample_rates=44100:channel_layouts=stereo[a{i}];'
-
-            # Build xfade string
-            # if i == 0:
-            #     FLV += f'[{i}:v][{i+1}:v]xfade=transition={transition}:offset={OFS}:duration={XFD}'
-            #     FLA += f'[{i}:a]atrim=0:{DUR}[{i}A];[{i}A][{i+1}:a]acrossfade=d={XFD}:c1=tri:c2=tri'
-            #     # FLA += f'[{i}:a][{i+1}:a]acrossfade=d={XFD}'
-            # elif i <= len(resized_clips)-2:
-            #     FLV += f'[v{i-1}{i}][{i+1}:v]xfade=transition={transition}:offset={OFS}:duration={XFD}'
-            #     FLA += f'[a{i-1}{i}]atrim=0:{DUR}[{i}A];[{i}A][{i+1}:a]acrossfade=d={XFD}:c1=tri:c2=tri'
-            #     # FLA += f'[a{i-1}{i}][{i+1}:a]acrossfade=d={XFD}:c1=tri:c2=tri'
-
-
-
-
-            # elif i == len(resized_clips)-2:
-            #     FLV += f'[v{i-1}{i}][{i+1}:v]xfade=transition={transition}:offset={OFS}:duration={XFD}'
-            #     FLA += f'[a{i-1}{i}][{i+1}:a]acrossfade=d={XFD}:c1=tri:c2=tri'
-                
-
-
-
-
-
-
-            # if i == 0:
-            #     FLV += f'[v{i}][v{i+1}]xfade=transition={transition}:offset={OFS}:duration={XFD}'
-            #     FLA += f'[a{i}][a{i+1}]acrossfade=d={XFD}'
-                
-            # elif i < len(resized_clips)-2:
-            #     FLV += f'[v{i-1}{i}][v{i+1}]xfade=transition={transition}:offset={OFS}:duration={XFD}'
-            #     FLA += f'[a{i-1}{i}][a{i+1}]acrossfade=d={XFD}'
-                
-            # elif i == len(resized_clips)-2:
-            #     FLV += f'[v{i-1}{i}][v{i+1}]xfade=transition={transition}:offset={OFS}:duration={XFD}'
-            #     FLA += f'[a{i-1}{i}][a{i+1}]acrossfade=d={XFD}'
-                
-
-            # Handle clip labels
-            # if i == len(resized_clips) - 2:
-            #     FLV += ',format=yuv420p[vout];'
-            #     FLA += '[aout];'
-            # elif i < len(resized_clips)-2:
-            #     FLV += f'[v{i}{i+1}];'
-            #     FLA += f'[a{i}{i+1}];'
   
         intermediate_video = os.path.join(utilities.get_root_path(), 'temp', 'intermediate_video.mp4')
         intermediate_audio= os.path.join(utilities.get_root_path(), 'temp', 'intermediate_audio.m4a')
@@ -406,13 +366,17 @@ def build_transitions(video_clips, target_duration, fadeout_duration, size):
         # command_combined = f'ffmpeg -i {intermediate_video} -i {intermediate_audio} -t {target_duration} -c:v libx264  -c:a aac  -map_metadata -1 {outpath} -y'
 
         file = resized_clips[-1]
+        resized_clips_length = len(resized_clips)
         inputs += f"-i {file} "
         DUR = get_length(file)
-        PDA = f"[{i+1}a]"
-        FLA += f"[{i+1}:a]atrim=0:{DUR}{PDA};"
+        PDA = f"[{resized_clips_length-1}a]"
+        FLA += f"[{resized_clips_length-1}:a]atrim=0:{DUR}{PDA};"
+        
         PDV =  PDV.replace(",format=yuv420p", "")
+        
+        
 
-        video_cmd = f"ffmpeg {inputs} -filter_complex \"{FLV}\" -map {PDV} -c:v libx264 -cq 20 -an -y {intermediate_video} -hide_banner"
+        video_cmd = f"ffmpeg {inputs} -filter_complex \"{FLV}\" -map {PDV} -c:v libx264 -an -y {intermediate_video} -hide_banner"
         print("ffmpeg_video: ", video_cmd)
         os.system(video_cmd)
         audio_cmd = f"ffmpeg {inputs} -filter_complex \"{FLA} {FLC}\" -map {PDC} -c:a aac -q:a 4 -y {intermediate_audio} -hide_banner"

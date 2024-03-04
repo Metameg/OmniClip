@@ -209,6 +209,7 @@ def create_content():
     
     return render_template("pages/create-content.html", voices=voices)
 
+
 @app.route('/create-content', methods=['POST'])
 def render():
     # Validate the CSRF token
@@ -258,10 +259,11 @@ def render():
     voice = os.path.join('static', 'voices', form_data['voice'] + '.mp3')
     numvideos = int(form_data['numvideos'])
     # fadeout_duration = float(form_data['fade'])
-    font_stroke = form_data['fontStroke']
-    font_size = int(form_data['fontSize'])
-    # font_size = 64
-    font_style = form_data['fontStyle']
+    font_stroke = 100
+    # font_stroke = form_data['fontStroke']
+    # font_size = int(form_data['fontSize'])
+    font_size = 64
+    # font_style = form_data['fontStyle']
     fade_duration = float(form_data['fadeoutDuration'])
     
     editor = AutoEditor('output', video_uploads_dir, 'audio_uploads', 
