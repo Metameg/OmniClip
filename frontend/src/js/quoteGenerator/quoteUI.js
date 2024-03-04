@@ -10,7 +10,7 @@ const quoteDOM = (function() {
     let quoteValue;
 
     return {
-        // Public APIS
+        // Public API
         configureDOM: () => {
             btnSpinners = document.querySelectorAll('.btn-spinner-div');
             gptSpinner = btnSpinners[0]; 

@@ -2,7 +2,6 @@
 
 .gradient-background-overlay {
     background-color: $background-gradient-overlay-color;
-    // background-color: $background-gradient-overlay-color;
     border: 1px dashed $section-divider-color;
     padding: 25px
 }
@@ -46,28 +45,6 @@
     height: 40px;
 }
 
-.voice {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex: 1 1 30%; 
-    margin: 10px;
-    padding: 5px;
-    border: 1px solid #ffffff;
-    border-radius: 50px;
-}
-
-.voice:hover {
-    cursor: pointer;
-    background-color: rgb(167, 167, 167);
-}
-
-.voice > audio {
-    margin-left: 20px;
-    width: 210px;
-    min-width: 120px;
-}
-
 .gap-1 > button {
     height: 40px;
     font-size: 1rem;
@@ -105,13 +82,28 @@
     display: none;
 }
 
+.voice {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex: 1 1 30%; 
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid #ffffff;
+    border-radius: 50px;
+}
 
+.voice > audio {
+    margin-left: 20px;
+    width: 210px;
+    min-width: 120px;
+}
 
 #mock-video {
     margin: 0 auto;
     max-width: 100%;
-    width: 304px;
-    height: 540px;
+    width: 360px;
+    height: 640px;
     border: 3px solid white;
     display: flex;
     justify-content: center;

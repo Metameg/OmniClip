@@ -75,11 +75,11 @@
         </div>
         <div class="mb-3">
             <label for="position-x" class="form-label">position X</label>
-            <input type="range" id="position-x" class="form-range" name="positionX" min="-150.0" max="150.0" step="1" value="1" aria-label="position X">
+            <input type="range" id="position-x" class="form-range" name="positionX" min="-380.0" max="400.0" step="1" value="1" aria-label="position X">
         </div>
         <div class="mb-3">
             <label for="position-y" class="form-label">position Y</label>
-            <input type="range" id="position-y" class="form-range" name="positionY" min="-150.0" max="150.0" step="1" value="1" aria-label="position Y">
+            <input type="range" id="position-y" class="form-range" name="positionY" min="-500.0" max="500.0" step="1" value="1" aria-label="position Y">
         </div>
 
 
@@ -94,3 +94,76 @@
     </div>
 
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+    var fontNameSelect = document.getElementById("font-name");
+    var fontSizeSelect = document.getElementById("font-size");
+    var boldCheckbox = document.getElementById("bold");
+    var italicCheckbox = document.getElementById("italic");
+    var underlineCheckbox = document.getElementById("underline");
+    var primaryColorInput = document.getElementById("primary-color");
+    var secondaryColorInput = document.getElementById("secondary-color");
+    var backColorInput = document.getElementById("back-color");
+    var positionXInput = document.getElementById("position-x"); // Corrected ID
+    var positionYInput = document.getElementById("position-y"); // Corrected ID
+    var aspectRatioSelect = document.getElementById("aspect-ratio");
+
+
+    var inputs = [fontNameSelect, fontSizeSelect, boldCheckbox, italicCheckbox, underlineCheckbox, primaryColorInput, secondaryColorInput, backColorInput, positionXInput, positionYInput, aspectRatioSelect];
+
+
+    inputs.forEach(function(input) {
+        input.addEventListener("input", function() { // Use "input" event for real-time updates
+            updateText(); // Call updateText() whenever any input changes
+        });
+    });
+
+
+    updateText();
+
+
+    function updateText() {
+
+        var fontName = fontNameSelect.value;
+        var fontSize = fontSizeSelect.value;
+        var isBold = boldCheckbox.checked;
+        var isItalic = italicCheckbox.checked;
+        var isUnderline = underlineCheckbox.checked;
+        var primaryColor = primaryColorInput.value;
+        var secondaryColor = secondaryColorInput.value;
+        var backColor = backColorInput.value;
+        var positionX = positionXInput.value; // Corrected variable name
+        var positionY = positionYInput.value; // Corrected variable name
+        var aspectRatio = aspectRatioSelect.value;
+
+
+        var sampleText = document.getElementById("sample-text");
+        sampleText.textContent = 'Sample Text';
+        sampleText.style.fontFamily = fontName;
+        sampleText.style.fontSize = fontSize + 'px';
+        sampleText.style.fontWeight = isBold ? 'bold' : 'normal';
+        sampleText.style.fontStyle = isItalic ? 'italic' : 'normal';
+        sampleText.style.textDecoration = isUnderline ? 'underline' : 'none';
+        sampleText.style.color = primaryColor;
+        sampleText.style.backgroundColor = backColor;
+        sampleText.style.boxShadow = '0 0 0 5px ' + secondaryColor + ' inset';
+        sampleText.style.marginLeft = positionX + 'px';
+        sampleText.style.marginBottom = positionY + 'px';
+
+
+        var mockVideo = document.getElementById("mock-video");
+        if (aspectRatio === "16:9") {
+            mockVideo.style.width = "640px";
+            mockVideo.style.height = "480px";
+        } else if (aspectRatio === "9:16") {
+            mockVideo.style.width = "480px";
+            mockVideo.style.height = "640px";
+        }
+
+    }
+});
+
+
+
+</script>

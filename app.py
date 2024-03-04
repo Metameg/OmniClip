@@ -17,33 +17,34 @@ load_dotenv()
 mysql_pwd = os.getenv('MYSQL_PWD')
 flask_key = os.getenv('FLASK_KEY')
 # Config MySQL database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:' + mysql_pwd + '@localhost/my_users'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:' + mysql_pwd + '@localhost/my_users'
 # Config CSRF for form
 app.config['SECRET_KEY'] = flask_key
 csrf = CSRFProtect(app)
 
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+# db = SQLAlchemy(app)
+# migrate = Migrate(app, db)
 
-class Users(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), nullable=False)
-    email = db.Column(db.String(120), nullable=False, unique=True)
-    favorite_color = db.Column(db.String(120))
-    date_added = db.Column(db.DateTime, default=datetime.utcnow())
+# class Users(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(50), nullable=False)
+#     email = db.Column(db.String(120), nullable=False, unique=True)
+#     favorite_color = db.Column(db.String(120))
+#     date_added = db.Column(db.DateTime, default=datetime.utcnow())
 
-    def __repr__(self):
-        return '<Name %r>' % self.name
+    # def __repr__(self):
+    #     return '<Name %r>' % self.name
 
-with app.app_context():
-    db.create_all()
+        # with app.app_context():
+        #     db.create_all()
 
-progress_percentage = 0
+# progress_percentage = 0
 
 # Create a Form Class
 # class EmailForm(FlaskForm):
 #     email = StringField("Email:", validators=[DataRequired()])
 #     submit = SubmitField("Submit")
+
 class UserForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired()])
@@ -52,42 +53,42 @@ class UserForm(FlaskForm):
 
 
 @app.route('/user/add', methods=['GET', 'POST'])
-def add_user():
-    name = None
-    form = UserForm()
-    if form.validate_on_submit():
-        user = Users.query.filter_by(email=form.email.data).first()
-        if user is None:
-            user = Users(name=form.name.data, email=form.email.data, favorite_color=form.favorite_color)
-            db.session.add(user)
-            db.session.commit()
-        name = form.name.data
-        form.name.data = ''
-        form.email.data = ''
-        form.favorite_color.data = ''
-        flash("User Added!")
-    our_users = Users.query.order_by(Users.date_added)
-    return render_template("add_user.html", form=form, name=name, our_users=our_users)
+#def add_user():
+  #  name = None
+  #  form = UserForm()
+  #  if form.validate_on_submit():
+  #       user = Users.query.filter_by(email=form.email.data).first()
+  #       if user is None:
+  #           user = Users(name=form.name.data, email=form.email.data, favorite_color=form.favorite_color)
+  #           db.session.add(user)
+  #           db.session.commit()
+  #       name = form.name.data
+  #       form.name.data = ''
+  #       form.email.data = ''
+  #       form.favorite_color.data = ''
+  #       flash("User Added!")
+  #   our_users = Users.query.order_by(Users.date_added)
+  #   return render_template("add_user.html", form=form, name=name, our_users=our_users)
 
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
-def update(id):
-    form = UserForm()
-    name_to_update = Users.query.get_or_404(id)
-    if request.method == 'POST':
-        name_to_update.name = request.form['name']
-        name_to_update.email = request.form['email']
-        name_to_update.favorite_color = request.form['favorite_color']
-
-        try:
-            db.session.commit()
-            flash("User Updated Successfully!")
-            return render_template("update.html", form=form, name_to_update=name_to_update)
-        except:
-            flash("Error! Problem...Try Again")
-            return render_template("update.html", form=form, name_to_update=name_to_update)
-
-    else:
-        return render_template("update.html", form=form, name_to_update=name_to_update)
+# def update(id):
+#     form = UserForm()
+#     name_to_update = Users.query.get_or_404(id)
+#     if request.method == 'POST':
+#         name_to_update.name = request.form['name']
+#         name_to_update.email = request.form['email']
+#         name_to_update.favorite_color = request.form['favorite_color']
+#
+#         try:
+#             db.session.commit()
+#             flash("User Updated Successfully!")
+#             return render_template("update.html", form=form, name_to_update=name_to_update)
+#         except:
+#             flash("Error! Problem...Try Again")
+#             return render_template("update.html", form=form, name_to_update=name_to_update)
+#
+#     else:
+#         return render_template("update.html", form=form, name_to_update=name_to_update)
 
 
 
@@ -102,6 +103,40 @@ def index():
 def about():
     return render_template("pages/about.html")
 
+
+
+
+
+
+
+
+# ADDED AFFILIATES PAGE
+@app.route('/affiliates')
+def affiliates():
+    return render_template("pages/affiliates.html")
+
+@app.route('/affSignUp')
+def affiliateSignUp():
+    return render_template("pages/affiliateSignUp.html")
+
+
+
+@app.route('/settings')
+def settings():
+    return render_template("pages/settings.html")
+
+
+
+
+
+
+
+
+
+
+
+
+
 @app.route('/pricing')
 def pricing():
     return render_template("pages/pricing.html")
@@ -110,7 +145,7 @@ def pricing():
 def checkout():
     return render_template("pages/checkout.html")
 
-@app.route('/user/<name>')
+@app.route('/profile/<name>')
 def user(name):
     return render_template("pages/profile.html", user_name=name)
 
@@ -223,10 +258,10 @@ def render():
     voice = os.path.join('static', 'voices', form_data['voice'] + '.mp3')
     numvideos = int(form_data['numvideos'])
     # fadeout_duration = float(form_data['fade'])
-    font_stroke = 100
+    font_stroke = form_data['fontStroke']
     font_size = int(form_data['fontSize'])
-    font_size = 48
-    # font_style = form_data['fontStyle']
+    # font_size = 64
+    font_style = form_data['fontStyle']
     fade_duration = float(form_data['fadeoutDuration'])
     
     editor = AutoEditor('output', video_uploads_dir, 'audio_uploads', 
@@ -289,9 +324,9 @@ def generate_videos(editor, numvideos):
 
     return videos
 
-@app.route('/get_progress')
-def get_progress():
-    return str(progress_percentage)
+# @app.route('/get_progress')
+# def get_progress():
+#     return str(progress_percentage)
     
 @app.route('/output/<filename>')
 def serve_output(filename):

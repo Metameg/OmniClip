@@ -174,7 +174,7 @@ class AutoEditor():
             text_videopath = os.path.join(utilities.get_root_path(), 'temp', text_video)
             full_render = text_videopath 
             
-        print("\n\n\n\n", self.overlay_folder, "\n\n\n\n")
+
         if self.overlay_folder is not None:
             # Select Image Overlay
             img = self._select_random_files(self.overlay_folder, False)
@@ -183,7 +183,7 @@ class AutoEditor():
             if text_videopath is not None:
                 full_render = fmpgapi.add_watermark(imgpath, text_videopath)
             else: 
-                full_render = fmpgapi.add_watermark(imgpath, transitions_with_audio)
+                full_render = fmpgapi.add_watermark(imgpath, transitions_video)
             
 
         end_time = time.time()
