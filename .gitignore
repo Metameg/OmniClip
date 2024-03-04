@@ -8,5 +8,4 @@ overlays
 stockaudio
 venv
 .env
-
 temp/*
