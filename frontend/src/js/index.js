@@ -9,18 +9,26 @@ import '../scss/index.scss';
 import '../scss/login.scss';
 import '../scss/pricing.scss';
 import '../scss/profile.scss';
+import '../scss/affiliate-dashboard.scss';
+import '../scss/affiliate-signup.scss';
 
 // console.log('hello');
 
 import { configureRenderForm } from './renders/renderFormController.js';
 import { configureQuoteGenerator } from './quoteGenerator/quoteController.js';
+import { configureAffiliate } from './affiliate/affiliateController.js';
+import { configuremediaUploader } from './mediaUploader/mediaUploaderController.js';
 
 
-$(document).ready(function(){
+$(document).ready(function() {
 
     if (window.location.pathname.startsWith('/create-content')) {
         configureRenderForm();
+        configuremediaUploader();
         configureQuoteGenerator();
+    }  
+    if (window.location.pathname.startsWith('/affiliate-program/dashboard')) {
+        configureAffiliate();
     }  
 }); 
 

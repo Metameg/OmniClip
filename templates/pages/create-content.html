@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <!-- <section class="hero-section"> -->
-    <div style="position: relative;">
+    
+    <div class="header-img-container">
         <div class="hero-image">
             <img style="overflow-x: hidden;" src="static/images/waves-background.svg" alt="" height="300">
         </div>
-        <img src="static/images/circle.svg" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);" alt="">
+        <img class="header-circle-img" src="static/images/circle.svg"  alt="">
         <div class="hero-logo">
             <div>
                 <img src="static/images/video-track.svg" width="80px" alt="">
@@ -23,20 +23,6 @@
             <section id="imports" class="options-section">
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <!-- CHANGES MADE VIDEO -->
                 <div class="container">
                     <div id="clippack-import-container" class="import-container">
                         <div class="mb-3">
@@ -53,88 +39,10 @@
 
                     <div id="uploaded-videos-container" class="row row-cols-2 row-cols-md-3 g-3 upload-container">
 
-                        <!-- Uploaded videos will be displayed here -->
-
-
-
                     </div>
                 </div>
 
-                <!-- Bootstrap Bundle with Popper -->
 
-                <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        const clippackPathInput = document.getElementById('clippack-path');
-                        const uploadedVideosContainer = document.getElementById('uploaded-videos-container');
-
-                        clippackPathInput.addEventListener('change', function(event) {
-                            const files = event.target.files;
-
-                            for (let i = 0; i < files.length; i++) {
-                                const file = files[i];
-                                const fileContainer = document.createElement('div');
-                                fileContainer.classList.add('col');
-
-                                // Create a flex container for file name and loading bar
-                                const flexContainer = document.createElement('div');
-                                flexContainer.style.display = 'flex';
-                                flexContainer.style.justifyContent = 'space-between';
-                                flexContainer.style.alignItems = 'center';
-
-                                // File name element
-                                const fileName = document.createElement('div');
-                                fileName.textContent = file.name;
-
-                                // Loading bar element
-                                const loadingBarContainer = document.createElement('div');
-                                const loadingBar = document.createElement('progress');
-                                loadingBar.max = 100; // Set the maximum value of the progress bar
-
-                                // Append loading bar to the container
-                                loadingBarContainer.appendChild(loadingBar);
-
-                                // Append file name and loading bar to the flex container
-                                flexContainer.appendChild(fileName);
-                                flexContainer.appendChild(loadingBarContainer);
-
-                                // Append flex container to the file container
-                                fileContainer.appendChild(flexContainer);
-
-                                uploadedVideosContainer.appendChild(fileContainer);
-
-                                // Simulate loading progress
-                                simulateLoading(loadingBar);
-                            }
-                        });
-
-                        function simulateLoading(progressBar) {
-                            let progress = 0;
-                            const interval = setInterval(function() {
-                                progress += 10; // Increment progress by 10%
-                                progressBar.value = progress;
-                                if (progress >= 100) {
-                                    clearInterval(interval);
-
-                                    // Set the color of the progress bar to aqua blue when fully loaded
-                                    progressBar.classList.add('bg-info');
-
-                                    // Display "Load Complete" inside the progress bar
-                                    progressBar.innerHTML = 'Load Complete';
-                                }
-                            }, 500); // Adjust the interval as needed
-                        }
-                    });
-                </script>
-
-
-
-
-
-
-
-
-
-                <!-- CHANGES MADE AUDIO -->
                 <div class="container">
                     <div id="audio-container" class="import-container">
                         <div class="mb-3">
@@ -149,75 +57,12 @@
                         </div>
                     </div>
                     <div id="uploaded-audios-container" class="row row-cols-2 row-cols-md-3 g-3 upload-container">
-                        <!-- Uploaded audios and audios will be displayed here -->
+                        
                     </div>
                 </div>
 
 
-                <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        const audioPathInput = document.getElementById('audio-path');
-                        const audioContainer = document.getElementById('uploaded-audios-container');
-
-                        audioPathInput.addEventListener('change', function(event) {
-                            const files = event.target.files;
-
-                            for (let i = 0; i < files.length; i++) {
-                                const file = files[i];
-                                const fileContainer = document.createElement('div');
-                                fileContainer.classList.add('col');
-
-                                // Create a flex container for file name and loading bar
-                                const flexContainer = document.createElement('div');
-                                flexContainer.style.display = 'flex';
-                                flexContainer.style.justifyContent = 'space-between';
-                                flexContainer.style.alignItems = 'center';
-
-                                // File name element
-                                const fileName = document.createElement('div');
-                                fileName.textContent = file.name;
-
-                                // Loading bar element
-                                const loadingBarContainer = document.createElement('div');
-                                const loadingBar = document.createElement('progress');
-                                loadingBar.max = 100; // Set the maximum value of the progress bar
-
-                                // Append loading bar to the container
-                                loadingBarContainer.appendChild(loadingBar);
-
-                                // Append file name and loading bar to the flex container
-                                flexContainer.appendChild(fileName);
-                                flexContainer.appendChild(loadingBarContainer);
-
-                                // Append flex container to the file container
-                                fileContainer.appendChild(flexContainer);
-
-                                audioContainer.appendChild(fileContainer);
-
-                                // Simulate loading progress
-                                simulateLoading(loadingBar);
-                            }
-                        });
-
-                        function simulateLoading(progressBar) {
-                            let progress = 0;
-                            const interval = setInterval(function() {
-                                progress += 10; // Increment progress by 10%
-                                progressBar.value = progress;
-                                if (progress >= 100) {
-                                    clearInterval(interval);
-
-                                    // Set the color of the progress bar to aqua blue when fully loaded
-                                    progressBar.classList.add('bg-info');
-
-                                    // Display "Load Complete" inside the progress bar
-                                    progressBar.innerHTML = 'Load Complete';
-                                }
-                            }, 500); // Adjust the interval as needed
-                        }
-                    });
-                </script>
-
+               
 
                 <div id="watermark-container" class="import-container">
                     <div class="mb-3">
@@ -234,72 +79,6 @@
                 <div id="uploaded-watermarks-container" class="row row-cols-2 row-cols-md-3 g-3 upload-container">
                     <!-- Uploaded watermark images will be displayed here -->
                 </div>
-
-
-
-                <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        const watermarkPathInput = document.getElementById('watermark-path');
-                        const watermarkContainer = document.getElementById('uploaded-watermarks-container');
-
-                        watermarkPathInput.addEventListener('change', function(event) {
-                            const files = event.target.files;
-
-                            for (let i = 0; i < files.length; i++) {
-                                const file = files[i];
-                                const fileContainer = document.createElement('div');
-                                fileContainer.classList.add('col');
-
-                                // Create a flex container for file name and loading bar
-                                const flexContainer = document.createElement('div');
-                                flexContainer.style.display = 'flex';
-                                flexContainer.style.justifyContent = 'space-between';
-                                flexContainer.style.alignItems = 'center';
-
-                                // File name element
-                                const fileName = document.createElement('div');
-                                fileName.textContent = file.name;
-
-                                // Loading bar element
-                                const loadingBarContainer = document.createElement('div');
-                                const loadingBar = document.createElement('progress');
-                                loadingBar.max = 100; // Set the maximum value of the progress bar
-
-                                // Append loading bar to the container
-                                loadingBarContainer.appendChild(loadingBar);
-
-                                // Append file name and loading bar to the flex container
-                                flexContainer.appendChild(fileName);
-                                flexContainer.appendChild(loadingBarContainer);
-
-                                // Append flex container to the file container
-                                fileContainer.appendChild(flexContainer);
-
-                                watermarkContainer.appendChild(fileContainer);
-
-                                // Simulate loading progress
-                                simulateLoading(loadingBar);
-                            }
-                        });
-
-                        function simulateLoading(progressBar) {
-                            let progress = 0;
-                            const interval = setInterval(function() {
-                                progress += 10; // Increment progress by 10%
-                                progressBar.value = progress;
-                                if (progress >= 100) {
-                                    clearInterval(interval);
-
-                                    // Set the color of the progress bar to aqua blue when fully loaded
-                                    progressBar.classList.add('bg-info');
-
-                                    // Display "Load Complete" inside the progress bar
-                                    progressBar.innerHTML = 'Load Complete';
-                                }
-                            }, 500); // Adjust the interval as needed
-                        }
-                    });
-                </script>
             </section>
 
             <section id="video-options" class="options-section">
@@ -321,13 +100,13 @@
                     </div> -->
                     <div id="total-length-container" class="slider-container mt-3">
                         <label for="total-length-val" class="form-label total-length-label">Target Duration</label>
-                        <input type="number" id="total-length-val" class="form-control ml-2" name="totalLength" step="1.0" min="1.0" max="600.0" value="15" style="width: 80px">
+                        <input type="number" id="total-length-val" class="form-control ml-2 range-inputbox" name="totalLength" step="1.0" min="1.0" max="600.0" value="15">
                         <label class="form-label total-length-label">seconds</label>
                     </div>
                     <label for="num-videos-range" class="form-label">Total Videos to Generate</label>
                     <div id="num-videos-container" class="slider-container">
                         <input id="num-videos-range" class="form-range"  type="range" min="1" max="5" value="1">
-                        <input type="number" id="num-videos-val" class="form-control ml-2" name="numvideos" min="1" max="5" value="1" style="width: 70px;">
+                        <input type="number" id="num-videos-val" class="form-control ml-2 range-inputbox" name="numvideos" min="1" max="5" value="1">
                     </div>
                 </div>
 
@@ -351,7 +130,7 @@
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
-                <!-- <input id="submit-type" type="hidden" name="action" value=""> -->
+                
                 <input type="submit" id="create-button-params" class="btn btn-primary" value="Create">
             </section>
 

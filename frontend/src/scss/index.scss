@@ -1,6 +1,7 @@
 @import "./_variables.scss";
 
 body {
+    color: $font-color-primary;
     background: $background-color-primary;
 }
 
@@ -78,7 +79,6 @@ main h2 {
 }
 
 .main-text {
-    color: $font-color-primary;
     text-align: center;
     font-size: 36px;
     font-style: normal;

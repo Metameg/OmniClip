@@ -11,6 +11,16 @@
     background-repeat: no-repeat;
 }
 
+.header-img-container {
+    position: relative;
+    .header-circle-img {
+        position: absolute; 
+        left: 50%;
+        top: 50%; 
+        transform: translate(-50%, -50%);
+    }
+}
+
 .divider-content-center  {
     margin: 1.5rem;
     text-align: center;

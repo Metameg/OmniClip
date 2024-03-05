@@ -14,23 +14,7 @@ export function configureRenderForm() {
     renderForm.addEventListener('submit', async function(event) {
         console.log('submitted');
         event.preventDefault();
-        // Set the hidden submit type field to expose which submit button on the form was pressed
-        // setSubmitType();
-        // // Get the set submit type
-        // let submitType = $('#submit-type').val();
-        // console.log(submitType);
         
-        // if (submitType == 'formData') {
-        //     postFormData();
-        // }
-        
-        // else if (submitType == 'gptQuote'){
-        //     quoteGPTSubmit();
-        // }
-        
-        // else {
-        //     quoteCategorySubmit();
-        // }
         var renderData = new FormData($('#render-form')[0]);
         $('#video-content').html('');
         renderFormDOM.showVideoLoading();
@@ -42,30 +26,5 @@ export function configureRenderForm() {
             // Handle errors if needed
             console.error(error);
         }
-
-        // renderService.postFormData(renderData) 
-        //     .then(response => {
-        //         $('#video-content').html(response);
-        //     })
-        //     .catch(error => {
-        //         console.error('Error submitting render data:', error);
-        //     })
-        
-        
     });
-
-
-    // function postFormData() {
-    //     var renderData = new FormData($('#' + renderForm)[0]);
-    //     $('#video-content').html('');
-    //     renderFormDOM.showVideoLoading();
-
-    //     renderService.submitRenderData(renderData) 
-    //         .then(response => {
-    //             $('#video-content').html(response);
-    //         })
-    //         .catch(error => {
-    //             console.error('Error submitting render data:', error);
-    //         })
-    // }
 }

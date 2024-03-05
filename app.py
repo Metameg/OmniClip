@@ -111,13 +111,13 @@ def about():
 
 
 # ADDED AFFILIATES PAGE
-@app.route('/affiliates')
-def affiliates():
-    return render_template("pages/affiliates.html")
+@app.route('/affiliate-program/dashboard')
+def affiliate_dashboard():
+    return render_template("pages/affiliate/affiliate-dashboard.html")
 
-@app.route('/affSignUp')
-def affiliateSignUp():
-    return render_template("pages/affiliateSignUp.html")
+@app.route('/affiliate-program/sign-up')
+def affiliate_signup():
+    return render_template("pages/affiliate/affiliate-sign-up.html")
 
 
 

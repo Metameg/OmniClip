@@ -98,6 +98,9 @@
                 <a id="dashboard-link" class="nav-link dark-hover active" aria-current="page"  data-bs-toggle="pill" href="#dashboard-content">Dashboard</a>
             </li>
             <li class="nav-item">
+                <a id="affiliate-link" class="nav-link dark-hover redirect-link" href="{{ url_for('affiliate_dashboard')}}">My Affiliate Account</a>
+            </li>
+            <li class="nav-item">
                 <a id="renders-link" class="nav-link dark-hover" aria-current="page" data-bs-toggle="pill" href="#renders-content">Renders</a>
             </li>
             <li class="nav-item">
@@ -141,31 +144,33 @@
         </div>
     </div>
 </div>
-<script>const pills = document.getElementById('profile-pills').querySelectorAll('.nav-link');
+<script>
+    const pills = document.getElementById('profile-pills').querySelectorAll('.nav-link');
 
     pills.forEach(pill => {
-        pill.addEventListener('click', function(event) {
-            event.preventDefault();
+        if (!pill.classList.contains('redirect-link')) {
+            pill.addEventListener('click', function(event) {
+                event.preventDefault();
+                // Get the target content div ID
+                const contentId = event.target.id.replace('link', 'content');
 
-            // Get the target content div ID
-            const contentId = event.target.id.replace('link', 'content');
+                // Remove 'show' class from all content divs
+                document.querySelectorAll('.profile-tab-pane').forEach(content => {
+                content.classList.remove('show', 'active');
+                });
 
-            // Remove 'show' class from all content divs
-            document.querySelectorAll('.profile-tab-pane').forEach(content => {
-            content.classList.remove('show', 'active');
+                // Add 'show' class to the selected content div
+                document.getElementById(contentId).classList.add('show', 'active');
+
+                // Remove 'active' class from all pills
+                pills.forEach(p => {
+                    p.classList.remove('active');
+                });
+
+                // Add 'active' class to the selected pill
+                event.target.classList.add('active');
             });
-
-            // Add 'show' class to the selected content div
-            document.getElementById(contentId).classList.add('show', 'active');
-
-            // Remove 'active' class from all pills
-            pills.forEach(p => {
-            p.classList.remove('active');
-            });
-
-            // Add 'active' class to the selected pill
-            event.target.classList.add('active');
-        });
+        }
     });
 </script>
 
