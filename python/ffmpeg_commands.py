@@ -386,7 +386,7 @@ def build_transitions(video_clips, target_duration, fadeout_duration, size):
         
         
 
-        video_cmd = f"ffmpeg {inputs} -filter_complex \"{FLV}\" -map {PDV} -c:v libx264 -an -y {intermediate_video} -hide_banner -loglevel quiet"
+        video_cmd = f"ffmpeg {inputs} -filter_complex \"{FLV}\" -map {PDV} -c:v libx264 -an -y {intermediate_video} "
         print("ffmpeg_video: ", video_cmd)
         subprocess.run(video_cmd, shell=True)
         # audio_cmd = f"ffmpeg {inputs} -filter_complex \"{FLA}\" -map [aout] -c:a aac -q:a 4 -y {intermediate_audio} -hide_banner"

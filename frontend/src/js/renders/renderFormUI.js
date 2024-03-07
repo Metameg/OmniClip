@@ -53,7 +53,12 @@ const renderFormDOM = (function () {
 
     function showDivFromBtn(showBtn, div) {
         showBtn.addEventListener('click', function() {
-            div.classList.add('show')
+            if (div.classList.contains('show')) {
+                div.classList.remove('show')
+            }
+            else {
+                div.classList.add('show')
+            }
         });
     }
 
@@ -143,6 +148,12 @@ const renderFormDOM = (function () {
             const voiceCloseBtn = document.getElementById('voice-btn-close');
             const voiceSelectBtn = document.getElementById('voice-select-btn');
             const voiceCollapse = document.getElementById('collapse-voices');
+            const boldBln = document.getElementById('bold');
+            const italicBln = document.getElementById('italic');
+            const underlineBln = document.getElementById('underline');
+            const boldBlnHidden = document.getElementById('bold-value');
+            const italicBlnHidden = document.getElementById('italic-value');
+            const underlineBlnHidden = document.getElementById('underline-value');
 
             enableFromCheckbox(manualClippackBln, clippack);
             notEnableFromCheckbox(manualClippackBln, clippackPath);
@@ -161,6 +172,9 @@ const renderFormDOM = (function () {
             updateHiddenInput(quoteCategoryHidden, quoteCategory);
             updateHiddenBln(sameCategoryBlnHidden, sameCategoryBln);
             updateHiddenBln(manualClippackBlnHidden, manualClippackBln);
+            updateHiddenBln(boldBlnHidden, boldBln);
+            updateHiddenBln(italicBlnHidden, italicBln);
+            updateHiddenBln(underlineBlnHidden, underlineBln);
             quoteConfirmListener(quoteManualInput, quoteManualConfirmBtn, quoteManualRetryBtn, quoteResponse, quoteValue);
             quoteRetryListener(quoteManualInput, quoteManualConfirmBtn, quoteManualRetryBtn, quoteValue);
             showDivFromBtn(voiceSelectBtn, voiceCollapse);

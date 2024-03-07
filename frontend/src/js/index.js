@@ -9,8 +9,8 @@ import '../scss/index.scss';
 import '../scss/login.scss';
 import '../scss/pricing.scss';
 import '../scss/profile.scss';
-import '../scss/affiliate-dashboard.scss';
-import '../scss/affiliate-signup.scss';
+import '../scss/affiliate/affiliate-dashboard.scss';
+import '../scss/affiliate/affiliate-signup.scss';
 
 // console.log('hello');
 

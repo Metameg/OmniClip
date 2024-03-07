@@ -3,7 +3,7 @@ from io import BytesIO
 import os
 import requests
 from dotenv import load_dotenv
-import python.utilities
+from . import utilities
 import ast
 import time
 
@@ -37,7 +37,7 @@ def _write_file(url):
     # if not os.path.exists('./temp/audios'):
     #     os.makedirs('./temp/audios')
 
-    tts_path = os.path.join(python.utilities.get_root_path(), 'temp', 'tts_audio.mp3')
+    tts_path = os.path.join(utilities.get_root_path(), 'temp', 'tts_audio.mp3')
     # Save the raw data to a temporary file
     with open(tts_path, 'wb') as temp_file:
         temp_file.write(data.getvalue())
@@ -82,6 +82,6 @@ def generate_tts(text, voice):
 
     return outfile
 
-if __name__ == '__main__':
-    path = generate_tts('This is a test', "Matthew")
-    print(path)
+# if __name__ == '__main__':
+#     path = generate_tts('This is a test', "Matthew")
+#     print(path)
