@@ -1,9 +1,19 @@
-// function toggleNavbarCollapse() {
-//     const navbarToggle = document.getElementById('nav-toggle-btn');
-//     const navbarCollapse = document.getElementById('navbarNavDropdown');
-//     navbarToggle.addEventListener('click', function() {
-//         navbarCollapse.classList.contains('show') ? navbarCollapse.classList.remove('show') : navbarCollapse.classList.add('show');
-//     });
-// }
+function enableFromCheckbox (checkbox, dropdown) {
+    checkbox.addEventListener('change', function () {
+        dropdown.disabled = !checkbox.checked;
+    });
+}
 
-// export {toggleNavbarCollapse};
+function notEnableFromCheckbox (checkbox, dropdown) {
+    checkbox.addEventListener('change', function () {
+        dropdown.disabled = checkbox.checked;
+    });
+}
+
+function updateHiddenBln (hiddenElement, checkboxElement) {
+    checkboxElement.addEventListener('change', function() {
+        hiddenElement.value = checkboxElement.checked ? 'true' : 'false';
+    });
+}
+
+export {enableFromCheckbox, notEnableFromCheckbox, updateHiddenBln}

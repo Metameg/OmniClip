@@ -67,20 +67,24 @@
         <div class="mb-3">
             <label for="primary-color" class="form-label">Font Color</label>
             <div>
-                <input type="text" id="primary-color" class="form-control" name="primaryColor" value="#FFFFFFFF" aria-label="Primary Color" data-coloris>
+                <input type="text" id="primary-color" class="form-control" name="primaryColor" value="#FFFFFF" aria-label="Primary Color" data-coloris>
             </div>
         </div>
         <div class="mb-3">
-            <label for="secondary-color" class="form-label">Outline Color</label>
+            <label for="outline-color" class="form-label">Outline Color</label>
             <div>
-                <input type="text" id="secondary-color" class="form-control" name="secondaryColor" value="#FFFFFF00" aria-label="Secondary Color" data-coloris>
+                <input type="text" id="outline-color" class="form-control" name="outlineColor" value="#FFFFFF" aria-label="Secondary Color" data-coloris disabled>
             </div>
+            <label for="outline-transparent-bln" class="form-check-label mt-2">Transparent</label>
+            <input type="checkbox" id="outline-transparent-bln" class="form-check-input" aria-label="Transparent Outline" checked>
         </div>
         <div class="mb-3">
             <label for="back-color" class="form-label">Background Color</label>
             <div>
-                <input type="text" id="back-color" class="form-control" name="backColor" value="#FFFFFF00" aria-label="Background Color" data-coloris>
+                <input type="text" id="back-color" class="form-control" name="backColor" value="#FFFFFF" aria-label="Background Color" data-coloris disabled>
             </div>
+            <label for="background-transparent-bln" class="form-check-label mt-2">Transparent</label>
+            <input type="checkbox" id="background-transparent-bln" class="form-check-input" aria-label="Transparent Background" checked>
         </div>
 
         <script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
@@ -88,19 +92,19 @@
             document.getElementById('primary-color').addEventListener('click', e => {
                 Coloris({
                     themeMode: 'dark',
-                    alpha: true
+                    alpha: false
                 });
             });
-            document.getElementById('secondary-color').addEventListener('click', e => {
+            document.getElementById('outline-color').addEventListener('click', e => {
                 Coloris({
                     themeMode: 'dark',
-                    alpha: true
+                    alpha: false
                 });
             });
             document.getElementById('back-color').addEventListener('click', e => {
                 Coloris({
                     themeMode: 'dark',
-                    alpha: true
+                    alpha: false
                 });
             });
             

@@ -257,9 +257,19 @@ def render():
     target_duration = float(form_data['totalLength'])
     font_name = form_data['fontName']
     font_size = int(form_data['fontSize'])
+
+    
     text_primary_color = form_data['primaryColor']
-    text_secondary_color = form_data['secondaryColor']
-    text_back_color = form_data['backColor']
+    
+    try:
+        text_outline_color = form_data['outlineColor']
+    except Exception:
+        text_outline_color = '#00000000'
+    try:
+        text_back_color = form_data['backColor'] 
+    except Exception:
+        text_back_color = '#00000000'
+
     isBold = form_data['isBold']
     isItalic = form_data['isItalic']
     isUnderline = form_data['isUnderline']
@@ -273,7 +283,7 @@ def render():
     
     editor = AutoEditor(outpath, video_uploads_dir, audio_uploads_dir, 
                         watermark_uploads_dir, fade_duration, target_duration, 
-                        'freedom', font_size, text_primary_color, text_secondary_color, 
+                        'freedom', font_size, text_primary_color, text_outline_color, 
                         text_back_color, isBold, isItalic, isUnderline, 
                         text_posX, text_posY, aspect_ratio, watermark_opacity,
                         quote=quote_val, voice=voice, subtitle_ass=True)

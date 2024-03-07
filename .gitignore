@@ -9,3 +9,7 @@ stockaudio
 venv
 .env
 temp/*
+output/*
+video_uploads/*
+audio_uploads/*
+watermark_uploads/*

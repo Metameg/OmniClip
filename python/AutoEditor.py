@@ -24,7 +24,7 @@ from python.shotstacktts import generate_tts
 class AutoEditor():
     def __init__(self, export_folder, video_folder, audio_folder, 
                  overlay_folder, fade_duration, target_duration, 
-                 font_name, font_size, text_primary_color, text_secondary_color,
+                 font_name, font_size, text_primary_color, text_outline_color,
                  text_back_color, isBold, isItalic, isUnderline, text_posX, text_posY,
                  aspect_ratio, watermark_opacity, quote=None, voice=None, subtitle_ass=True):
         
@@ -40,7 +40,7 @@ class AutoEditor():
         self.subtitle_ass = subtitle_ass
 
         self.style_options = ['font_ttfs/' + font_name + '.ttf', font_size,
-                                 text_primary_color, text_secondary_color, 
+                                 text_primary_color, text_outline_color, 
                                  text_back_color, isBold, isItalic, isUnderline,
                                  text_posX, text_posY, aspect_ratio]
 

@@ -1,3 +1,5 @@
+import { notEnableFromCheckbox, updateHiddenBln } from "../shared/utils.js";
+
 const videoStylerUI = (function () {
     // Private Variables and Functions
     function updateVideoStylerListener(inputs, sampleText) {
@@ -16,14 +18,17 @@ const videoStylerUI = (function () {
         var isItalic = inputs[3].checked;
         var isUnderline = inputs[4].checked;
         var primaryColor = inputs[5].value;
-        var secondaryColor = inputs[6].value;
-        var backColor = inputs[7].value;
-        var positionX = inputs[8].value; 
-        var positionY = inputs[9].value; 
-        var aspectRatio = inputs[10].value;
-        var mockVideoEle = inputs[11];
-
         
+        var isOutlineTransparent = inputs[8].checked;
+        var isBackTransparent = inputs[9].checked;
+        var outlineColor = isOutlineTransparent ? '#00000000' : inputs[6].value;
+        var backColor = isBackTransparent ? '#00000000' : inputs[7].value;
+
+        var positionX = inputs[10].value; 
+        var positionY = inputs[11].value; 
+        var aspectRatio = inputs[12].value;
+        var mockVideoEle = inputs[13];
+
         sampleText.textContent = 'Sample Text';
         sampleText.style.fontFamily = fontName;
         sampleText.style.fontSize = fontSize + 'px';
@@ -32,7 +37,7 @@ const videoStylerUI = (function () {
         sampleText.style.textDecoration = isUnderline ? 'underline' : 'none';
         sampleText.style.color = primaryColor;
         sampleText.style.backgroundColor = backColor;
-        sampleText.style.boxShadow = '0 0 0 5px ' + secondaryColor + ' inset';
+        sampleText.style.boxShadow = '0 0 0 5px ' + outlineColor + ' inset';
         sampleText.style.marginLeft = positionX + 'px';
         sampleText.style.marginBottom = positionY + 'px';
         mockVideoEle.style.width =  aspectRatio === "16:9" ? "406px" : "230px";
@@ -46,17 +51,31 @@ const videoStylerUI = (function () {
             const boldCheckbox = document.getElementById("bold");
             const italicCheckbox = document.getElementById("italic");
             const underlineCheckbox = document.getElementById("underline");
+            const boldBlnHidden = document.getElementById('bold-value');
+            const italicBlnHidden = document.getElementById('italic-value');
+            const underlineBlnHidden = document.getElementById('underline-value');
             const primaryColorInput = document.getElementById("primary-color");
-            const secondaryColorInput = document.getElementById("secondary-color");
+            const outlineColorInput = document.getElementById("outline-color");
             const backColorInput = document.getElementById("back-color");
+            const outlineTransparentBln = document.getElementById('outline-transparent-bln');
+            const backTransparentBln = document.getElementById('background-transparent-bln');
             const positionXInput = document.getElementById("position-x"); // Corrected ID
             const positionYInput = document.getElementById("position-y"); // Corrected ID
             const aspectRatioSelect = document.getElementById("aspect-ratio");
             const mockVideo = document.getElementById("mock-video");
             const sampleText = document.getElementById("sample-text");
             // const inputs = [fontNameSelect, fontSizeSelect, boldCheckbox, italicCheckbox, underlineCheckbox, positionXInput, positionYInput, aspectRatioSelect, mockVideo];
-            const inputs = [fontNameSelect, fontSizeSelect, boldCheckbox, italicCheckbox, underlineCheckbox, primaryColorInput, secondaryColorInput, backColorInput, positionXInput, positionYInput, aspectRatioSelect, mockVideo];
+            const inputs = [fontNameSelect, fontSizeSelect, boldCheckbox, 
+                            italicCheckbox, underlineCheckbox, primaryColorInput,
+                            outlineColorInput, backColorInput, 
+                            outlineTransparentBln, backTransparentBln, positionXInput, 
+                            positionYInput, aspectRatioSelect, mockVideo];
 
+            updateHiddenBln(boldBlnHidden, boldCheckbox);
+            updateHiddenBln(italicBlnHidden, italicCheckbox);
+            updateHiddenBln(underlineBlnHidden, underlineCheckbox);
+            notEnableFromCheckbox(outlineTransparentBln, outlineColorInput);
+            notEnableFromCheckbox(backTransparentBln, backColorInput);
             updateVideoStylerListener(inputs, sampleText);
         }
     }

@@ -3,6 +3,21 @@ from . import utilities
 import whisper_timestamped as whisperts
 from whisper_timestamped.make_subtitles import write_srt
 
+def _rgb2bgr(rgb):
+    # Remove '#' from the beginning
+    hex_without_hash = rgb[1:]
+    
+    if rgb == '00000000':
+        return hex_without_hash
+
+    # Ensure the hex value is 6 characters long
+    padded_hex = hex_without_hash.zfill(6)
+
+    # Swap red and blue components in the hex string
+    bgr_hex_nohash = padded_hex[4:6] + padded_hex[2:4] + padded_hex[0:2]
+
+    return bgr_hex_nohash
+
 def _characters_after_x(input_string, x):
     index_of_x = input_string.find(x)
 
@@ -27,14 +42,23 @@ def _seconds_to_ass_time(seconds):
 
 
 def _create_ass_file(data, font_name, font_size, primary_color, 
-                     secondary_color, back_color, isBold, isItalic, 
+                     outline_color, back_color, isBold, isItalic, 
                      isUnderline, positionX, positionY, aspect_ratio, size='576:244'):
     '''
         Writes the data to the .ass file using the fields below. (SOME FIELDS GENERATED via ChatGPT!!!)
     '''
-    bold = 1 if isBold else 0
-    italic = 1 if isItalic else 0
-    underline = 1 if isUnderline else 0
+    print(isBold, isItalic, isUnderline)
+    print(primary_color, outline_color, back_color)
+    # Convert bold, italic, underline values to ass specs 
+    bold = -1 if isBold == 'true' else 0
+    italic = -1 if isItalic == 'true' else 0
+    underline = -1 if isUnderline == 'true' else 0
+
+    # Convert color values to ass specs
+    primary = _rgb2bgr(primary_color) 
+    outline = _rgb2bgr(outline_color) 
+    background = _rgb2bgr(back_color) 
+
 
     height = _characters_after_x(size, ':')
     print(height)
@@ -51,7 +75,7 @@ def _create_ass_file(data, font_name, font_size, primary_color,
     ass_lines.append("Format: Name,Fontname,Fontsize,PrimaryColour,SecondaryColour,OutlineColour,BackColour,Bold," 
                      "Italic,Underline,StrikeOut,ScaleX,ScaleY,Spacing,Angle,BorderStyle,Outline,Shadow,Alignment,"
                      "MarginL,MarginR,MarginV,Encoding")
-    ass_lines.append(f"Style: Default,{font_name},{font_size},&H00FF37,&H2F1A75,&H000DFF,&HFFD103,"
+    ass_lines.append(f"Style: Default,{font_name},{font_size},&H{primary},&H00000000,&H{outline},&H{background},"
                      f"{bold},{italic},{underline},0,100,100,0,0.00,1,2,2,2,{positionX},0,60,1")
     ass_lines.append("")
     ass_lines.append("[Events]")

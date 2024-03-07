@@ -1,18 +1,9 @@
 import Validators from "./validators.js";
+import { notEnableFromCheckbox, enableFromCheckbox, updateHiddenBln } from "../shared/utils.js";
 
 const renderFormDOM = (function () {
     // Private variables and functions
-    function enableFromCheckbox (checkbox, dropdown) {
-        checkbox.addEventListener('change', function () {
-            dropdown.disabled = !checkbox.checked;
-        });
-    }
-
-    function notEnableFromCheckbox (checkbox, dropdown) {
-        checkbox.addEventListener('change', function () {
-            dropdown.disabled = checkbox.checked;
-        });
-    }
+    
 
     function voiceSelect (voice, radios) {
         radios.forEach(function (radioButton) {
@@ -86,11 +77,6 @@ const renderFormDOM = (function () {
         });
     }
 
-    function updateHiddenBln (hiddenElement, checkboxElement) {
-        checkboxElement.addEventListener('change', function() {
-            hiddenElement.value = checkboxElement.checked ? 'true' : 'false';
-        });
-    }
 
     function quoteConfirmListener(input, quoteManualConfirmBtn, quoteManualRetryBtn, quoteResponse, quoteValue) {
         quoteManualConfirmBtn.addEventListener('click', function() {
@@ -148,12 +134,12 @@ const renderFormDOM = (function () {
             const voiceCloseBtn = document.getElementById('voice-btn-close');
             const voiceSelectBtn = document.getElementById('voice-select-btn');
             const voiceCollapse = document.getElementById('collapse-voices');
-            const boldBln = document.getElementById('bold');
-            const italicBln = document.getElementById('italic');
-            const underlineBln = document.getElementById('underline');
-            const boldBlnHidden = document.getElementById('bold-value');
-            const italicBlnHidden = document.getElementById('italic-value');
-            const underlineBlnHidden = document.getElementById('underline-value');
+            // const boldBln = document.getElementById('bold');
+            // const italicBln = document.getElementById('italic');
+            // const underlineBln = document.getElementById('underline');
+            // const boldBlnHidden = document.getElementById('bold-value');
+            // const italicBlnHidden = document.getElementById('italic-value');
+            // const underlineBlnHidden = document.getElementById('underline-value');
 
             enableFromCheckbox(manualClippackBln, clippack);
             notEnableFromCheckbox(manualClippackBln, clippackPath);
@@ -172,9 +158,9 @@ const renderFormDOM = (function () {
             updateHiddenInput(quoteCategoryHidden, quoteCategory);
             updateHiddenBln(sameCategoryBlnHidden, sameCategoryBln);
             updateHiddenBln(manualClippackBlnHidden, manualClippackBln);
-            updateHiddenBln(boldBlnHidden, boldBln);
-            updateHiddenBln(italicBlnHidden, italicBln);
-            updateHiddenBln(underlineBlnHidden, underlineBln);
+            // updateHiddenBln(boldBlnHidden, boldBln);
+            // updateHiddenBln(italicBlnHidden, italicBln);
+            // updateHiddenBln(underlineBlnHidden, underlineBln);
             quoteConfirmListener(quoteManualInput, quoteManualConfirmBtn, quoteManualRetryBtn, quoteResponse, quoteValue);
             quoteRetryListener(quoteManualInput, quoteManualConfirmBtn, quoteManualRetryBtn, quoteValue);
             showDivFromBtn(voiceSelectBtn, voiceCollapse);
