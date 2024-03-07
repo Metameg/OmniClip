@@ -34,11 +34,20 @@
                             <div class="invalid-feedback">
                                 Make sure the folder includes at least one video file (.mp4, .mov, etc.)
                             </div>
+
+                            <div class="mt-3"> 
+                                <p>--or--</p>
+                                <input type="checkbox" id="clippack-checkbox" class="form-check">
+                                <input type="hidden" id="clippack-checkbox-value" value="False">
+                                <select id="clippack" class="form-select" disabled>
+                                    {% include 'partials/quote-categories.html'%}
+                                </select>
+                            </div>
                         </div>
                     </div>
 
                     <div id="uploaded-videos-container" class="row row-cols-2 row-cols-md-3 g-3 upload-container">
-
+                        <h3>Your Clips</h3>
                     </div>
                 </div>
 
@@ -57,7 +66,7 @@
                         </div>
                     </div>
                     <div id="uploaded-audios-container" class="row row-cols-2 row-cols-md-3 g-3 upload-container">
-                        
+                        <h3>Your Audios</h3>
                     </div>
                 </div>
 
@@ -77,7 +86,7 @@
                     </div>
                 </div>
                 <div id="uploaded-watermarks-container" class="row row-cols-2 row-cols-md-3 g-3 upload-container">
-                    <!-- Uploaded watermark images will be displayed here -->
+                    <h3>Your Watermarks</h3>
                 </div>
             </section>
 
