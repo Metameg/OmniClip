@@ -1,0 +1,10 @@
+@import "../_variables.scss";
+
+footer {
+    background: $footer-background;
+    color: rgba(255, 255, 255, 0.9); // Adjust text opacity here
+    text-align: center;
+    padding: 20px 0;
+    border-radius: 50px;
+    box-shadow: 0px 0px 15px rgba(255, 255, 255, 10);
+}
