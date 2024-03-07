@@ -23,7 +23,7 @@ from python.transcribe_subtitles import transcribe_subtitles
 class AutoEditor():
     def __init__(self, export_folder, video_folder, audio_folder, 
                  overlay_folder, fade_duration, target_duration, 
-                 font_style, font_size, font_stroke, 
+                 font_name, font_size, 
                  quote=None, voice=None, subtitle_ass=True):
         
         self.export_folder = export_folder
@@ -32,9 +32,9 @@ class AutoEditor():
         self.video_folder = video_folder
         self.audio_folder = audio_folder
         self.overlay_folder = overlay_folder
-        self.font_style = 'font_ttfs/' + font_style + '.ttf'
+        self.font_name = 'font_ttfs/' + font_name + '.ttf'
         self.font_size = font_size
-        self.font_stroke = font_stroke
+    
         self.quote = quote
         self.voice = voice
         self.subtitle_ass = subtitle_ass
@@ -165,10 +165,10 @@ class AutoEditor():
             if self.subtitle_ass:
                 transcribe_subtitles(self.voice)
                 ass_file = 'temp/subtitles.ass'
-                text_video = fmpgapi.add_text(voice_video, self.font_style, self.font_size, ass_file=ass_file)
+                text_video = fmpgapi.add_text(voice_video, self.font_name, self.font_size, ass_file=ass_file)
             else:
                 quote_wrapped = self._wrap_text(self.quote, 20)
-                text_video = fmpgapi.add_text(voice_video, self.font_style, self.font_size, quote=quote_wrapped)
+                text_video = fmpgapi.add_text(voice_video, self.font_name, self.font_size, quote=quote_wrapped)
                 
 
             text_videopath = os.path.join(utilities.get_root_path(), 'temp', text_video)
