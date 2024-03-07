@@ -6,6 +6,7 @@ import random
 from . import utilities
 from . import ffmpeg_commands as fmpgapi
 from python.transcribe_subtitles import transcribe_subtitles
+from python.shotstacktts import generate_tts
 # from proglog import ProgressBarLogger
 
 # class MyBarLogger(ProgressBarLogger):
@@ -161,6 +162,7 @@ class AutoEditor():
     
             
         if self.quote != '':
+            self.voice = generate_tts(self.quote, 'Joey')
             voice_video = fmpgapi.add_voice_over(transitions_with_audio, self.voice)
             if self.subtitle_ass:
                 transcribe_subtitles(self.voice)
