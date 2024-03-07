@@ -18,8 +18,8 @@ const videoStylerUI = (function () {
         var primaryColor = inputs[5].value;
         var secondaryColor = inputs[6].value;
         var backColor = inputs[7].value;
-        var positionX = inputs[8].value; // Corrected variable name
-        var positionY = inputs[9].value; // Corrected variable name
+        var positionX = inputs[8].value; 
+        var positionY = inputs[9].value; 
         var aspectRatio = inputs[10].value;
         var mockVideoEle = inputs[11];
 
@@ -54,6 +54,7 @@ const videoStylerUI = (function () {
             const aspectRatioSelect = document.getElementById("aspect-ratio");
             const mockVideo = document.getElementById("mock-video");
             const sampleText = document.getElementById("sample-text");
+            // const inputs = [fontNameSelect, fontSizeSelect, boldCheckbox, italicCheckbox, underlineCheckbox, positionXInput, positionYInput, aspectRatioSelect, mockVideo];
             const inputs = [fontNameSelect, fontSizeSelect, boldCheckbox, italicCheckbox, underlineCheckbox, primaryColorInput, secondaryColorInput, backColorInput, positionXInput, positionYInput, aspectRatioSelect, mockVideo];
 
             updateVideoStylerListener(inputs, sampleText);

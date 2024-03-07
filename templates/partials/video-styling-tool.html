@@ -3,14 +3,14 @@
     <div class="mx-4">
         <div class="mb-3">
             <label for="aspect-ratio" class="form-label">Aspect Ratio</label>
-            <select id="aspect-ratio" class="form-select" name="aspectRatio" aria-label="Aspect Ratio">
+            <select id="aspect-ratio" class="form-select" name="aspectRatio" value="9:16" aria-label="Aspect Ratio">
                 <option value="16:9">16:9</option>
                 <option value="9:16" selected>9:16</option>
             </select>
         </div>
         <div>
             <label for="font-name" class="form-label">Font Name</label>
-            <select id="font-name" class="form-select font-dropdown" name="fontName" aria-label="Font Name">
+            <select id="font-name" class="form-select font-dropdown" name="fontName" value="arial" aria-label="Font Name">
                 <option value="Arial" selected>Arial</option>
                 <option value="Verdana">Verdana</option>
                 <option value="Helvetica">Helvetica</option>
@@ -31,7 +31,7 @@
 
         <div class="mb-3">
             <label for="font-size" class="form-label">Font Size</label>
-            <select id="font-size" class="form-select font-dropdown" name="fontSize" aria-label="Font Size">
+            <select id="font-size" class="form-select font-dropdown" name="fontSize" value="12" aria-label="Font Size">
                 <option value="8">8</option>
                 <option value="9">9</option>
                 <option value="10">10</option>
@@ -66,16 +66,46 @@
     <div class="mx-4">
         <div class="mb-3">
             <label for="primary-color" class="form-label">Font Color</label>
-            <input type="color" id="primary-color" class="form-control" name="primaryColor" aria-label="Primary Color">
+            <div>
+                <input type="text" id="primary-color" class="form-control" name="primaryColor" value="#FFFFFFFF" aria-label="Primary Color" data-coloris>
+            </div>
         </div>
         <div class="mb-3">
             <label for="secondary-color" class="form-label">Outline Color</label>
-            <input type="color" id="secondary-color" class="form-control" name="secondaryColor" aria-label="Secondary Color">
+            <div>
+                <input type="text" id="secondary-color" class="form-control" name="secondaryColor" value="#FFFFFF00" aria-label="Secondary Color" data-coloris>
+            </div>
         </div>
         <div class="mb-3">
             <label for="back-color" class="form-label">Background Color</label>
-            <input type="color" id="back-color" class="form-control" name="backColor" aria-label="Background Color">
+            <div>
+                <input type="text" id="back-color" class="form-control" name="backColor" value="#FFFFFF00" aria-label="Background Color" data-coloris>
+            </div>
         </div>
+
+        <script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
+        <script>
+            document.getElementById('primary-color').addEventListener('click', e => {
+                Coloris({
+                    themeMode: 'dark',
+                    alpha: true
+                });
+            });
+            document.getElementById('secondary-color').addEventListener('click', e => {
+                Coloris({
+                    themeMode: 'dark',
+                    alpha: true
+                });
+            });
+            document.getElementById('back-color').addEventListener('click', e => {
+                Coloris({
+                    themeMode: 'dark',
+                    alpha: true
+                });
+            });
+            
+        </script>
+
         <div class="mb-3">
             <label for="position-x" class="form-label">position X</label>
             <input type="range" id="position-x" class="form-range" name="positionX" min="-380.0" max="400.0" step="1" value="1" aria-label="position X">

@@ -114,6 +114,9 @@ def affiliate_dashboard():
 def affiliate_signup():
     return render_template("pages/affiliate/affiliate-sign-up.html")
 
+@app.route('/affiliate-program/about')
+def affiliate_about():
+    return render_template("pages/affiliate/affiliate-about.html")
 
 
 @app.route('/settings')

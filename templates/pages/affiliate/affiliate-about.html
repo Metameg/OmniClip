@@ -3,45 +3,47 @@
 {% block content %}
 
 
-<main class="container">
-    <header>
+<main >
+    <header class="affiliate-header">
         <h1>Welcome to Our Affiliate Program!</h1>
         <p>Join our affiliate program and start earning commissions today!</p>
     </header>
 
-    <section id="key-benefits">
+    <section class="affiliate-about-section">
         <h2>Key Benefits</h2>
         <ul>
-            <li><br>Earn commissions for referring customers.</li>
-            <li><br>Access to exclusive promotions or discounts.</li>
-            <li><br>Opportunities for additional bonuses or incentives.</li>
-            <li><br>Flexible earning potential based on performance.</li>
+            <br><li>Earn commissions for referring customers.</li>
+            <br><li>Access to exclusive promotions or discounts.</li>
+            <br><li>Opportunities for additional bonuses or incentives.</li>
+            <br><li>Flexible earning potential based on performance.</li>
         </ul>
+        <br>
     </section>
 
-    <section id="how-it-works">
+    <section class="affiliate-about-section">
         <h2>How It Works</h2>
         <ol>
-            <li><br>Sign Up: Register for the affiliate program through the sign-up page.</li>
-            <li><br>Receive Referral Link: Upon approval, affiliates receive a unique referral link or code.</li>
-            <li><br>Promote Products/Services: Share the referral link through various channels to drive traffic to the platform.</li>
-            <li><br>Earn Commissions: Get rewarded with commissions for each successful referral or sale generated through the affiliate link.</li>
+            <br><li>Sign Up: Register for the affiliate program through the sign-up page.</li>
+            <br><li>Receive Referral Link: Upon approval, affiliates receive a unique referral link or code.</li>
+            <br><li>Promote Products/Services: Share the referral link through various channels to drive traffic to the platform.</li>
+            <br><li>Earn Commissions: Get rewarded with commissions for each successful referral or sale generated through the affiliate link.</li>
         </ol>
+        <br>
     </section>
 
-    <section id="commission-structure">
+    <section class="affiliate-about-section">
         <h2>Commission Structure</h2>
         <p>Our commission rates are based on a tiered system:</p>
         <!-- Add commission structure details here -->
     </section>
 
-    <section id="terms-and-conditions">
+    <section class="affiliate-about-section">
         <h2>Terms and Conditions</h2>
         <p>Please review our terms and conditions before joining our affiliate program:</p>
         <!-- Add terms and conditions details here -->
     </section>
 
-    <section id="faqs">
+    <section class="affiliate-about-section">
         <h2>FAQs</h2>
         <p>
             Q: What is an affiliate program?<br>
@@ -54,15 +56,18 @@
             A: To become an affiliate, simply sign up for our affiliate program through our website. Once approved, you'll receive access to your unique affiliate link and marketing materials to start promoting our products or services.<br><br>
 
             Commission and Payments:<br>
-            Q: How much commission do affiliates earn?<br>
+            <strong>Q: How much commission do affiliates earn?</strong><br>
             A: Commission rates vary depending on the product or service you promote. You can find detailed commission rates in your affiliate dashboard after signing up for the program.<br>
         </p>
     </section>
 
-    <section id="cta">
+    <section class="affiliate-about-section">
         <h2>Ready to Get Started?</h2>
         <p>Sign up for our affiliate program now and start earning commissions!</p>
-        <!-- Add call-to-action button/link here -->
+        <div class="d-flex">
+            <a href="{{ url_for('affiliate_signup') }}"><button class="btn btn-primary affiliate-btn" >Sign Up</button></a>
+            <a href="{{ url_for('login') }}"><button class="btn btn-primary affiliate-btn">Login</button></a>
+        </div>
     </section>
 
     <footer>

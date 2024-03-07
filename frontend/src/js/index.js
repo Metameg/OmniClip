@@ -11,6 +11,7 @@ import '../scss/pricing.scss';
 import '../scss/profile.scss';
 import '../scss/affiliate/affiliate-dashboard.scss';
 import '../scss/affiliate/affiliate-signup.scss';
+import '../scss/affiliate/affiliate-about.scss';
 
 // console.log('hello');
 
@@ -18,7 +19,7 @@ import { configureRenderForm } from './renders/renderFormController.js';
 import { configureQuoteGenerator } from './quoteGenerator/quoteController.js';
 import { configureAffiliate } from './affiliate/affiliateController.js';
 import { configuremediaUploader } from './mediaUploader/mediaUploaderController.js';
-// import { configureVideoStyler } from './videoStyler/videoStylerController.js';
+
 
 
 $(document).ready(function() {
