@@ -493,7 +493,7 @@ def add_voice_over(video, voice):
     return outpath
 
 
-def add_text(video, font_style, font_size, ass_file=None, quote=None):
+def add_text(video, font_name=None, font_size=None, ass_file=None, quote=None):
         text_out = os.path.join(utilities.get_root_path(), 'temp', f'text_video.mp4')
         if ass_file:
             ffmpeg_command = [
@@ -516,7 +516,7 @@ def add_text(video, font_style, font_size, ass_file=None, quote=None):
                 'quiet',
                 '-i', video,
                 '-filter_complex',
-                f"drawtext=text='{quote}':fontfile={font_style}:fontsize={font_size}:fontcolor=#000000:box=1:boxcolor=black@0.0:boxborderw=5:x=(W-text_w)/2:y=(H-text_h)/2:enable='between(t,0,5)'[text];[0:v][text]overlay=0:0",
+                f"drawtext=text='{quote}':fontfile={font_name}:fontsize={font_size}:fontcolor=#000000:box=1:boxcolor=black@0.0:boxborderw=5:x=(W-text_w)/2:y=(H-text_h)/2:enable='between(t,0,5)'[text];[0:v][text]overlay=0:0",
                 '-c:v', 'libx264',
                 '-c:a', 'aac',
                 '-y',

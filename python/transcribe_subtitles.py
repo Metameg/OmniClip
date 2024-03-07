@@ -26,11 +26,17 @@ def _seconds_to_ass_time(seconds):
     return f"{hours:02}:{minutes:02}:{int(seconds):02}.{centiseconds:02}"
 
 
-def _create_ass_file(data, font_name, font_size, primary_color, secondary_color, back_color, positionX, positionY, size='576x244'):
+def _create_ass_file(data, font_name, font_size, primary_color, 
+                     secondary_color, back_color, isBold, isItalic, 
+                     isUnderline, positionX, positionY, aspect_ratio, size='576:244'):
     '''
         Writes the data to the .ass file using the fields below. (SOME FIELDS GENERATED via ChatGPT!!!)
     '''
-    height = _characters_after_x(size, 'x')
+    bold = 1 if isBold else 0
+    italic = 1 if isItalic else 0
+    underline = 1 if isUnderline else 0
+
+    height = _characters_after_x(size, ':')
     print(height)
     marginv = int(height) // 2 if height else 0
     print("marginv: ", marginv)
@@ -45,8 +51,8 @@ def _create_ass_file(data, font_name, font_size, primary_color, secondary_color,
     ass_lines.append("Format: Name,Fontname,Fontsize,PrimaryColour,SecondaryColour,OutlineColour,BackColour,Bold," 
                      "Italic,Underline,StrikeOut,ScaleX,ScaleY,Spacing,Angle,BorderStyle,Outline,Shadow,Alignment,"
                      "MarginL,MarginR,MarginV,Encoding")
-    ass_lines.append(f"Style: Default,{font_name},{font_size},{primary_color},{secondary_color},&H000000,{back_color},"
-                     f"0,0,0,0,100,100,0,0.00,1,2,2,2,{positionX},0,{positionY},1")
+    ass_lines.append(f"Style: Default,{font_name},{font_size},&H00FF37,&H2F1A75,&H000DFF,&HFFD103,"
+                     f"{bold},{italic},{underline},0,100,100,0,0.00,1,2,2,2,{positionX},0,60,1")
     ass_lines.append("")
     ass_lines.append("[Events]")
     ass_lines.append("Format: Layer,Start,End,Style,Name,MarginL,MarginR,MarginV,Effect,Text")
@@ -64,7 +70,7 @@ def _create_ass_file(data, font_name, font_size, primary_color, secondary_color,
         f.write("\n".join(ass_lines))
 
     
-def transcribe_subtitles(audio):
+def transcribe_subtitles(audio, style_options):
     print("\n\n\n\n\naudio_file: ", audio, "\n\n\n\n\n")
     audio_to_transcribe = whisperts.load_audio(audio)
     model = whisperts.load_model("tiny", device="cpu")
@@ -72,7 +78,7 @@ def transcribe_subtitles(audio):
     result = whisperts.transcribe(model, audio_to_transcribe, language="en")
     words = result['segments'][0]['words']
 
-    _create_ass_file(words)
+    _create_ass_file(words, *style_options)
 
 if __name__ == '__main__':
     

@@ -11,13 +11,13 @@ def _audio_complete_callback(url, headers):
         lapsed_time = 0
         print("url: ", url)
         resp = requests.get(url, headers=headers)
-        print("resp: ", resp.content)
         status = ast.literal_eval(resp.content.decode())["data"]["attributes"]["status"]
         print(status)
 
         while(status != 'done'):
-            resp = requests.get(url)
-            status = ast.literal_eval(resp)["data"]["attributes"]["status"]
+            resp = requests.get(url, headers=headers)
+            status = ast.literal_eval(resp.content.decode())["data"]["attributes"]["status"]
+            print("resp: ", resp.content)
             time.sleep(3)
             lapsed_time += 3
             if lapsed_time > 30:
@@ -66,7 +66,7 @@ def generate_tts(text, voice):
     
     # Get audio cdn link from post to shotstack API
     resp = requests.post(req_url, json=audio_data, headers=audio_headers)
-    
+    print("resp: ", resp.status_code)
     if resp.status_code >= 200 and resp.status_code < 300:
         # Print the response content (usually in JSON format)
         audio_id = str(ast.literal_eval(resp.text)["data"]["id"])

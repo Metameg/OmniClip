@@ -24,8 +24,9 @@ from python.shotstacktts import generate_tts
 class AutoEditor():
     def __init__(self, export_folder, video_folder, audio_folder, 
                  overlay_folder, fade_duration, target_duration, 
-                 font_name, font_size, 
-                 quote=None, voice=None, subtitle_ass=True):
+                 font_name, font_size, text_primary_color, text_secondary_color,
+                 text_back_color, isBold, isItalic, isUnderline, text_posX, text_posY,
+                 aspect_ratio, watermark_opacity, quote=None, voice=None, subtitle_ass=True):
         
         self.export_folder = export_folder
         self.fade_duration = fade_duration
@@ -33,13 +34,15 @@ class AutoEditor():
         self.video_folder = video_folder
         self.audio_folder = audio_folder
         self.overlay_folder = overlay_folder
-        self.font_name = 'font_ttfs/' + font_name + '.ttf'
-        self.font_size = font_size
-    
+        self.watermark_opacity = watermark_opacity
         self.quote = quote
         self.voice = voice
         self.subtitle_ass = subtitle_ass
 
+        self.style_options = ['font_ttfs/' + font_name + '.ttf', font_size,
+                                 text_primary_color, text_secondary_color, 
+                                 text_back_color, isBold, isItalic, isUnderline,
+                                 text_posX, text_posY, aspect_ratio]
 
     def _fill_duration_randomly(self, files, folder):
         selected_files = []
@@ -165,12 +168,14 @@ class AutoEditor():
             self.voice = generate_tts(self.quote, 'Joey')
             voice_video = fmpgapi.add_voice_over(transitions_with_audio, self.voice)
             if self.subtitle_ass:
-                transcribe_subtitles(self.voice)
+                
+                
+                transcribe_subtitles(self.voice, self.style_options)
                 ass_file = 'temp/subtitles.ass'
-                text_video = fmpgapi.add_text(voice_video, self.font_name, self.font_size, ass_file=ass_file)
+                text_video = fmpgapi.add_text(voice_video, ass_file=ass_file)
             else:
                 quote_wrapped = self._wrap_text(self.quote, 20)
-                text_video = fmpgapi.add_text(voice_video, self.font_name, self.font_size, quote=quote_wrapped)
+                text_video = fmpgapi.add_text(voice_video, self.style_options[0], self.style_options[1], quote=quote_wrapped)
                 
 
             text_videopath = os.path.join(utilities.get_root_path(), 'temp', text_video)

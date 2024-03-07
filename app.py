@@ -251,18 +251,31 @@ def render():
         
 
     
-
-    quote_val = form_data['quoteVal']
+    outpath = 'output'
+    audio_uploads_dir = 'audio_uploads'
+    fade_duration = float(form_data['fadeoutDuration'])
     target_duration = float(form_data['totalLength'])
+    font_name = form_data['fontName']
+    font_size = int(form_data['fontSize'])
+    text_primary_color = form_data['primaryColor']
+    text_secondary_color = form_data['secondaryColor']
+    text_back_color = form_data['backColor']
+    isBold = form_data['isBold']
+    isItalic = form_data['isItalic']
+    isUnderline = form_data['isUnderline']
+    text_posX = form_data['positionX']
+    text_posY = form_data['positionY']
+    aspect_ratio = form_data['aspectRatio']
+    watermark_opacity = form_data['watermarkOpacity']
+    quote_val = form_data['quoteVal']
     voice = os.path.join('static', 'voices', form_data['voice'] + '.mp3')
     numvideos = int(form_data['numvideos'])
-    font_size = int(form_data['fontSize'])
-    font_name = form_data['fontName']
-    fade_duration = float(form_data['fadeoutDuration'])
     
-    editor = AutoEditor('output', video_uploads_dir, 'audio_uploads', 
+    editor = AutoEditor(outpath, video_uploads_dir, audio_uploads_dir, 
                         watermark_uploads_dir, fade_duration, target_duration, 
-                        'freedom', font_size, 
+                        'freedom', font_size, text_primary_color, text_secondary_color, 
+                        text_back_color, isBold, isItalic, isUnderline, 
+                        text_posX, text_posY, aspect_ratio, watermark_opacity,
                         quote=quote_val, voice=voice, subtitle_ass=True)
     videopaths = generate_videos(editor, numvideos)
 
