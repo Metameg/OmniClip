@@ -52,7 +52,7 @@ class UserForm(FlaskForm):
     submit = SubmitField("Submit")
 
 
-@app.route('/user/add', methods=['GET', 'POST'])
+# @app.route('/user/add', methods=['GET', 'POST'])
 #def add_user():
   #  name = None
   #  form = UserForm()
@@ -70,7 +70,7 @@ class UserForm(FlaskForm):
   #   our_users = Users.query.order_by(Users.date_added)
   #   return render_template("add_user.html", form=form, name=name, our_users=our_users)
 
-@app.route('/update/<int:id>', methods=['GET', 'POST'])
+# @app.route('/update/<int:id>', methods=['GET', 'POST'])
 # def update(id):
 #     form = UserForm()
 #     name_to_update = Users.query.get_or_404(id)
@@ -97,7 +97,7 @@ class UserForm(FlaskForm):
 @app.route('/')
 def index():
     stuff = "This is <strong>Bold</strong>"
-    return render_template("pages/index.html", stuff=stuff)
+    return render_template("pages/home.html", stuff=stuff)
 
 @app.route('/about')
 def about():
@@ -106,11 +106,6 @@ def about():
 
 
 
-
-
-
-
-# ADDED AFFILIATES PAGE
 @app.route('/affiliate-program/dashboard')
 def affiliate_dashboard():
     return render_template("pages/affiliate/affiliate-dashboard.html")
@@ -226,8 +221,7 @@ def render():
     form_data = request.form
     print(len(videos), len(audios), len(watermarks))
     # clippack_category = form_data['clippack']
-    
-    print(audios[0].filename, watermarks[0].filename)
+
     for key, value in form_data.items():
         print(f"{key}: {value}")
 
@@ -258,51 +252,17 @@ def render():
     target_duration = float(form_data['totalLength'])
     voice = os.path.join('static', 'voices', form_data['voice'] + '.mp3')
     numvideos = int(form_data['numvideos'])
-    # fadeout_duration = float(form_data['fade'])
-    font_stroke = 100
-    # font_stroke = form_data['fontStroke']
-    # font_size = int(form_data['fontSize'])
-    font_size = 64
-    # font_style = form_data['fontStyle']
+    font_size = int(form_data['fontSize'])
+    font_name = form_data['fontName']
     fade_duration = float(form_data['fadeoutDuration'])
     
     editor = AutoEditor('output', video_uploads_dir, 'audio_uploads', 
                         watermark_uploads_dir, fade_duration, target_duration, 
-                        'freedom', font_size, font_stroke, 
+                        'freedom', font_size, 
                         quote=quote_val, voice=voice, subtitle_ass=True)
     videopaths = generate_videos(editor, numvideos)
 
     return render_template('partials/video-container.html', videopaths=videopaths)
-    # return "ok test"
-    
-    
-    # elif request.form.get("submitType") == "gptQuote":      
-    #     prompt = request.form.get('prompt')
-    #     print(f"Quote submit pressed. {prompt}")
-    #     threading.Thread(target=simulate_time_consuming_process, args=()).start()
-    
-    #     res = prompt
-        
-    #     return res
-    
-    # else:
-    #     category = request.form.get('category')
-    #     is_same_as_clippack = request.form.get('sameCategoryBln')
-    #     clippackCategory = request.form.get('clippack')
-
-    #     print("category:", category)
-    #     print("bln:", is_same_as_clippack)
-    #     print("clippack:", clippackCategory)
-    #     print(f"category submit pressed. {category}")
-    #     threading.Thread(target=simulate_time_consuming_process, args=()).start()
-    
-    #     if is_same_as_clippack == 'true':
-    #         res = clippackCategory
-    #     else:
-    #         res = category
-        
-    #     return res
-    
 
 # def simulate_time_consuming_process():
 #     global progress_percentage

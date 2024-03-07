@@ -18,6 +18,7 @@ import { configureRenderForm } from './renders/renderFormController.js';
 import { configureQuoteGenerator } from './quoteGenerator/quoteController.js';
 import { configureAffiliate } from './affiliate/affiliateController.js';
 import { configuremediaUploader } from './mediaUploader/mediaUploaderController.js';
+// import { configureVideoStyler } from './videoStyler/videoStylerController.js';
 
 
 $(document).ready(function() {
@@ -26,6 +27,7 @@ $(document).ready(function() {
         configureRenderForm();
         configuremediaUploader();
         configureQuoteGenerator();
+        // configureVideoStyler();
     }  
     if (window.location.pathname.startsWith('/affiliate-program/dashboard')) {
         configureAffiliate();

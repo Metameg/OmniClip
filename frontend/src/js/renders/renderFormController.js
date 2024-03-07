@@ -1,14 +1,12 @@
 import { renderService } from './renderService.js';
 import renderFormDOM from './renderFormUI.js';
-import { quoteDOM } from '../quoteGenerator/quoteUI.js';
-// import { quoteGPTSubmit } from "../quoteGenerator/quoteController.js";
-// import { quoteCategorySubmit } from "../quoteGenerator/quoteController.js";
-// import { setSubmitType } from '../shared/utils.js';
+import videoStylerUI from '../videoStyler/videoStylerUI.js';
+
 
 
 export function configureRenderForm() {
     renderFormDOM.configureDOM();
-    quoteDOM.configureDOM();
+    videoStylerUI.configureDOM();
     const renderForm = document.getElementById('render-form');
 
     renderForm.addEventListener('submit', async function(event) {
