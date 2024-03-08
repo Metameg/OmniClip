@@ -46,8 +46,17 @@
                         </div>
                     </div>
 
-                    <div id="uploaded-videos-container" class="row row-cols-2 row-cols-md-3 g-3 upload-container">
-                        <h3>Your Clips</h3>
+                    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Enable both scrolling & backdrop</button>
+
+                    <div class="offcanvas offcanvas-top" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Your Media</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body text-center mx-auto">
+                        <p> Upload file(s)</p>
+                        <input id="clippack-path" type="file" class="form-control import-path" name="clippackPath" multiple>
+                    </div>
                     </div>
                 </div>
 

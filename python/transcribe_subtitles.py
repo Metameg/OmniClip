@@ -76,7 +76,7 @@ def _create_ass_file(data, font_name, font_size, primary_color,
                      "Italic,Underline,StrikeOut,ScaleX,ScaleY,Spacing,Angle,BorderStyle,Outline,Shadow,Alignment,"
                      "MarginL,MarginR,MarginV,Encoding")
     ass_lines.append(f"Style: Default,{font_name},{font_size},&H{primary},&H00000000,&H{outline},&H{background},"
-                     f"{bold},{italic},{underline},0,100,100,0,0.00,1,2,2,2,{positionX},0,60,1")
+                     f"{bold},{italic},{underline},0,100,100,0,0.00,1,2,2,9,0,0,10,1")
     ass_lines.append("")
     ass_lines.append("[Events]")
     ass_lines.append("Format: Layer,Start,End,Style,Name,MarginL,MarginR,MarginV,Effect,Text")
