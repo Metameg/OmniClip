@@ -1,162 +1,207 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    
-    <div class="header-img-container">
-        <div class="hero-image">
-            <img style="overflow-x: hidden;" src="static/images/waves-background.svg" alt="" height="300">
-        </div>
-        <img class="header-circle-img" src="static/images/circle.svg"  alt="">
-        <div class="hero-logo">
-            <div>
-                <img src="static/images/video-track.svg" width="80px" alt="">
-            </div>
+
+<div class="header-img-container">
+    <div class="hero-image">
+        <img style="overflow-x: hidden;" src="static/images/waves-background.svg" alt="" height="300">
+    </div>
+    <img class="header-circle-img" src="static/images/circle.svg" alt="">
+    <div class="hero-logo">
+        <div>
+            <img src="static/images/video-track.svg" width="80px" alt="">
         </div>
     </div>
+</div>
 
-    <h2 id="instructions-params">Fill out the information below for a fully customized video.</h2>
+<h2 id="instructions-params">Fill out the information below for a fully customized video.</h2>
 
-    <div id="main-container-params">
-        <h3 class="param-header">Import Video Components</h3>
-        <form action="#" method="post" id="render-form" enctype="multipart/form-data">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <section id="imports" class="options-section">
+<div id="main-container-params">
+    <h3 class="param-header">Import Video Components</h3>
+    <form action="#" method="post" id="render-form" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <section id="imports" class="options-section">
 
-                
-                <div class="container">
-                    <div id="clippack-import-container" class="import-container">
-                        <div class="mb-3">
-                            <label for="clippack-path" class="form-label">Import Clip File(s)</label>
-                            <input id="clippack-path" type="file" class="form-control import-path" name="clippackPath" multiple>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                            <div class="invalid-feedback">
-                                Make sure the folder includes at least one video file (.mp4, .mov, etc.)
-                            </div>
-
-                            <div class="mt-3"> 
-                                <p>--or--</p>
-                                <input type="checkbox" id="clippack-checkbox" class="form-check">
-                                <input type="hidden" id="clippack-checkbox-value" value="false">
-                                <select id="clippack" class="form-select" disabled>
-                                    {% include 'partials/quote-categories.html'%}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Enable both scrolling & backdrop</button>
-
-                    <div class="offcanvas offcanvas-top" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
-                    <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Your Media</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body text-center mx-auto">
-                        <p> Upload file(s)</p>
-                        <input id="clippack-path" type="file" class="form-control import-path" name="clippackPath" multiple>
-                    </div>
-                    </div>
-                </div>
-
-
-                <div class="container">
-                    <div id="audio-container" class="import-container">
-                        <div class="mb-3">
-                            <label for="audio-path" class="form-label">Import Audio File(s)</label>
-                            <input id="audio-path" type="file" class="form-control import-path" name="audioPath" multiple>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                            <div class="invalid-feedback">
-                                Make sure the folder includes at least one audio file (.mp3, .wav, etc.)
-                            </div>
-                        </div>
-                    </div>
-                    <div id="uploaded-audios-container" class="row row-cols-2 row-cols-md-3 g-3 upload-container">
-                        <h3>Your Audios</h3>
-                    </div>
-                </div>
-
-
-               
-
-                <div id="watermark-container" class="import-container">
+            <div class="container">
+                <div id="clippack-import-container" class="import-container">
                     <div class="mb-3">
-                        <label for="watermark-path" class="form-label">Import Watermark Image File(s)</label>
-                        <input id="watermark-path" type="file" class="form-control import-path" name="watermarkPath" multiple>
+                        <label for="clippack-path" class="form-label">Import Clip File(s)</label>
+                        <input id="clippack-path" type="file" class="form-control import-path" name="clippackPath" multiple>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
                         <div class="invalid-feedback">
-                            Make sure the folder includes at least one image file (.png, .jpg, etc.)
+                            Make sure the folder includes at least one video file (.mp4, .mov, etc.)
+                        </div>
+
+                        <div class="mt-3">
+                            <p>--or--</p>
+                            <input type="checkbox" id="clippack-checkbox" class="form-check">
+                            <input type="hidden" id="clippack-checkbox-value" value="false">
+                            <select id="clippack" class="form-select" disabled>
+                                {% include 'partials/quote-categories.html'%}
+                            </select>
                         </div>
                     </div>
                 </div>
-                <div id="uploaded-watermarks-container" class="row row-cols-2 row-cols-md-3 g-3 upload-container">
-                    <h3>Your Watermarks</h3>
-                </div>
-            </section>
 
-            <section id="video-options" class="options-section">
+                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-media-upload" aria-controls="offcanvas-media-upload">Enable both scrolling & backdrop</button>
 
+                <div class="offcanvas offcanvas-top " data-bs-backdrop="static"  tabindex="-1" id="offcanvas-media-upload" aria-labelledby="offcanvas-media-uploadLabel">
+                <button id="offcanvas-upload-close" type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 
 
-                <h3 class="param-header mt-3">Video Options</h3>
-                <div id="sliders">
-                    <!-- <label for="num-clips-range" class="form-label">Number of Clips to Use in Video</label>
-                    <div id="num-clips-container" class="slider-container">
-                        <input id="num-clips-range" class="form-range"  type="range" min="1" max="5" value="5">
-                        <input type="number" id="num-clips-val" class="form-control ml-2" name="numclips" value="5" style="width: 70px;">
-                    </div>
-                    <label for="clip-length-range" class="form-label">Length of Each Clip</label>
-                    <div id="clip-length-container" class="slider-container">
-                        <input id="clip-length-range" class="form-range"  type="range" min="0.1" max="100" step="0.01" value="3.5">
-                        <input type="number" id="clip-length-val" class="form-control ml-2" name="clipLength" min="0.1" max="100" step="0.01"  value="3.5" style="width: 70px;">
-                        <p style="margin-left: 10px;">seconds</p>
-                    </div> -->
-                    <div id="total-length-container" class="slider-container mt-3">
-                        <label for="total-length-val" class="form-label total-length-label">Target Duration</label>
-                        <input type="number" id="total-length-val" class="form-control ml-2 range-inputbox" name="totalLength" step="1.0" min="1.0" max="600.0" value="15">
-                        <label class="form-label total-length-label">seconds</label>
-                    </div>
-                    <label for="num-videos-range" class="form-label">Total Videos to Generate</label>
-                    <div id="num-videos-container" class="slider-container">
-                        <input id="num-videos-range" class="form-range"  type="range" min="1" max="5" value="1">
-                        <input type="number" id="num-videos-val" class="form-control ml-2 range-inputbox" name="numvideos" min="1" max="5" value="1">
-                    </div>
-                </div>
 
-                <div id="fine-tuning" class="mb-3">
-                    <h3 class="param-header">Fine-Tuning (Optional)</h3>
-                    {% include 'partials/fine-tuning-box.html' %}
-                </div>
-            </section>
 
-            <section id="submit-section" class="options-section">
-                <div id="render-carousel" class="carousel slide">
-                    <div id="video-content" class="carousel-inner">
+                    <ul class="nav nav-tabs" role="tablist">
+                      <li role="presentation">
+                        <a data-mdb-tab-init id="video-tab" class="nav-link active" href="#" role="tab" aria-controls="video-uploads" aria-selected="true" >Video Uploads</a>
+                      </li>
+                      <li role="presentation">
+                        <a data-mdb-tab-init id="audio-tab" class="nav-link" href="#" role="tab" aria-controls="audio-uploads" aria-selected="false">Audio Uploads</a>
+                      </li>
+                      <li role="presentation">
+                        <a data-mdb-tab-init id="watermark-tab" class="nav-link" href="#" role="tab" aria-controls="watermark-uploads" aria-selected="false">Watermark Uploads</a>
+                      </li>
+                    </ul>
+
+                    <div class="offcanvas-header ">
+                        <h5 class="offcanvas-title" id="offcanvas-media-uploadLabel">Your Media</h5>
 
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#render-carousel" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden"></span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#render-carousel" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+
+                    <div id="video-uploads" class="tab-pane fade show active" role="tabpanel" aria-labelledby="video-tab">
+                        VIDEO UPLOADS
+                    </div>
+
+                    <div id="audio-uploads" class="tab-pane fade" role="tabpanel" aria-labelledby="audio-tab">
+                        AUDIO UPLOADS
+                    </div>
+
+                    <div id="watermark-uploads" class="tab-pane fade" role="tabpanel" aria-labelledby="watermark-tab">
+                        WATERMARK UPLOADS
+                    </div>
+
+                    <script>
+                        $(document).ready(function() {
+                             // Click event handler for tab links
+                             $(".nav-link").on('click', function() {
+                            // Remove 'active' class from all tab links
+                            $(".nav-link").removeClass('active');
+
+                            // Add 'active' class to the clicked tab link
+                            $(this).addClass('active');
+
+                            // Optionally, show the corresponding content tab
+                            var targetTabId = $(this).attr('aria-controls');
+                            $(".tab-pane").removeClass('show active');
+                            $("#" + targetTabId).addClass('show active');
+                        });
+                        });
+
+                  </script>
+
+
+
+
+
+
+
+                    <div class="offcanvas-body text-center mx-auto offcanvas-upload-centered" >
+                        <p><strong>Drop files to upload</strong><br>or</p>
+                        <label for="hidden-file-input" class="custom-file-input">Select Files</label>
+                        <input id="hidden-file-input" type="file" class="form-control" name="clippackPath" multiple>
+                    </div>
                 </div>
-                
-                <input type="submit" id="create-button-params" class="btn btn-primary" value="Create">
-            </section>
+            </div>
 
-        </form>
-    </div>
+            <div class="container">
+                <div id="audio-container" class="import-container">
+                    <div class="mb-3">
+                        <label for="audio-path" class="form-label">Import Audio File(s)</label>
+                        <input id="audio-path" type="file" class="form-control import-path" name="audioPath" multiple>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Make sure the folder includes at least one audio file (.mp3, .wav, etc.)
+                        </div>
+                    </div>
+                </div>
+                <div id="uploaded-audios-container" class="row row-cols-2 row-cols-md-3 g-3 upload-container">
+                    <h3>Your Audios</h3>
+                </div>
+            </div>
 
+            <div id="watermark-container" class="import-container">
+                <div class="mb-3">
+                    <label for="watermark-path" class="form-label">Import Watermark Image File(s)</label>
+                    <input id="watermark-path" type="file" class="form-control import-path" name="watermarkPath" multiple>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Make sure the folder includes at least one image file (.png, .jpg, etc.)
+                    </div>
+                </div>
+            </div>
+            <div id="uploaded-watermarks-container" class="row row-cols-2 row-cols-md-3 g-3 upload-container">
+                <h3>Your Watermarks</h3>
+            </div>
+        </section>
 
+        <section id="video-options" class="options-section">
+            <h3 class="param-header mt-3">Video Options</h3>
+            <div id="sliders">
+                <!-- <label for="num-clips-range" class="form-label">Number of Clips to Use in Video</label>
+                <div id="num-clips-container" class="slider-container">
+                    <input id="num-clips-range" class="form-range" type="range" min="1" max="5" value="5">
+                    <input type="number" id="num-clips-val" class="form-control ml-2" name="numclips" value="5" style="width: 70px;">
+                </div>
+                <label for="clip-length-range" class="form-label">Length of Each Clip</label>
+                <div id="clip-length-container" class="slider-container">
+                    <input id="clip-length-range" class="form-range" type="range" min="0.1" max="100" step="0.01" value="3.5">
+                    <input type="number" id="clip-length-val" class="form-control ml-2" name="clipLength" min="0.1" max="100" step="0.01" value="3.5" style="width: 70px;">
+                    <p style="margin-left: 10px;">seconds</p>
+                </div> -->
+                <div id="total-length-container" class="slider-container mt-3">
+                    <label for="total-length-val" class="form-label total-length-label">Target Duration</label>
+                    <input type="number" id="total-length-val" class="form-control ml-2 range-inputbox" name="totalLength" step="1.0" min="1.0" max="600.0" value="15">
+                    <label class="form-label total-length-label">seconds</label>
+                </div>
+                <label for="num-videos-range" class="form-label">Total Videos to Generate</label>
+                <div id="num-videos-container" class="slider-container">
+                    <input id="num-videos-range" class="form-range" type="range" min="1" max="5" value="1">
+                    <input type="number" id="num-videos-val" class="form-control ml-2 range-inputbox" name="numvideos" min="1" max="5" value="1">
+                </div>
+            </div>
 
+            <div id="fine-tuning" class="mb-3">
+                <h3 class="param-header">Fine-Tuning (Optional)</h3>
+                {% include 'partials/fine-tuning-box.html' %}
+            </div>
+        </section>
+
+        <section id="submit-section" class="options-section">
+            <div id="render-carousel" class="carousel slide">
+                <div id="video-content" class="carousel-inner">
+
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#render-carousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#render-carousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+
+            <input type="submit" id="create-button-params" class="btn btn-primary" value="Create">
+        </section>
+
+    </form>
+</div>
 
 {% endblock %}
 
