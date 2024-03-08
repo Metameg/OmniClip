@@ -273,20 +273,22 @@ def render():
     isBold = form_data['isBold']
     isItalic = form_data['isItalic']
     isUnderline = form_data['isUnderline']
-    text_posX = form_data['positionX']
-    text_posY = form_data['positionY']
-    aspect_ratio = form_data['aspectRatio']
+    # text_posX = form_data['positionX']
+    # text_posY = form_data['positionY']
+    # aspect_ratio = form_data['aspectRatio']
+    alignment = int(form_data['subtitleAlignment'])
     watermark_opacity = form_data['watermarkOpacity']
     quote_val = form_data['quoteVal']
     voice = os.path.join('static', 'voices', form_data['voice'] + '.mp3')
     numvideos = int(form_data['numvideos'])
-    
+
     editor = AutoEditor(outpath, video_uploads_dir, audio_uploads_dir, 
                         watermark_uploads_dir, fade_duration, target_duration, 
                         'freedom', font_size, text_primary_color, text_outline_color, 
                         text_back_color, isBold, isItalic, isUnderline, 
-                        text_posX, text_posY, aspect_ratio, watermark_opacity,
+                        alignment, watermark_opacity,
                         quote=quote_val, voice=voice, subtitle_ass=True)
+    
     videopaths = generate_videos(editor, numvideos)
 
     return render_template('partials/video-container.html', videopaths=videopaths)

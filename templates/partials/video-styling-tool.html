@@ -8,6 +8,20 @@
                 <option value="9:16" selected>9:16</option>
             </select>
         </div>
+
+        <label for="subtitle-alignment" class="form-label">Subtitle Alignment</label>
+        <select id="subtitle-alignment" class="form-select font-dropdown" name="subtitleAlignment" value="5" aria-label="Subtitle Alignment">
+            <option value="1">Bottom-Left</option>
+            <option value="2">Bottom-Center</option>
+            <option value="3">Bottom-Right</option>
+            <option value="4">Middle-Left</option>
+            <option value="5" selected>Middle-Center</option>
+            <option value="6">Middle-Right</option>
+            <option value="7">Top-Left</option>
+            <option value="8">Top-Center</option>
+            <option value="9">Top-Right</option>
+        </select>
+
         <div>
             <label for="font-name" class="form-label">Font Name</label>
             <select id="font-name" class="form-select font-dropdown" name="fontName" value="arial" aria-label="Font Name">
@@ -110,15 +124,16 @@
             
         </script>
 
-        <div class="mb-3">
+        <!-- <div class="mb-3">
             <label for="position-x" class="form-label">position X</label>
             <input type="range" id="position-x" class="form-range" name="positionX" min="-380.0" max="400.0" step="1" value="1" aria-label="position X">
         </div>
         <div class="mb-3">
             <label for="position-y" class="form-label">position Y</label>
             <input type="range" id="position-y" class="form-range" name="positionY" min="-500.0" max="500.0" step="1" value="1" aria-label="position Y">
-        </div>
+        </div> -->
 
+        
 
         <div class="mb-3">
             <label for="watermark-opacity-range" class="form-label mt-3">Watermark Opacity</label>

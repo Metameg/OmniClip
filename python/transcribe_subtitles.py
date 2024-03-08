@@ -43,12 +43,13 @@ def _seconds_to_ass_time(seconds):
 
 def _create_ass_file(data, font_name, font_size, primary_color, 
                      outline_color, back_color, isBold, isItalic, 
-                     isUnderline, positionX, positionY, aspect_ratio, size='576:244'):
+                     isUnderline, alignment, size='576:244'):
     '''
         Writes the data to the .ass file using the fields below. (SOME FIELDS GENERATED via ChatGPT!!!)
     '''
     print(isBold, isItalic, isUnderline)
     print(primary_color, outline_color, back_color)
+    print("alignment: ", type(alignment))
     # Convert bold, italic, underline values to ass specs 
     bold = -1 if isBold == 'true' else 0
     italic = -1 if isItalic == 'true' else 0
@@ -59,11 +60,12 @@ def _create_ass_file(data, font_name, font_size, primary_color,
     outline = _rgb2bgr(outline_color) 
     background = _rgb2bgr(back_color) 
 
-
-    height = _characters_after_x(size, ':')
-    print(height)
-    marginv = int(height) // 2 if height else 0
-    print("marginv: ", marginv)
+    marginL = 10 if alignment == 1 or alignment == 4 or alignment == 7 else 0
+    marginR = 10 if alignment == 3 or alignment == 6 or alignment == 9 else 0
+    # height = _characters_after_x(size, ':')
+    # print(height)
+    # marginv = int(height) // 2 if height else 0
+    # print("marginv: ", marginv)
 
     ass_lines = []
     ass_lines.append("[Script Info]")
@@ -76,7 +78,7 @@ def _create_ass_file(data, font_name, font_size, primary_color,
                      "Italic,Underline,StrikeOut,ScaleX,ScaleY,Spacing,Angle,BorderStyle,Outline,Shadow,Alignment,"
                      "MarginL,MarginR,MarginV,Encoding")
     ass_lines.append(f"Style: Default,{font_name},{font_size},&H{primary},&H00000000,&H{outline},&H{background},"
-                     f"{bold},{italic},{underline},0,100,100,0,0.00,1,2,2,9,0,0,10,1")
+                     f"{bold},{italic},{underline},0,100,100,0,0.00,1,2,2,{alignment},{marginL},{marginR},10,1")
     ass_lines.append("")
     ass_lines.append("[Events]")
     ass_lines.append("Format: Layer,Start,End,Style,Name,MarginL,MarginR,MarginV,Effect,Text")
