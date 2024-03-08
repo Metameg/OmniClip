@@ -25,7 +25,7 @@ class AutoEditor():
     def __init__(self, export_folder, video_folder, audio_folder, 
                  overlay_folder, fade_duration, target_duration, 
                  font_name, font_size, text_primary_color, text_outline_color,
-                 text_back_color, isBold, isItalic, isUnderline, alignment,
+                 isBold, isItalic, isUnderline, alignment,
                  watermark_opacity, quote=None, voice=None, subtitle_ass=True):
         
         self.export_folder = export_folder
@@ -41,7 +41,7 @@ class AutoEditor():
 
         self.style_options = ['font_ttfs/' + font_name + '.ttf', font_size,
                                  text_primary_color, text_outline_color, 
-                                 text_back_color, isBold, isItalic, isUnderline,
+                                 isBold, isItalic, isUnderline,
                                  alignment]
 
     def _fill_duration_randomly(self, files, folder):

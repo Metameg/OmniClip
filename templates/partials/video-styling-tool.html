@@ -1,28 +1,25 @@
-<div id="mock-video"><span id="sample-text" class="p-3">Sample Text</span></div>
+<div id="mock-video">
+    <span id="sample-text" class="p-3">Sample</span>
+</div>
 <div class="d-flex justify-content-center">
     <div class="mx-4">
+        
         <div class="mb-3">
-            <label for="aspect-ratio" class="form-label">Aspect Ratio</label>
-            <select id="aspect-ratio" class="form-select" name="aspectRatio" value="9:16" aria-label="Aspect Ratio">
-                <option value="16:9">16:9</option>
-                <option value="9:16" selected>9:16</option>
+            <label for="subtitle-alignment" class="form-label">Subtitle Alignment</label>
+            <select id="subtitle-alignment" class="form-select font-dropdown" name="subtitleAlignment" value="5" aria-label="Subtitle Alignment">
+                <option value="1">Bottom-Left</option>
+                <option value="2">Bottom-Center</option>
+                <option value="3">Bottom-Right</option>
+                <option value="4">Middle-Left</option>
+                <option value="5" selected>Middle-Center</option>
+                <option value="6">Middle-Right</option>
+                <option value="7">Top-Left</option>
+                <option value="8">Top-Center</option>
+                <option value="9">Top-Right</option>
             </select>
         </div>
 
-        <label for="subtitle-alignment" class="form-label">Subtitle Alignment</label>
-        <select id="subtitle-alignment" class="form-select font-dropdown" name="subtitleAlignment" value="5" aria-label="Subtitle Alignment">
-            <option value="1">Bottom-Left</option>
-            <option value="2">Bottom-Center</option>
-            <option value="3">Bottom-Right</option>
-            <option value="4">Middle-Left</option>
-            <option value="5" selected>Middle-Center</option>
-            <option value="6">Middle-Right</option>
-            <option value="7">Top-Left</option>
-            <option value="8">Top-Center</option>
-            <option value="9">Top-Right</option>
-        </select>
-
-        <div>
+        <div class="mb-3">
             <label for="font-name" class="form-label">Font Name</label>
             <select id="font-name" class="form-select font-dropdown" name="fontName" value="arial" aria-label="Font Name">
                 <option value="Arial" selected>Arial</option>
@@ -60,17 +57,17 @@
              </select>
         </div>
 
-        <div class="mb-3">
+        <div class="m-3">
             <input id="bold-value" type="hidden" name="isBold" value="false">
             <label for="bold" class="form-check-label">Bold</label>
             <input type="checkbox" id="bold" class="form-check-input"  aria-label="Bold">
         </div>
-        <div class="mb-3">
+        <div class="m-3">
             <input id="italic-value" type="hidden" name="isItalic" value="false">
             <label for="italic" class="form-check-label">Italic</label>
             <input type="checkbox" id="italic" class="form-check-input" aria-label="Italic">
         </div>
-        <div class="mb-3">
+        <div class="m-3">
             <input id="underline-value" type="hidden" name="isUnderline" value="false">
             <label for="underline" class="form-check-label">Underline</label>
             <input type="checkbox" id="underline" class="form-check-input" aria-label="Underline">
@@ -78,6 +75,14 @@
     </div>
 
     <div class="mx-4">
+        <div class="mb-3">
+            <label for="aspect-ratio" class="form-label">Aspect Ratio</label>
+            <select id="aspect-ratio" class="form-select" name="aspectRatio" value="9:16" aria-label="Aspect Ratio">
+                <option value="16:9">16:9</option>
+                <option value="9:16" selected>9:16</option>
+            </select>
+        </div>
+
         <div class="mb-3">
             <label for="primary-color" class="form-label">Font Color</label>
             <div>
@@ -87,19 +92,19 @@
         <div class="mb-3">
             <label for="outline-color" class="form-label">Outline Color</label>
             <div>
-                <input type="text" id="outline-color" class="form-control" name="outlineColor" value="#FFFFFF" aria-label="Secondary Color" data-coloris disabled>
+                <input type="text" id="outline-color" class="form-control" name="outlineColor" value="#000000" aria-label="Secondary Color" data-coloris disabled>
             </div>
             <label for="outline-transparent-bln" class="form-check-label mt-2">Transparent</label>
-            <input type="checkbox" id="outline-transparent-bln" class="form-check-input" aria-label="Transparent Outline" checked>
+            <input type="checkbox" id="outline-transparent-bln" class="form-check-input mt-2" aria-label="Transparent Outline" checked>
         </div>
-        <div class="mb-3">
+        <!-- <div class="mb-3">
             <label for="back-color" class="form-label">Background Color</label>
             <div>
                 <input type="text" id="back-color" class="form-control" name="backColor" value="#FFFFFF" aria-label="Background Color" data-coloris disabled>
             </div>
             <label for="background-transparent-bln" class="form-check-label mt-2">Transparent</label>
             <input type="checkbox" id="background-transparent-bln" class="form-check-input" aria-label="Transparent Background" checked>
-        </div>
+        </div> -->
 
         <script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
         <script>
@@ -115,12 +120,12 @@
                     alpha: false
                 });
             });
-            document.getElementById('back-color').addEventListener('click', e => {
-                Coloris({
-                    themeMode: 'dark',
-                    alpha: false
-                });
-            });
+            // document.getElementById('back-color').addEventListener('click', e => {
+            //     Coloris({
+            //         themeMode: 'dark',
+            //         alpha: false
+            //     });
+            // });
             
         </script>
 

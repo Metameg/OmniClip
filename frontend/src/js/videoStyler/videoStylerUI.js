@@ -31,13 +31,14 @@ const videoStylerUI = (function () {
         var isUnderline = inputs[4].checked;
         var primaryColor = inputs[5].value;
         
-        var isOutlineTransparent = inputs[8].checked;
-        var isBackTransparent = inputs[9].checked;
+        var isOutlineTransparent = inputs[7].checked;
+        // var isBackTransparent = inputs[9].checked;
         var outlineColor = isOutlineTransparent ? '#00000000' : inputs[6].value;
-        var backColor = isBackTransparent ? '#00000000' : inputs[7].value;
+        var alignment = inputs[8].value;
+        var aspectRatio = inputs[9].value;
+        var mockVideoEle = inputs[10];
 
-        // Get Styles from alignment selected
-        var alignment = inputs[10].value;
+
         // Remove existing left, right, top, or bottom properties
         sampleText.style.removeProperty('left');
         sampleText.style.removeProperty('right');
@@ -52,23 +53,17 @@ const videoStylerUI = (function () {
             console.log(sampleText.style[property], ': ', styles[property]);
         });
 
-        // var positionX = inputs[10].value; 
-        // var positionY = inputs[11].value; 
-        var aspectRatio = inputs[11].value;
-        var mockVideoEle = inputs[12];
+        
 
-        sampleText.textContent = 'Sample Text';
+        sampleText.textContent = 'Sample';
         sampleText.style.fontFamily = fontName;
         sampleText.style.fontSize = fontSize + 'px';
         sampleText.style.fontWeight = isBold ? 'bold' : 'normal';
         sampleText.style.fontStyle = isItalic ? 'italic' : 'normal';
         sampleText.style.textDecoration = isUnderline ? 'underline' : 'none';
         sampleText.style.color = primaryColor;
-        sampleText.style.backgroundColor = backColor;
-        sampleText.style.boxShadow = '0 0 0 5px ' + outlineColor + ' inset';
-        // sampleText.style.left = 
-        // sampleText.style.marginLeft = positionX + 'px';
-        // sampleText.style.marginBottom = positionY + 'px';
+        sampleText.style.textShadow = `-1px -1px 0 ${outlineColor}, 1px -1px 0 ${outlineColor}, -1px 1px 0 ${outlineColor}, 1px 1px 0 ${outlineColor} `;
+        
         mockVideoEle.style.width =  aspectRatio === "16:9" ? "406px" : "230px";
         mockVideoEle.style.height = aspectRatio === "9:16" ? "406px" : "230px";
     }
@@ -85,11 +80,9 @@ const videoStylerUI = (function () {
             const underlineBlnHidden = document.getElementById('underline-value');
             const primaryColorInput = document.getElementById("primary-color");
             const outlineColorInput = document.getElementById("outline-color");
-            const backColorInput = document.getElementById("back-color");
+            // const backColorInput = document.getElementById("back-color");
             const outlineTransparentBln = document.getElementById('outline-transparent-bln');
-            const backTransparentBln = document.getElementById('background-transparent-bln');
-            // const positionXInput = document.getElementById("position-x"); // Corrected ID
-            // const positionYInput = document.getElementById("position-y"); // Corrected ID
+            // const backTransparentBln = document.getElementById('background-transparent-bln');
             const alignment = document.getElementById('subtitle-alignment');
             const aspectRatioSelect = document.getElementById("aspect-ratio");
             const mockVideo = document.getElementById("mock-video");
@@ -97,15 +90,14 @@ const videoStylerUI = (function () {
             // const inputs = [fontNameSelect, fontSizeSelect, boldCheckbox, italicCheckbox, underlineCheckbox, positionXInput, positionYInput, aspectRatioSelect, mockVideo];
             const inputs = [fontNameSelect, fontSizeSelect, boldCheckbox, 
                             italicCheckbox, underlineCheckbox, primaryColorInput,
-                            outlineColorInput, backColorInput, 
-                            outlineTransparentBln, backTransparentBln, alignment,
+                            outlineColorInput, outlineTransparentBln, alignment,
                             aspectRatioSelect, mockVideo];
 
             updateHiddenBln(boldBlnHidden, boldCheckbox);
             updateHiddenBln(italicBlnHidden, italicCheckbox);
             updateHiddenBln(underlineBlnHidden, underlineCheckbox);
             notEnableFromCheckbox(outlineTransparentBln, outlineColorInput);
-            notEnableFromCheckbox(backTransparentBln, backColorInput);
+            // notEnableFromCheckbox(backTransparentBln, backColorInput);
             updateVideoStylerListener(inputs, sampleText);
         }
     }
