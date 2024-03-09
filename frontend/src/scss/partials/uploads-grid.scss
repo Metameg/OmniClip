@@ -4,33 +4,18 @@
 // }
 
 .uploads-grid {
-    min-width: 400px;
+    width: 75%;
     border: 2px solid $section-divider-color;
     padding: 8px;
     background: $background-gradient;
+    margin: 0 auto;
 
-    .media-row {
+    .upload-group {
         background-color: $background-color-secondary;
-        margin: 12px;
-        // border-bottom: 2px solid $section-divider-color;
+        margin-bottom: 15px;
     }
 
-    .media-col {
-        // border-left: 1px solid $section-divider-color;
-        // border-right: 1px solid $section-divider-color;
-        padding: 20px;
+    .media-trash-btn {
+        margin-left: 12px;
     }
 }
-
-
-
-
-// .media-item {
-//     margin-bottom: 10px;
-// }
-
-// .media-item img {
-//     max-width: 100%;
-//     height: auto;
-//     border-radius: 4px;
-// }
