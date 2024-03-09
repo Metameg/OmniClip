@@ -22,7 +22,7 @@
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <section id="imports" class="options-section">
 
-            <div class="container">
+            <!-- <div class="container">
                 <div id="clippack-import-container" class="import-container">
                     <div class="mb-3">
                         <label for="clippack-path" class="form-label">Import Clip File(s)</label>
@@ -43,12 +43,13 @@
                             </select>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-media-upload" aria-controls="offcanvas-media-upload">Enable both scrolling & backdrop</button>
+                <button class="btn btn-outline-primary upload-offcanvas-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-media-upload" aria-controls="offcanvas-media-upload">
+                    Upload Media<i class='bx bx-plus-circle' style="color: #0500ff"></i></button>
 
                 <div class="offcanvas offcanvas-top " data-bs-backdrop="static"  tabindex="-1" id="offcanvas-media-upload" aria-labelledby="offcanvas-media-uploadLabel">
-                <button id="offcanvas-upload-close" type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    <button id="offcanvas-upload-close" type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 
 
 
@@ -113,9 +114,11 @@
                         <input id="hidden-file-input" type="file" class="form-control" name="clippackPath" multiple>
                     </div>
                 </div>
-            </div>
 
-            <div class="container">
+                {% include 'partials/uploads-grid.html' %}
+            <!-- </div> -->
+
+            <!-- <div class="container">
                 <div id="audio-container" class="import-container">
                     <div class="mb-3">
                         <label for="audio-path" class="form-label">Import Audio File(s)</label>
@@ -147,7 +150,7 @@
             </div>
             <div id="uploaded-watermarks-container" class="row row-cols-2 row-cols-md-3 g-3 upload-container">
                 <h3>Your Watermarks</h3>
-            </div>
+            </div> -->
         </section>
 
         <section id="video-options" class="options-section">

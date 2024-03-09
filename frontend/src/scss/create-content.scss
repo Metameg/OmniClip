@@ -67,9 +67,8 @@
 
 #imports {
     border-top: solid 2px $section-divider-color;
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* flex-wrap: wrap; */
+    display: flex;
+    flex-direction: column;
 }
 
 .import-container {
@@ -205,9 +204,16 @@
     justify-content: center;
 }
 
-/* Custom CSS for the offcanvas */
+.upload-offcanvas-toggle {
+    align-self: center;
+    width: 140px;
+    margin: 20px;
+    color: $font-color-primary;
+}
+
+
 #offcanvas-media-upload {
-    background-color: #ffffff; /* Light gray background */
+    background-color: #ffffff; 
     margin-top: 9%;
     width: 90%;
     height: 70%;
@@ -216,8 +222,8 @@
 
 .offcanvas-upload-centered {
     display: flex;
-    justify-content: center; /* Horizontal centering */
-    align-items: center; /* Vertical centering */
+    justify-content: center; 
+    align-items: center; 
     flex-direction: column;
     margin-top: -15%;
 }

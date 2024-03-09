@@ -1,0 +1,36 @@
+@import "../_variables.scss";
+// h1 {
+//     text-align: center;
+// }
+
+.uploads-grid {
+    min-width: 400px;
+    border: 2px solid $section-divider-color;
+    padding: 8px;
+    background: $background-gradient;
+
+    .media-row {
+        background-color: $background-color-secondary;
+        margin: 12px;
+        // border-bottom: 2px solid $section-divider-color;
+    }
+
+    .media-col {
+        // border-left: 1px solid $section-divider-color;
+        // border-right: 1px solid $section-divider-color;
+        padding: 20px;
+    }
+}
+
+
+
+
+// .media-item {
+//     margin-bottom: 10px;
+// }
+
+// .media-item img {
+//     max-width: 100%;
+//     height: auto;
+//     border-radius: 4px;
+// }

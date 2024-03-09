@@ -9,6 +9,7 @@ import '../scss/index.scss';
 import '../scss/login.scss';
 import '../scss/pricing.scss';
 import '../scss/profile.scss';
+import '../scss/partials/uploads-grid.scss';
 import '../scss/affiliate/affiliate-dashboard.scss';
 import '../scss/affiliate/affiliate-signup.scss';
 import '../scss/affiliate/affiliate-about.scss';
@@ -18,7 +19,7 @@ import '../scss/affiliate/affiliate-about.scss';
 import { configureRenderForm } from './renders/renderFormController.js';
 import { configureQuoteGenerator } from './quoteGenerator/quoteController.js';
 import { configureAffiliate } from './affiliate/affiliateController.js';
-import { configuremediaUploader } from './mediaUploader/mediaUploaderController.js';
+// import { configuremediaUploader } from './mediaUploader/mediaUploaderController.js';
 
 
 
@@ -26,7 +27,7 @@ $(document).ready(function() {
 
     if (window.location.pathname.startsWith('/create-content')) {
         configureRenderForm();
-        configuremediaUploader();
+        // configuremediaUploader();
         configureQuoteGenerator();
         // configureVideoStyler();
     }  

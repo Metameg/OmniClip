@@ -103,12 +103,12 @@ const renderFormDOM = (function () {
     // Public API
     return {
         configureDOM: function() {
-            const clippackPath = document.getElementById('clippack-path');
-            const manualClippackBln = document.getElementById('clippack-checkbox');
-            const manualClippackBlnHidden = document.getElementById('clippack-checkbox-value');
-            const clippack = document.getElementById('clippack');
-            const audioPath = document.getElementById('audio-path');
-            const watermarkPath = document.getElementById('watermark-path');
+            // const clippackPath = document.getElementById('clippack-path');
+            // const manualClippackBln = document.getElementById('clippack-checkbox');
+            // const manualClippackBlnHidden = document.getElementById('clippack-checkbox-value');
+            // const clippack = document.getElementById('clippack');
+            // const audioPath = document.getElementById('audio-path');
+            // const watermarkPath = document.getElementById('watermark-path');
             const totalLength = document.getElementById('total-length-val');
             const numvideos = document.getElementById('num-videos-val');
             const numvideosRange = document.getElementById('num-videos-range');
@@ -134,18 +134,18 @@ const renderFormDOM = (function () {
             const voiceCloseBtn = document.getElementById('voice-btn-close');
             const voiceSelectBtn = document.getElementById('voice-select-btn');
             const voiceCollapse = document.getElementById('collapse-voices');
-            // const boldBln = document.getElementById('bold');
-            // const italicBln = document.getElementById('italic');
-            // const underlineBln = document.getElementById('underline');
-            // const boldBlnHidden = document.getElementById('bold-value');
-            // const italicBlnHidden = document.getElementById('italic-value');
-            // const underlineBlnHidden = document.getElementById('underline-value');
+            const boldBln = document.getElementById('bold');
+            const italicBln = document.getElementById('italic');
+            const underlineBln = document.getElementById('underline');
+            const boldBlnHidden = document.getElementById('bold-value');
+            const italicBlnHidden = document.getElementById('italic-value');
+            const underlineBlnHidden = document.getElementById('underline-value');
 
-            enableFromCheckbox(manualClippackBln, clippack);
-            notEnableFromCheckbox(manualClippackBln, clippackPath);
-            Validators.imports.validateVideo(clippackPath);
-            Validators.imports.validateAudio(audioPath);
-            Validators.imports.validateImage(watermarkPath);
+            // enableFromCheckbox(manualClippackBln, clippack);
+            // notEnableFromCheckbox(manualClippackBln, clippackPath);
+            // Validators.imports.validateVideo(clippackPath);
+            // Validators.imports.validateAudio(audioPath);
+            // Validators.imports.validateImage(watermarkPath);
             Validators.inputField.validateNumber(totalLength);
             Validators.slides.validateRange(numvideosRange, numvideos, false);
             Validators.slides.validateRange(watermarkOpacityRange, watermarkOpacity, false);
@@ -153,14 +153,14 @@ const renderFormDOM = (function () {
             notEnableFromCheckbox(sameCategoryBln, quoteCategory);
             voiceSelect(voice, voiceRadios);
             Validators.voice.validate(voice);
-            syncCatgorySelections(selectedCategorySpan, clippack);
+            // syncCatgorySelections(selectedCategorySpan, clippack);
             showDivFromRadio(quoteRadios, quoteRadioDivs);
             updateHiddenInput(quoteCategoryHidden, quoteCategory);
             updateHiddenBln(sameCategoryBlnHidden, sameCategoryBln);
-            updateHiddenBln(manualClippackBlnHidden, manualClippackBln);
-            // updateHiddenBln(boldBlnHidden, boldBln);
-            // updateHiddenBln(italicBlnHidden, italicBln);
-            // updateHiddenBln(underlineBlnHidden, underlineBln);
+            // updateHiddenBln(manualClippackBlnHidden, manualClippackBln);
+            updateHiddenBln(boldBlnHidden, boldBln);
+            updateHiddenBln(italicBlnHidden, italicBln);
+            updateHiddenBln(underlineBlnHidden, underlineBln);
             quoteConfirmListener(quoteManualInput, quoteManualConfirmBtn, quoteManualRetryBtn, quoteResponse, quoteValue);
             quoteRetryListener(quoteManualInput, quoteManualConfirmBtn, quoteManualRetryBtn, quoteValue);
             showDivFromBtn(voiceSelectBtn, voiceCollapse);
