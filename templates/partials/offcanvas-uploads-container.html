@@ -1,0 +1,71 @@
+<button id="offcanvas-upload-close" type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+
+
+
+
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation">
+        <a data-mdb-tab-init id="media-tab" class="nav-link active" href="#" role="tab" aria-controls="media-uploads" aria-selected="true" >Media Uploads</a>
+    </li>
+  <li role="presentation">
+    <a data-mdb-tab-init id="video-tab" class="nav-link" href="#" role="tab" aria-controls="video-uploads" aria-selected="true" >Video Uploads</a>
+  </li>
+  <li role="presentation">
+    <a data-mdb-tab-init id="audio-tab" class="nav-link" href="#" role="tab" aria-controls="audio-uploads" aria-selected="false">Audio Uploads</a>
+  </li>
+  <li role="presentation">
+    <a data-mdb-tab-init id="watermark-tab" class="nav-link" href="#" role="tab" aria-controls="watermark-uploads" aria-selected="false">Watermark Uploads</a>
+  </li>
+</ul>
+
+<div class="offcanvas-header ">
+    <h5 class="offcanvas-title" id="offcanvas-media-uploadLabel">Your Media</h5>
+
+</div>
+
+<div id="media-uploads" class="tab-pane fade show active" role="tabpanel" aria-labelledby="media-tab">
+    {% include 'partials/media-offcanvas-cards.html' %}
+</div>
+
+<div id="video-uploads" class="tab-pane fade" role="tabpanel" aria-labelledby="video-tab">
+    VIDEO UPLOADS
+</div>
+
+<div id="audio-uploads" class="tab-pane fade" role="tabpanel" aria-labelledby="audio-tab">
+    AUDIO UPLOADS
+</div>
+
+<div id="watermark-uploads" class="tab-pane fade" role="tabpanel" aria-labelledby="watermark-tab">
+    WATERMARK UPLOADS
+</div>
+
+<script>
+    $(document).ready(function() {
+         // Click event handler for tab links
+         $(".nav-link").on('click', function() {
+        // Remove 'active' class from all tab links
+        $(".nav-link").removeClass('active');
+
+        // Add 'active' class to the clicked tab link
+        $(this).addClass('active');
+
+        // Optionally, show the corresponding content tab
+        var targetTabId = $(this).attr('aria-controls');
+        $(".tab-pane").removeClass('show active');
+        $("#" + targetTabId).addClass('show active');
+    });
+    });
+
+</script>
+
+
+
+
+
+
+
+<div class="offcanvas-body text-center mx-auto offcanvas-upload-centered" >
+    <p><strong>Drop files to upload</strong><br>or</p>
+    <label for="hidden-file-input" class="custom-file-input">Select Files</label>
+    <input id="hidden-file-input" type="file" class="form-control" name="clippackPath" multiple>
+</div>

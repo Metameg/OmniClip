@@ -216,6 +216,21 @@
     color: $font-color-primary;
 }
 
+#media-uploads {
+    display: flex;
+    padding: 12px;
+    overflow-x: auto; 
+}
+
+.media-upload-card {
+    min-width: 9rem;
+    width: 9rem;
+    text-align: right;
+    margin: 8px;
+    input:hover {
+        cursor: pointer;
+    }
+}
 
 #offcanvas-media-upload {
     background-color: #ffffff; 
