@@ -93,6 +93,11 @@
     flex: 1 1 10%; 
 } */
 
+.select-media-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
 
 .import-path {
     min-width: 106px;

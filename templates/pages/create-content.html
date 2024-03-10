@@ -45,8 +45,22 @@
                     </div>
                 </div> -->
 
-                <button class="btn btn-outline-primary upload-offcanvas-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-media-upload" aria-controls="offcanvas-media-upload">
-                    Upload Media<i class='bx bx-plus-circle' style="color: #0500ff"></i></button>
+                <div class="select-media-container">
+                    <button class="btn btn-outline-primary upload-offcanvas-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-media-upload" aria-controls="offcanvas-media-upload">
+                        Upload Media<i class='bx bx-plus-circle' style="color: #0500ff"></i></button>
+
+                    <p>or</p>
+                    <div class="m-3">
+                        <div class="d-flex">
+                            <input type="checkbox" id="clippack-checkbox" class="form-check mx-3">
+                            <label for="clippack-checkbox" class="form-label">Select clippack from niche</label>
+                        </div>
+                        <input type="hidden" id="clippack-checkbox-value" value="false">
+                        <select id="clippack" class="form-select" disabled>
+                            {% include 'partials/quote-categories.html'%}
+                        </select>
+                    </div>
+                </div>
 
                 <div class="offcanvas offcanvas-top " data-bs-backdrop="static"  tabindex="-1" id="offcanvas-media-upload" aria-labelledby="offcanvas-media-uploadLabel">
                     <button id="offcanvas-upload-close" type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>

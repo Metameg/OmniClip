@@ -104,9 +104,9 @@ const renderFormDOM = (function () {
     return {
         configureDOM: function() {
             // const clippackPath = document.getElementById('clippack-path');
-            // const manualClippackBln = document.getElementById('clippack-checkbox');
-            // const manualClippackBlnHidden = document.getElementById('clippack-checkbox-value');
-            // const clippack = document.getElementById('clippack');
+            const manualClippackBln = document.getElementById('clippack-checkbox');
+            const manualClippackBlnHidden = document.getElementById('clippack-checkbox-value');
+            const clippack = document.getElementById('clippack');
             // const audioPath = document.getElementById('audio-path');
             // const watermarkPath = document.getElementById('watermark-path');
             const totalLength = document.getElementById('total-length-val');
@@ -141,7 +141,7 @@ const renderFormDOM = (function () {
             const italicBlnHidden = document.getElementById('italic-value');
             const underlineBlnHidden = document.getElementById('underline-value');
 
-            // enableFromCheckbox(manualClippackBln, clippack);
+            enableFromCheckbox(manualClippackBln, clippack);
             // notEnableFromCheckbox(manualClippackBln, clippackPath);
             // Validators.imports.validateVideo(clippackPath);
             // Validators.imports.validateAudio(audioPath);
@@ -153,11 +153,11 @@ const renderFormDOM = (function () {
             notEnableFromCheckbox(sameCategoryBln, quoteCategory);
             voiceSelect(voice, voiceRadios);
             Validators.voice.validate(voice);
-            // syncCatgorySelections(selectedCategorySpan, clippack);
+            syncCatgorySelections(selectedCategorySpan, clippack);
             showDivFromRadio(quoteRadios, quoteRadioDivs);
             updateHiddenInput(quoteCategoryHidden, quoteCategory);
             updateHiddenBln(sameCategoryBlnHidden, sameCategoryBln);
-            // updateHiddenBln(manualClippackBlnHidden, manualClippackBln);
+            updateHiddenBln(manualClippackBlnHidden, manualClippackBln);
             updateHiddenBln(boldBlnHidden, boldBln);
             updateHiddenBln(italicBlnHidden, italicBln);
             updateHiddenBln(underlineBlnHidden, underlineBln);
