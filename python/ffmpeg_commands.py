@@ -371,7 +371,7 @@ def build_transitions(video_clips, target_duration, fadeout_duration, size):
             # PDA += f'[{i}:a]aformat=sample_rates=44100:channel_layouts=stereo[a{i}];'
   
         intermediate_video = os.path.join(utilities.get_root_path(), 'temp', 'intermediate_video.mp4')
-        intermediate_audio= os.path.join(utilities.get_root_path(), 'temp', 'intermediate_audio.m4a')
+        intermediate_audio = os.path.join(utilities.get_root_path(), 'temp', 'intermediate_audio.m4a')
         
 
         file = resized_clips[-1]
@@ -393,7 +393,7 @@ def build_transitions(video_clips, target_duration, fadeout_duration, size):
         audio_cmd = f"ffmpeg {inputs} -filter_complex \"{FLA} {FLC}\" -map {PDC} -c:a aac -q:a 4 -y {intermediate_audio} -hide_banner -loglevel quiet"
         print("\n\nffmpeg_audio: ", audio_cmd)
         subprocess.run(audio_cmd, shell=True)
-        comb_cmd = f"ffmpeg -y -i {intermediate_video} -i {intermediate_audio} -c copy {outpath} -hide_banner -loglevel quiet"
+        comb_cmd = f"ffmpeg -y -i {intermediate_video} -i {intermediate_audio} -af aresample=async=1000 -c:v copy {outpath} -hide_banner -loglevel quiet"
         # command_combined = 'ffmpeg ' + inputs + ' -filter_complex ' + '"' +  FLV  +  FLA + '"' + f' -map [vout] -map [aout] -t {target_duration} -c:v libx264  -c:a aac  -map_metadata -1 {outpath} -y'
         # command = 'ffmpeg ' + inputs + ' -filter_complex ' + '"' + PDV + FLV  + PDA + FLA + '"' + f' -map [vout] -map [aout] -t {target_duration} -c:v libx264  -c:a aac  -map_metadata -1 {outpath} -y -hide_banner'
         print(comb_cmd)
@@ -498,9 +498,9 @@ def add_text(video, font_name=None, font_size=None, ass_file=None, quote=None):
         if ass_file:
             ffmpeg_command = [
             'ffmpeg',
-            # '-hide_banner',
-            # '-loglevel',
-            # 'quiet',
+            '-hide_banner',
+            '-loglevel',
+            'quiet',
             '-i', video,
             '-vf',
             f"ass='{ass_file}",

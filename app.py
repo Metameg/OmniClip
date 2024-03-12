@@ -17,24 +17,39 @@ load_dotenv()
 mysql_pwd = os.getenv('MYSQL_PWD')
 flask_key = os.getenv('FLASK_KEY')
 # Config MySQL database
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:' + mysql_pwd + '@localhost/my_users'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:' + mysql_pwd + '@localhost/omniclip_users'
 # Config CSRF for form
 app.config['SECRET_KEY'] = flask_key
 csrf = CSRFProtect(app)
 
-# db = SQLAlchemy(app)
-# migrate = Migrate(app, db)
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
-# class Users(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(50), nullable=False)
-#     email = db.Column(db.String(120), nullable=False, unique=True)
-#     favorite_color = db.Column(db.String(120))
-#     date_added = db.Column(db.DateTime, default=datetime.utcnow())
+class MyUsers(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(120), nullable=False, unique=True)
+    favorite_color = db.Column(db.String(120))
+    date_added = db.Column(db.DateTime, default=datetime.utcnow())
 
-    # def __repr__(self):
-    #     return '<Name %r>' % self.name
+    def __repr__(self):
+        return '<Name %r>' % self.name
 
+class Users(db.Model):
+    __tablename__ = 'users'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
+    username = db.Column(db.String(50), nullable=False, unique=True)
+    password = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(10), nullable=False, unique=True)
+    subscription_id = db.Column(db.Integer, nullable=True)
+    affiliate_id = db.Column(db.Integer, nullable=True)
+    date_added = db.Column(db.DateTime, default=datetime.utcnow())
+
+    def __repr__(self):
+        return '<Name %r>' % self.name
         # with app.app_context():
         #     db.create_all()
 
@@ -52,23 +67,44 @@ class UserForm(FlaskForm):
     submit = SubmitField("Submit")
 
 
-# @app.route('/user/add', methods=['GET', 'POST'])
-#def add_user():
-  #  name = None
-  #  form = UserForm()
-  #  if form.validate_on_submit():
-  #       user = Users.query.filter_by(email=form.email.data).first()
-  #       if user is None:
-  #           user = Users(name=form.name.data, email=form.email.data, favorite_color=form.favorite_color.data)
-  #           db.session.add(user)
-  #           db.session.commit()
-  #       name = form.name.data
-  #       form.name.data = ''
-  #       form.email.data = ''
-  #       form.favorite_color.data = ''
-  #       flash("User Added!")
-  #   our_users = Users.query.order_by(Users.date_added)
-  #   return render_template("add_user.html", form=form, name=name, our_users=our_users)
+@app.route('/user/add', methods=['GET', 'POST'])
+def add_user():
+    name = None
+    form = UserForm()
+    if form.validate_on_submit():
+        user = MyUsers.query.filter_by(email=form.email.data).first()
+        if user is None:
+            user = MyUsers(name=form.name.data, email=form.email.data, favorite_color=form.favorite_color.data)
+            db.session.add(user)
+            db.session.commit()
+        name = form.name.data
+        form.name.data = ''
+        form.email.data = ''
+        form.favorite_color.data = ''
+        flash("User Added!")
+    our_users = MyUsers.query.order_by(MyUsers.date_added)
+    
+    return render_template("add_user.html", form=form, name=name, our_users=our_users)
+
+@app.route('/upload-media/<int:id>', methods=['GET', 'POST'])
+def upload_media(id):
+    user = Users.query.get_or_404(id)
+    if request.method == 'POST':
+        user.name = request.form['name']
+        user.email = request.form['email']
+        user.favorite_color = request.form['favorite_color']
+
+        try:
+            db.session.commit()
+            flash("User Updated Successfully!")
+            return render_template("update.html", user=user)
+        except:
+            flash("Error! Problem...Try Again")
+            return render_template("update.html", user=user)
+
+    else:
+        return render_template("uploads_grid.html", user=user)
+
 
 # @app.route('/update/<int:id>', methods=['GET', 'POST'])
 # def update(id):
@@ -201,7 +237,6 @@ def generate_quote_from_category():
 
 @app.route('/create-content', methods=['GET'])
 def create_content():
-    # csrf_token = csrf._get_csrf_token()
     with open('voices.json', 'r') as f:
         voices = json.load(f)['voices']
     
@@ -240,14 +275,20 @@ def render():
             video_uploads_dir = 'video_uploads'
             upload_files(videos, video_uploads_dir)
 
-    if  audios[0].filename != '':
+    if len(audios) == 0:
+        audio_uploads_dir = 'audio_uploads'
+
+    elif  audios[0].filename != '':
         upload_files(audios, 'audio_uploads')
 
-    if  watermarks[0].filename == '':
+    if len(watermarks) == 0:
         watermark_uploads_dir = None
     else:
-        watermark_uploads_dir = 'watermark_uploads'
-        upload_files(watermarks, 'watermark_uploads')
+        if  watermarks[0].filename == '':
+            watermark_uploads_dir = None
+        else:
+            watermark_uploads_dir = 'watermark_uploads'
+            upload_files(watermarks, 'watermark_uploads')
         
 
     
