@@ -5,7 +5,7 @@
 
 <ul class="nav nav-tabs" role="tablist">
     <li role="presentation">
-        <a data-mdb-tab-init id="media-tab" class="nav-link active" href="#" role="tab" aria-controls="media-uploads" aria-selected="true" >Media Uploads</a>
+        <a data-mdb-tab-init id="media-tab" class="nav-link active" href="#" role="tab" aria-controls="all-uploads" aria-selected="true" >Media Uploads</a>
     </li>
   <li role="presentation">
     <a data-mdb-tab-init id="video-tab" class="nav-link" href="#" role="tab" aria-controls="video-uploads" aria-selected="true" >Video Uploads</a>
@@ -23,8 +23,8 @@
 
 </div>
 
-<div id="media-uploads" class="tab-pane fade show active" role="tabpanel" aria-labelledby="media-tab">
-    {% include 'partials/media-offcanvas-cards.html' %}
+<div id="all-uploads" class="tab-pane fade show active" role="tabpanel" aria-labelledby="media-tab">
+    No media files uploaded.
 </div>
 
 <div id="video-uploads" class="tab-pane fade" role="tabpanel" aria-labelledby="video-tab">
@@ -67,5 +67,5 @@
 <div class="offcanvas-body text-center mx-auto offcanvas-upload-centered" >
     <p><strong>Drop files to upload</strong><br>or</p>
     <label for="hidden-file-input" class="custom-file-input">Select Files</label>
-    <input id="hidden-file-input" type="file" class="form-control" name="clippackPath" multiple>
+    <input id="hidden-file-input" type="file" class="form-control" name="mediaPath" multiple>
 </div>

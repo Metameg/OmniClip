@@ -1,5 +1,4 @@
 from flask import Blueprint, request, flash, render_template, jsonify
-from app import db
 
 
 
@@ -8,7 +7,6 @@ blueprint = Blueprint('quote_generation', __name__)
 @blueprint.route('/gpt', methods=['POST'])
 def generate_quote_gpt():
     from app.services.GPT import QuoteGenerator
-    print("gpt selected")
     json_data = request.get_json()
     prompt = json_data["prompt"]
     print(f"Quote submit pressed. {prompt}")

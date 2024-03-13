@@ -52,8 +52,17 @@ def generate_videos(editor, numvideos):
 
     return videos
 
+def is_audio_file(filename):
+    audio_extensions = ['.mp3', '.wav', '.ogg', '.flac', '.aac', '.wma']  
+    return any(filename.lower().endswith(ext) for ext in audio_extensions)
 
+def is_video_file(filename):
+    video_extensions = ['.mp4', '.avi', '.mov', '.wmv', '.mkv', '.flv']  # Add more extensions as needed
+    return any(filename.lower().endswith(ext) for ext in video_extensions)
 
+def is_image_file(filename):
+    image_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg', '.webp']  # Add more extensions as needed
+    return any(filename.lower().endswith(ext) for ext in image_extensions)
     
 
 

@@ -19,7 +19,7 @@ import '../scss/affiliate/affiliate-about.scss';
 import { configureRenderForm } from './renders/renderFormController.js';
 import { configureQuoteGenerator } from './quoteGenerator/quoteController.js';
 import { configureAffiliate } from './affiliate/affiliateController.js';
-// import { configuremediaUploader } from './mediaUploader/mediaUploaderController.js';
+import { configureMediaUploader } from './mediaUploader/mediaUploaderController.js';
 
 
 
@@ -27,7 +27,7 @@ $(document).ready(function() {
 
     if (window.location.pathname.startsWith('/create-content')) {
         configureRenderForm();
-        // configuremediaUploader();
+        configureMediaUploader();
         configureQuoteGenerator();
         // configureVideoStyler();
     }  

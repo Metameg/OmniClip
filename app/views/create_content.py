@@ -24,7 +24,7 @@ def render():
     # json_data = request.get_json()
     # print(json_data)
     # if request.form.get("action") == "formData":
-    videos = request.files.getlist('clippackPath')
+    videos = request.files.getlist('mediaPath')
     print(videos)
     audios = request.files.getlist('audioPath')
     print(audios)
@@ -79,10 +79,7 @@ def render():
         text_outline_color = form_data['outlineColor']
     except Exception:
         text_outline_color = '#00000000'
-    # try:
-    #     text_back_color = form_data['backColor'] 
-    # except Exception:
-    #     text_back_color = '#00000000'
+    
 
     isBold = form_data['isBold']
     isItalic = form_data['isItalic']

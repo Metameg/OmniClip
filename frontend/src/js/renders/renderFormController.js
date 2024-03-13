@@ -10,7 +10,7 @@ export function configureRenderForm() {
     const renderForm = document.getElementById('render-form');
 
     renderForm.addEventListener('submit', async function(event) {
-        console.log('submitted');
+        
         event.preventDefault();
         
         var renderData = new FormData($('#render-form')[0]);

@@ -63,16 +63,25 @@ const uploadMedia = (function () {
     // Public API
     return {
         configureDOM: function() {
-            const clippackPathInput = document.getElementById('clippack-path');
-            const uploadedVideosContainer = document.getElementById('uploaded-videos-container');
-            const audioPathInput = document.getElementById('audio-path');
-            const uploadedAudiosContainer = document.getElementById('uploaded-audios-container');
-            const watermarkPathInput = document.getElementById('watermark-path');
-            const uploadedWatermarksContainer = document.getElementById('uploaded-watermarks-container');
+            const mediaFiles = document.getElementById('hidden-file-input');
+            const allUploads = document.getElementById('all-uploads');
+            const videoUploads = document.getElementById('video-uploads');
+            const audioUploads = document.getElementById('audio-uploads');
+            const watermarkUploads = document.getElementById('watermark-uploads');
+            // const clippackPathInput = document.getElementById('clippack-path');
+            // const uploadedVideosContainer = document.getElementById('uploaded-videos-container');
+            // const audioPathInput = document.getElementById('audio-path');
+            // const uploadedAudiosContainer = document.getElementById('uploaded-audios-container');
+            // const watermarkPathInput = document.getElementById('watermark-path');
+            // const uploadedWatermarksContainer = document.getElementById('uploaded-watermarks-container');
 
-            uploadFileUI(clippackPathInput, uploadedVideosContainer);
-            uploadFileUI(audioPathInput, uploadedAudiosContainer);
-            uploadFileUI(watermarkPathInput, uploadedWatermarksContainer);
+            // uploadFileUI(clippackPathInput, uploadedVideosContainer);
+            // uploadFileUI(audioPathInput, uploadedAudiosContainer);
+            // uploadFileUI(watermarkPathInput, uploadedWatermarksContainer);
+            uploadFileUI(mediaFiles, allUploads);
+            uploadFileUI(mediaFiles, videoUploads);
+            uploadFileUI(mediaFiles, audioUploads);
+            uploadFileUI(mediaFiles, watermarkUploads);
         }
     }
 
