@@ -6,9 +6,7 @@ blueprint = Blueprint('affiliate', __name__)
 def affiliate_dashboard():
     return render_template("pages/affiliate/affiliate-dashboard.html")
 
-@blueprint.route('/sign-up')
-def affiliate_signup():
-    return render_template("pages/affiliate/affiliate-sign-up.html")
+
 
 @blueprint.route('/about')
 def affiliate_about():

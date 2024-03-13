@@ -22,13 +22,7 @@ def checkout():
     return render_template("pages/checkout.html")
 
 
-@blueprint.route('/profile/<name>')
-def user(name):
-    return render_template("pages/profile.html", user_name=name)
 
-@blueprint.route('/login')
-def login():
-    return render_template("pages/login.html")
 
 
 # Invalid URL

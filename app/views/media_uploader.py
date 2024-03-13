@@ -14,6 +14,7 @@ def upload_media():
     mediapaths = []
     upload_dirs = []
     for file in files:
+
         sanitized_filename = utilities.sanitize_filename(file.filename)
 
         if utilities.is_video_file(file.filename):

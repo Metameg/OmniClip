@@ -13,7 +13,7 @@ export function configureMediaUploader() {
         var files = mediaFiles.files;
         var mediaData = new FormData();
         const url = '/upload-media'
-        allUploads.innerHTML = '';
+        // allUploads.innerHTML = '';
 
         // Add each file to the FormData object
         for (var i = 0; i < files.length; i++) {

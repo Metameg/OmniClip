@@ -14,7 +14,7 @@ import app.tools.utilities
 from app import app
 
 os.environ['FLASK_APP'] = 'app'
-print(os.environ['FLASK_APP'])
+
 
 # app = Flask(__name__, template_folder=os.path.join('..', 'frontend', 'src', 'templates'))
 # load_dotenv()

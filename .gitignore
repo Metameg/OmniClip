@@ -12,4 +12,5 @@ temp/*
 output/*
 video_uploads/*
 audio_uploads/*
-watermark_uploads/*'dist'
+watermark_uploads/*
+index-bundle.js

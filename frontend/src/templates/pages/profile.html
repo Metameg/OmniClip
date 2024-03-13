@@ -2,48 +2,6 @@
 
 {% block content %}
 
-<!-- <style>
-    .dark-hover:hover {
-        color: #969696;
-    }
-    .dark-hover {
-        color: #ffffff;
-    }
-
-    h2 {
-        font-family: Georgia, 'Times New Roman', Times, serif;
-        font-weight: 500;
-        line-height: 1.2;
-        color: #ffffff;
-        background-color: #353535;
-        width: 66%;
-        margin: 0 auto;
-        border-bottom: 2px solid black;
-        border-right: 2px solid black;
-        border-left: 2px solid black;
-    }
-
-    @media (max-width: 575px) {
-        #nav-lg-screen {
-            display: none;
-        }
-        #offcanvas-btn {
-            display: block;
-        }
-
-    }
-    @media (min-width: 576px) {
-        #nav-lg-screen {
-            display: flex;
-        }
-        #offcanvas-btn, #offcanvas {
-            display: none;
-        }
-
-    }
-
-
-</style> -->
 <button id="offcanvas-btn" class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas" style="background-color: #060606;">
     <i class='bx bx-menu' style="font-size: 2rem; color: white;"></i>
 </button>
@@ -53,7 +11,7 @@
         <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="height: 100%;">
             <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
             <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-            <span class="fs-4">Username</span>
+            <span class="fs-4">{{ user }}</span>
             </a>
             <hr>
             <ul class="nav nav-pills flex-column">
@@ -75,13 +33,13 @@
             <div class="dropdown">
                 <a href="#" class="align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                    <strong>username</strong>
+                    <strong>{{ user }}</strong>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser">
                     <li><a class="dropdown-item" href="/">Create New...</a></li>
                     <li><a class="dropdown-item" href="/">API Keys</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Sign out</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('login.logout') }}">Sign out</a></li>
                 </ul>
             </div>
         </div>
@@ -90,7 +48,7 @@
     <div id="nav-lg-screen" class="flex-column flex-shrink-0 p-3 text-white bg-dark">
         <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-        <span class="fs-4">Username</span>
+        <span class="fs-4">{{ user }}</span>
         </a>
         <hr>
         <ul id="profile-pills" class="nav nav-pills flex-column">
@@ -115,14 +73,14 @@
         <div class="dropdown">
             <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                <strong>mdo</strong>
+                <strong>{{ user }}</strong>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser">
                 <li><a class="dropdown-item" href="/">Create New...</a></li>
                 <li><a class="dropdown-item" href="/">Security</a></li>
                 <li><a class="dropdown-item" href="/">API Keys</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Sign out</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('login.logout') }}">Sign out</a></li>
             </ul>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
         </div>
