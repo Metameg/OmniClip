@@ -1,0 +1,29 @@
+@import '../variables.scss';
+
+/* Hide the checkbox */
+.toggle-checkbox {
+    display: none;
+}
+
+/* Style for the label acting as the button */
+.custom-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Style for the label when checkbox is checked */
+.toggle-checkbox:checked + .custom-button {
+    background-color: #0056b3;
+}
+
+/* Show/hide content based on checkbox state */
+#content {
+    display: none;
+}
+
+.toggle-checkbox:checked ~ #content {
+    display: block;
+}

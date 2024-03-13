@@ -1,6 +1,6 @@
-$background-color-primary: #060606;
-$background-color-secondary: #0e0e0e;
-$background-gradient: linear-gradient(107deg, #020202 9.16%, #000000 43.89%, #090016 97.72%);
+$background-color-primary: #000000;
+$background-color-secondary: #060606;
+$background-gradient: linear-gradient(107deg, #0a0512 9.16%, #2c1d49 43.89%, #0a0512 97.72%);
 $font-family: Arial, sans-serif;
 $background-gradient-overlay-color: #00000070;
 $font-color-primary: #ffffff;
@@ -16,3 +16,8 @@ $text-shadow-xy-light: -5px -5px 15px #c2c2c2,
                 -5px  5px 15px #c2c2c2,
                 5px  5px 15px #c2c2c2;
 $discord-btn-color: linear-gradient(97deg, #455EB5 9.16%, #5643CC 43.89%, #673FD7 64.72%);
+
+
+// Used in uploads-grid, create-content
+$border: 2px solid white;
+$border-radius: 20px;
