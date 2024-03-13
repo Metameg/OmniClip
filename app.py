@@ -1,109 +1,106 @@
 import json
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from flask import Flask, render_template, flash, request, jsonify, send_from_directory
-from flask_wtf import FlaskForm
-from flask_wtf.csrf import CSRFProtect
-from wtforms import StringField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired, Length
-from python.AutoEditor import AutoEditor
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from datetime import datetime
-import python.utilities
+# from flask_wtf import FlaskForm
+# from flask_wtf.csrf import CSRFProtect
+# from wtforms import StringField, SubmitField, TextAreaField
+# from wtforms.validators import DataRequired, Length
+from app.services.AutoEditor import AutoEditor
+# from flask_sqlalchemy import SQLAlchemy
+# from flask_migrate import Migrate
+# from datetime import datetime
+import app.tools.utilities
+from app import app
 
-app = Flask(__name__)
-load_dotenv()
-mysql_pwd = os.getenv('MYSQL_PWD')
-flask_key = os.getenv('FLASK_KEY')
-# Config MySQL database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:' + mysql_pwd + '@localhost/omniclip_users'
-# Config CSRF for form
-app.config['SECRET_KEY'] = flask_key
-csrf = CSRFProtect(app)
+os.environ['FLASK_APP'] = 'app'
+print(os.environ['FLASK_APP'])
 
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+# app = Flask(__name__, template_folder=os.path.join('..', 'frontend', 'src', 'templates'))
+# load_dotenv()
+# mysql_pwd = os.getenv('MYSQL_PWD')
+# flask_key = os.getenv('FLASK_KEY')
+# # Config MySQL database
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:' + mysql_pwd + '@localhost/omniclip_users'
+# # Config CSRF for form
+# app.config['SECRET_KEY'] = flask_key
+# csrf = CSRFProtect(app)
 
-class MyUsers(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), nullable=False)
-    email = db.Column(db.String(120), nullable=False, unique=True)
-    favorite_color = db.Column(db.String(120))
-    date_added = db.Column(db.DateTime, default=datetime.utcnow())
+# db = SQLAlchemy(app)
+# migrate = Migrate(app, db)
 
-    def __repr__(self):
-        return '<Name %r>' % self.name
+# class MyUsers(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(50), nullable=False)
+#     email = db.Column(db.String(120), nullable=False, unique=True)
+#     favorite_color = db.Column(db.String(120))
+#     date_added = db.Column(db.DateTime, default=datetime.utcnow())
 
-class Users(db.Model):
-    __tablename__ = 'users'
+#     def __repr__(self):
+#         return '<Name %r>' % self.name
+
+# class Users(db.Model):
+#     __tablename__ = 'users'
     
-    id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(50), nullable=False)
-    last_name = db.Column(db.String(50), nullable=False)
-    username = db.Column(db.String(50), nullable=False, unique=True)
-    password = db.Column(db.String(50), nullable=False)
-    email = db.Column(db.String(10), nullable=False, unique=True)
-    subscription_id = db.Column(db.Integer, nullable=True)
-    affiliate_id = db.Column(db.Integer, nullable=True)
-    date_added = db.Column(db.DateTime, default=datetime.utcnow())
+#     id = db.Column(db.Integer, primary_key=True)
+#     first_name = db.Column(db.String(50), nullable=False)
+#     last_name = db.Column(db.String(50), nullable=False)
+#     username = db.Column(db.String(50), nullable=False, unique=True)
+#     password = db.Column(db.String(50), nullable=False)
+#     email = db.Column(db.String(10), nullable=False, unique=True)
+#     subscription_id = db.Column(db.Integer, nullable=True)
+#     affiliate_id = db.Column(db.Integer, nullable=True)
+#     date_added = db.Column(db.DateTime, default=datetime.utcnow())
 
-    def __repr__(self):
-        return '<Name %r>' % self.name
-        # with app.app_context():
-        #     db.create_all()
+#     def __repr__(self):
+#         return '<Name %r>' % self.name
 
-# progress_percentage = 0
 
-# Create a Form Class
-# class EmailForm(FlaskForm):
-#     email = StringField("Email:", validators=[DataRequired()])
+
+# class UserForm(FlaskForm):
+#     name = StringField("Name", validators=[DataRequired()])
+#     email = StringField("Email", validators=[DataRequired()])
+#     favorite_color = StringField("Favorite Color")
 #     submit = SubmitField("Submit")
 
-class UserForm(FlaskForm):
-    name = StringField("Name", validators=[DataRequired()])
-    email = StringField("Email", validators=[DataRequired()])
-    favorite_color = StringField("Favorite Color")
-    submit = SubmitField("Submit")
 
-
-@app.route('/user/add', methods=['GET', 'POST'])
-def add_user():
-    name = None
-    form = UserForm()
-    if form.validate_on_submit():
-        user = MyUsers.query.filter_by(email=form.email.data).first()
-        if user is None:
-            user = MyUsers(name=form.name.data, email=form.email.data, favorite_color=form.favorite_color.data)
-            db.session.add(user)
-            db.session.commit()
-        name = form.name.data
-        form.name.data = ''
-        form.email.data = ''
-        form.favorite_color.data = ''
-        flash("User Added!")
-    our_users = MyUsers.query.order_by(MyUsers.date_added)
+# @app.route('/user/add', methods=['GET', 'POST'])
+# def add_user():
+#     name = None
+#     form = UserForm()
+#     if form.validate_on_submit():
+#         user = MyUsers.query.filter_by(email=form.email.data).first()
+#         if user is None:
+#             user = MyUsers(name=form.name.data, email=form.email.data, favorite_color=form.favorite_color.data)
+#             db.session.add(user)
+#             db.session.commit()
+#         name = form.name.data
+#         form.name.data = ''
+#         form.email.data = ''
+#         form.favorite_color.data = ''
+#         flash("User Added!")
+#     our_users = MyUsers.query.order_by(MyUsers.date_added)
     
-    return render_template("add_user.html", form=form, name=name, our_users=our_users)
+#     return render_template("add_user.html", form=form, name=name, our_users=our_users)
 
-@app.route('/upload-media/<int:id>', methods=['GET', 'POST'])
-def upload_media(id):
-    user = Users.query.get_or_404(id)
-    if request.method == 'POST':
-        user.name = request.form['name']
-        user.email = request.form['email']
-        user.favorite_color = request.form['favorite_color']
+# @app.route('/upload-media/<int:id>', methods=['GET', 'POST'])
+# def upload_media(id):
+#     user = Users.query.get_or_404(id)
+#     if request.method == 'POST':
+#         user.name = request.form['name']
+#         user.email = request.form['email']
+#         user.favorite_color = request.form['favorite_color']
 
-        try:
-            db.session.commit()
-            flash("User Updated Successfully!")
-            return render_template("update.html", user=user)
-        except:
-            flash("Error! Problem...Try Again")
-            return render_template("update.html", user=user)
+#         try:
+#             db.session.commit()
+#             flash("User Updated Successfully!")
+#             return render_template("update.html", user=user)
+#         except:
+#             flash("Error! Problem...Try Again")
+#             return render_template("update.html", user=user)
 
-    else:
-        return render_template("uploads_grid.html", user=user)
+#     else:
+#         return render_template("uploads_grid.html", user=user)
 
 
 # @app.route('/update/<int:id>', methods=['GET', 'POST'])
@@ -130,34 +127,29 @@ def upload_media(id):
 
 
 
-@app.route('/')
-def index():
-    stuff = "This is <strong>Bold</strong>"
-    return render_template("pages/home.html", stuff=stuff)
+# @app.route('/')
+# def index():
+#     stuff = "This is <strong>Bold</strong>"
+#     return render_template("pages/home.html", stuff=stuff)
 
-@app.route('/about')
-def about():
-    return render_template("pages/about.html")
-
-
+# @app.route('/about')
+# def about():
+#     return render_template("pages/about.html")
 
 
-@app.route('/affiliate-program/dashboard')
-def affiliate_dashboard():
-    return render_template("pages/affiliate/affiliate-dashboard.html")
-
-@app.route('/affiliate-program/sign-up')
-def affiliate_signup():
-    return render_template("pages/affiliate/affiliate-sign-up.html")
-
-@app.route('/affiliate-program/about')
-def affiliate_about():
-    return render_template("pages/affiliate/affiliate-about.html")
 
 
-@app.route('/settings')
-def settings():
-    return render_template("pages/settings.html")
+# @app.route('/affiliate-program/dashboard')
+# def affiliate_dashboard():
+#     return render_template("pages/affiliate/affiliate-dashboard.html")
+
+# @app.route('/affiliate-program/sign-up')
+# def affiliate_signup():
+#     return render_template("pages/affiliate/affiliate-sign-up.html")
+
+# @app.route('/affiliate-program/about')
+# def affiliate_about():
+#     return render_template("pages/affiliate/affiliate-about.html")
 
 
 
@@ -169,168 +161,166 @@ def settings():
 
 
 
+# @app.route('/pricing')
+# def pricing():
+#     return render_template("pages/pricing.html")
 
+# @app.route('/checkout')
+# def checkout():
+#     return render_template("pages/checkout.html")
 
-@app.route('/pricing')
-def pricing():
-    return render_template("pages/pricing.html")
-
-@app.route('/checkout')
-def checkout():
-    return render_template("pages/checkout.html")
-
-@app.route('/profile/<name>')
-def user(name):
-    return render_template("pages/profile.html", user_name=name)
+# @app.route('/profile/<name>')
+# def user(name):
+#     return render_template("pages/profile.html", user_name=name)
 
 
 
-def sanitize_filename(filename):
-    # Replace spaces with underscores and remove other special characters
-    return ''.join(c if c.isalnum() or c in ['.', '_'] else '_' for c in filename)
+# def sanitize_filename(filename):
+#     # Replace spaces with underscores and remove other special characters
+#     return ''.join(c if c.isalnum() or c in ['.', '_'] else '_' for c in filename)
 
-def upload_files(files, export_folder):
+# def upload_files(files, export_folder):
 
-    for file in files:
-        sanitized_filename = sanitize_filename(file.filename)
+#     for file in files:
+#         sanitized_filename = sanitize_filename(file.filename)
        
         
-        # Save the file to the 'uploads' directory with the sanitized filename
-        file.save(os.path.join(export_folder, sanitized_filename))
-        # print(test_jpeg(file.getvalue()))
+#         # Save the file to the 'uploads' directory with the sanitized filename
+#         file.save(os.path.join(export_folder, sanitized_filename))
+#         # print(test_jpeg(file.getvalue()))
             
             
-@app.route('/quote-generator/gpt', methods=['POST'])
-def generate_quote_gpt():
-    from python.GPT import QuoteGenerator
-    print("gpt selected")
-    json_data = request.get_json()
-    prompt = json_data["prompt"]
-    print(f"Quote submit pressed. {prompt}")
-    generator = QuoteGenerator(prompt)
-    # prompt = request.get_json()["prompt"]
-    res = generator.generate()
-    # threading.Thread(target=simulate_time_consuming_process, args=()).start()
+# @app.route('/quote-generator/gpt', methods=['POST'])
+# def generate_quote_gpt():
+#     from app.services.GPT import QuoteGenerator
+#     print("gpt selected")
+#     json_data = request.get_json()
+#     prompt = json_data["prompt"]
+#     print(f"Quote submit pressed. {prompt}")
+#     generator = QuoteGenerator(prompt)
+#     # prompt = request.get_json()["prompt"]
+#     res = generator.generate()
+#     # threading.Thread(target=simulate_time_consuming_process, args=()).start()
     
-    return jsonify(res)
+#     return jsonify(res)
 
-@app.route('/quote-generator/category', methods=['POST'])
-def generate_quote_from_category():
-    print("category selected")
-    json_data = request.get_json()
-    category = json_data['category']
-    is_same_as_clippack = json_data['sameCategoryBln']
-    clippackCategory = json_data['clippack']
+# @app.route('/quote-generator/category', methods=['POST'])
+# def generate_quote_from_category():
+#     print("category selected")
+#     json_data = request.get_json()
+#     category = json_data['category']
+#     is_same_as_clippack = json_data['sameCategoryBln']
+#     clippackCategory = json_data['clippack']
 
-    print("category:", category)
-    print("bln:", is_same_as_clippack)
-    print("clippack:", clippackCategory)
-    print(f"category submit pressed. {category}")
-    # threading.Thread(target=simulate_time_consuming_process, args=()).start()
+#     print("category:", category)
+#     print("bln:", is_same_as_clippack)
+#     print("clippack:", clippackCategory)
+#     print(f"category submit pressed. {category}")
+#     # threading.Thread(target=simulate_time_consuming_process, args=()).start()
 
-    if is_same_as_clippack == 'true':
-        res = clippackCategory
-    else:
-        res = category
+#     if is_same_as_clippack == 'true':
+#         res = clippackCategory
+#     else:
+#         res = category
     
-    return jsonify(res)
+#     return jsonify(res)
 
-@app.route('/create-content', methods=['GET'])
-def create_content():
-    with open('voices.json', 'r') as f:
-        voices = json.load(f)['voices']
+# @app.route('/create-content', methods=['GET'])
+# def create_content():
+#     with open('voices.json', 'r') as f:
+#         voices = json.load(f)['voices']
     
-    return render_template("pages/create-content.html", voices=voices)
+#     return render_template("pages/create-content.html", voices=voices)
 
 
-@app.route('/create-content', methods=['POST'])
-def render():
-    print("here")
-    # Validate the CSRF token
-    csrf.protect()
-    # json_data = request.get_json()
-    # print(json_data)
-    # if request.form.get("action") == "formData":
-    videos = request.files.getlist('clippackPath')
-    print(videos)
-    audios = request.files.getlist('audioPath')
-    print(audios)
-    watermarks = request.files.getlist('watermarkPath')
-    print(watermarks)
-    form_data = request.form
-    print(len(videos), len(audios), len(watermarks))
-    # clippack_category = form_data['clippack']
+# @app.route('/create-content', methods=['POST'])
+# def render():
+#     print("here")
+#     # Validate the CSRF token
+#     csrf.protect()
+#     # json_data = request.get_json()
+#     # print(json_data)
+#     # if request.form.get("action") == "formData":
+#     videos = request.files.getlist('clippackPath')
+#     print(videos)
+#     audios = request.files.getlist('audioPath')
+#     print(audios)
+#     watermarks = request.files.getlist('watermarkPath')
+#     print(watermarks)
+#     form_data = request.form
+#     print(len(videos), len(audios), len(watermarks))
+#     # clippack_category = form_data['clippack']
 
-    for key, value in form_data.items():
-        print(f"{key}: {value}")
+#     for key, value in form_data.items():
+#         print(f"{key}: {value}")
 
-    # if import videos was disabled, set video upload directory to appropriate clippack category
-    if len(videos) == 0:
-        # video_uploads_dir = os.path.join('clippack_categories', clippack_category)
-        video_uploads_dir = 'video_uploads'
-    else:
-        if videos[0].filename == '':
-            video_uploads_dir = 'video_uploads'
-        else:
-            video_uploads_dir = 'video_uploads'
-            upload_files(videos, video_uploads_dir)
+#     # if import videos was disabled, set video upload directory to appropriate clippack category
+#     if len(videos) == 0:
+#         # video_uploads_dir = os.path.join('clippack_categories', clippack_category)
+#         video_uploads_dir = 'video_uploads'
+#     else:
+#         if videos[0].filename == '':
+#             video_uploads_dir = 'video_uploads'
+#         else:
+#             video_uploads_dir = 'video_uploads'
+#             upload_files(videos, video_uploads_dir)
 
-    if len(audios) == 0:
-        audio_uploads_dir = 'audio_uploads'
+#     if len(audios) == 0:
+#         audio_uploads_dir = 'audio_uploads'
 
-    elif  audios[0].filename != '':
-        upload_files(audios, 'audio_uploads')
+#     elif  audios[0].filename != '':
+#         upload_files(audios, 'audio_uploads')
 
-    if len(watermarks) == 0:
-        watermark_uploads_dir = None
-    else:
-        if  watermarks[0].filename == '':
-            watermark_uploads_dir = None
-        else:
-            watermark_uploads_dir = 'watermark_uploads'
-            upload_files(watermarks, 'watermark_uploads')
+#     if len(watermarks) == 0:
+#         watermark_uploads_dir = None
+#     else:
+#         if  watermarks[0].filename == '':
+#             watermark_uploads_dir = None
+#         else:
+#             watermark_uploads_dir = 'watermark_uploads'
+#             upload_files(watermarks, 'watermark_uploads')
         
 
     
-    outpath = 'output'
-    audio_uploads_dir = 'audio_uploads'
-    fade_duration = float(form_data['fadeoutDuration'])
-    target_duration = float(form_data['totalLength'])
-    font_name = form_data['fontName']
-    font_size = int(form_data['fontSize'])
+#     outpath = 'output'
+#     audio_uploads_dir = 'audio_uploads'
+#     fade_duration = float(form_data['fadeoutDuration'])
+#     target_duration = float(form_data['totalLength'])
+#     font_name = form_data['fontName']
+#     font_size = int(form_data['fontSize'])
 
     
-    text_primary_color = form_data['primaryColor']
+#     text_primary_color = form_data['primaryColor']
     
-    try:
-        text_outline_color = form_data['outlineColor']
-    except Exception:
-        text_outline_color = '#00000000'
-    # try:
-    #     text_back_color = form_data['backColor'] 
-    # except Exception:
-    #     text_back_color = '#00000000'
+#     try:
+#         text_outline_color = form_data['outlineColor']
+#     except Exception:
+#         text_outline_color = '#00000000'
+#     # try:
+#     #     text_back_color = form_data['backColor'] 
+#     # except Exception:
+#     #     text_back_color = '#00000000'
 
-    isBold = form_data['isBold']
-    isItalic = form_data['isItalic']
-    isUnderline = form_data['isUnderline']
-    # aspect_ratio = form_data['aspectRatio']
-    alignment = int(form_data['subtitleAlignment'])
-    watermark_opacity = form_data['watermarkOpacity']
-    quote_val = form_data['quoteVal']
-    voice = os.path.join('static', 'voices', form_data['voice'] + '.mp3')
-    numvideos = int(form_data['numvideos'])
+#     isBold = form_data['isBold']
+#     isItalic = form_data['isItalic']
+#     isUnderline = form_data['isUnderline']
+#     # aspect_ratio = form_data['aspectRatio']
+#     alignment = int(form_data['subtitleAlignment'])
+#     watermark_opacity = form_data['watermarkOpacity']
+#     quote_val = form_data['quoteVal']
+#     voice = os.path.join('static', 'voices', form_data['voice'] + '.mp3')
+#     numvideos = int(form_data['numvideos'])
 
-    editor = AutoEditor(outpath, video_uploads_dir, audio_uploads_dir, 
-                        watermark_uploads_dir, fade_duration, target_duration, 
-                        'freedom', font_size, text_primary_color, text_outline_color, 
-                        isBold, isItalic, isUnderline, 
-                        alignment, watermark_opacity,
-                        quote=quote_val, voice=voice, subtitle_ass=True)
+#     editor = AutoEditor(outpath, video_uploads_dir, audio_uploads_dir, 
+#                         watermark_uploads_dir, fade_duration, target_duration, 
+#                         'freedom', font_size, text_primary_color, text_outline_color, 
+#                         isBold, isItalic, isUnderline, 
+#                         alignment, watermark_opacity,
+#                         quote=quote_val, voice=voice, subtitle_ass=True)
     
-    videopaths = generate_videos(editor, numvideos)
+#     videopaths = generate_videos(editor, numvideos)
 
-    return render_template('partials/video-container.html', videopaths=videopaths)
+#     return render_template('partials/video-container.html', videopaths=videopaths)
 
 # def simulate_time_consuming_process():
 #     global progress_percentage
@@ -342,29 +332,29 @@ def render():
 #     # progress_percentage = 0  # Reset progress after completion
 
 
-def generate_videos(editor, numvideos):
-    videos = []
-    for _ in range(numvideos):
-        # thread = threading.Thread(target=render_video, args=(editor,))
-        # thread.start()
-        # thread.join()
-        editor.render()
-        videopath = sorted(os.listdir('output'))[-1]
-        videos.append(videopath)
+# def generate_videos(editor, numvideos):
+#     videos = []
+#     for _ in range(numvideos):
+#         # thread = threading.Thread(target=render_video, args=(editor,))
+#         # thread.start()
+#         # thread.join()
+#         editor.render()
+#         videopath = sorted(os.listdir('output'))[-1]
+#         videos.append(videopath)
 
-    return videos
+#     return videos
 
 # @app.route('/get_progress')
 # def get_progress():
 #     return str(progress_percentage)
     
-@app.route('/output/<filename>')
-def serve_output(filename):
-    return send_from_directory('output', filename)
+# @app.route('/output/<filename>')
+# def serve_output(filename):
+#     return send_from_directory('output', filename)
 
-@app.route('/loading_container_partial', methods=['GET'])
-def loading_container_partial():
-    return render_template("partials/loading-container.html")
+# @app.route('/loading_container_partial', methods=['GET'])
+# def loading_container_partial():
+#     return render_template("partials/loading-container.html")
 
 # @app.route('/email', methods=['GET', 'POST'])
 # def email():
@@ -377,20 +367,20 @@ def loading_container_partial():
         
 #     return render_template("email.html", email=email, form=form)
 
-@app.route('/login')
-def login():
-    return render_template("pages/login.html")
+# @app.route('/login')
+# def login():
+#     return render_template("pages/login.html")
 
 
-# Invalid URL
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template("pages/404.html"), 404
+# # Invalid URL
+# @app.errorhandler(404)
+# def page_not_found(e):
+#     return render_template("pages/404.html"), 404
 
-# Internal Server Error
-@app.errorhandler(500)
-def internal_server_error(e):
-    return render_template("pages/500.html"), 500
+# # Internal Server Error
+# @app.errorhandler(500)
+# def internal_server_error(e):
+#     return render_template("pages/500.html"), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

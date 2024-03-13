@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<main >
+    <header class="affiliate-header">
+        <h1>Welcome to Our Affiliate Program!</h1>
+        <p>Join our affiliate program and start earning commissions today!</p>
+    </header>
+
+    <section class="affiliate-about-section">
+        <h2>Key Benefits</h2>
+        <ul>
+            <br><li>Earn commissions for referring customers.</li>
+            <br><li>Access to exclusive promotions or discounts.</li>
+            <br><li>Opportunities for additional bonuses or incentives.</li>
+            <br><li>Flexible earning potential based on performance.</li>
+        </ul>
+        <br>
+    </section>
+
+    <section class="affiliate-about-section">
+        <h2>How It Works</h2>
+        <ol>
+            <br><li>Sign Up: Register for the affiliate program through the sign-up page.</li>
+            <br><li>Receive Referral Link: Upon approval, affiliates receive a unique referral link or code.</li>
+            <br><li>Promote Products/Services: Share the referral link through various channels to drive traffic to the platform.</li>
+            <br><li>Earn Commissions: Get rewarded with commissions for each successful referral or sale generated through the affiliate link.</li>
+        </ol>
+        <br>
+    </section>
+
+    <section class="affiliate-about-section">
+        <h2>Commission Structure</h2>
+        <p>Our commission rates are based on a tiered system:</p>
+        <!-- Add commission structure details here -->
+    </section>
+
+    <section class="affiliate-about-section">
+        <h2>Terms and Conditions</h2>
+        <p>Please review our terms and conditions before joining our affiliate program:</p>
+        <!-- Add terms and conditions details here -->
+    </section>
+
+    <section class="affiliate-about-section">
+        <h2>FAQs</h2>
+        <p>
+            Q: What is an affiliate program?<br>
+            A: An affiliate program is a marketing arrangement where a business rewards affiliates for promoting their products or services. Affiliates earn a commission for each sale or action generated through their referral links.<br><br>
+
+            Q: How does your affiliate program work?<br>
+            A: Our affiliate program allows you to earn commission by referring customers to our products or services through your unique affiliate link. When someone makes a purchase using your link, you earn a percentage of the sale.<br><br>
+
+            Q: How do I become an affiliate?<br>
+            A: To become an affiliate, simply sign up for our affiliate program through our website. Once approved, you'll receive access to your unique affiliate link and marketing materials to start promoting our products or services.<br><br>
+
+            Commission and Payments:<br>
+            <strong>Q: How much commission do affiliates earn?</strong><br>
+            A: Commission rates vary depending on the product or service you promote. You can find detailed commission rates in your affiliate dashboard after signing up for the program.<br>
+        </p>
+    </section>
+
+    <section class="affiliate-about-section">
+        <h2>Ready to Get Started?</h2>
+        <p>Sign up for our affiliate program now and start earning commissions!</p>
+        <div class="d-flex">
+            <a href="{{ url_for('affiliate.affiliate_signup') }}"><button class="btn btn-primary affiliate-btn" >Sign Up</button></a>
+            <a href="{{ url_for('general.login') }}"><button class="btn btn-primary affiliate-btn">Login</button></a>
+        </div>
+    </section>
+
+    <footer>
+        <p>Contact us at affiliate@yourcompany.com for any questions or assistance.</p>
+    </footer>
+</main>
+
+{% endblock %}
+
+{% set include_footer = true %}

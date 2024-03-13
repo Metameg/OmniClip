@@ -31,6 +31,6 @@ module.exports = {
     ],
     output: {
         filename: 'bundle-[name].js',
-        path: path.resolve(__dirname, '..', 'static', 'dist'),
+        path: path.resolve(__dirname, '..', 'app', 'static', 'dist'),
     },
 };
