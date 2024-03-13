@@ -14,7 +14,7 @@ const affiliateChart = (function () {
                 label: 'Sales',
                 backgroundColor: 'rgb(54, 162, 235)',
                 borderColor: 'rgb(54, 162, 235)',
-                data: [10, 20, 30, 25, 35, 45],
+                data: [0],
             }]
         };
 

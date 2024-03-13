@@ -16,10 +16,15 @@ body {
 
 .affiliate-about-section {
     padding: 20px;
-    margin-bottom: 20px; /* Add some space between sections */
-    border: 1px solid $border-color-primary; /* Add border around each section */
+    margin-bottom: 50px; /* Add some space between sections */
+    margin-top: 50px;
+    border: 3px solid $border-color-primary; /* Add border around each section */
     border-radius: 5px; /* Add border radius for rounded corners */
 
+
+        /* Center the div horizontally */
+    margin-left: auto;
+    margin-right: auto;
     h2 {
         color: rgba(255, 255, 255, 0.9); // Adjust text opacity here
     }
@@ -38,8 +43,13 @@ body {
 
 .affiliate-btn {
     width: 200px;
-    color: #fff; 
+    color: #fff;
     border-radius: 10px;
     margin: 15px;
-    
 }
+
+
+
+
+
+// Only effects the "Ready to Get Started" section.

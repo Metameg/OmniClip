@@ -14,6 +14,13 @@ import '../scss/affiliate/affiliate-dashboard.scss';
 import '../scss/affiliate/affiliate-signup.scss';
 import '../scss/affiliate/affiliate-about.scss';
 
+
+
+import '../scss/partials/_testing.scss';
+
+
+
+
 // console.log('hello');
 
 import { configureRenderForm } from './renders/renderFormController.js';

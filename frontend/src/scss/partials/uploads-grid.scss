@@ -5,17 +5,23 @@
 
 .uploads-grid {
     width: 75%;
-    border: 2px solid $section-divider-color;
     padding: 8px;
     background: $background-gradient;
     margin: 0 auto;
 
+    border-radius: $border-radius;
+    border: $border;
+
+
     .upload-group {
         background-color: $background-color-secondary;
         margin-bottom: 15px;
+
+
     }
 
     .media-trash-btn {
         margin-left: 12px;
     }
+
 }

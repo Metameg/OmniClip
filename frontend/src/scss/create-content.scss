@@ -1,7 +1,7 @@
 @import "./_variables.scss";
 
 #main-container-params {
-    color: $font-color-primary;
+    color: solid red;
     background-color: $background-color-secondary;
     padding: 30px;
     border-radius: 14px; 
@@ -50,19 +50,6 @@
     height: 200px;
     overflow-y: scroll;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #imports {
@@ -238,6 +225,9 @@
     width: 90%;
     height: 70%;
     left: 5%;
+
+    border-radius: $border-radius;
+    border: $border;
 }
 
 .offcanvas-upload-centered {
