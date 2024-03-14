@@ -1,4 +1,4 @@
-const uploadMedia = (function () {
+const uploadMediaUI = (function () {
     // Private functions and variables
     function uploadFileUI(input, uploadContainer) {
         input.addEventListener('change', function(event) {
@@ -82,9 +82,23 @@ const uploadMedia = (function () {
             uploadFileUI(mediaFiles, videoUploads);
             uploadFileUI(mediaFiles, audioUploads);
             uploadFileUI(mediaFiles, watermarkUploads);
+        },
+
+        toggleNoUploadsMsg: function() {
+            const uploads = document.querySelectorAll('.media-upload-card');
+            const noUploadsMsg = document.getElementById('no-uploads-msg');
+            var numUploads = uploads.length;
+        
+            if (numUploads == 0) {
+                console.log('block');
+                noUploadsMsg.style.display = 'block';
+            } else {
+                console.log('none');
+                noUploadsMsg.style.display = 'none';
+            }
         }
     }
 
 })();
 
-export default uploadMedia;
+export default uploadMediaUI;
