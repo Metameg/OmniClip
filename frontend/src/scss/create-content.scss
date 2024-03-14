@@ -205,12 +205,13 @@
 
 #all-uploads {
     display: flex;
-    padding: 12px;
-    overflow-x: auto; 
+    padding: 12px; 
 }
 
 #all-uploads-content {
-    background-color: $section-divider-color;
+    // background-color: $section-divider-color;
+    margin: 0 auto;
+    padding-left: 7%;
 }
 
 .media-upload-card {
@@ -225,6 +226,7 @@
         height: 6rem;
     }
 }
+
 
 .media-upload-card:hover {
     cursor: pointer;

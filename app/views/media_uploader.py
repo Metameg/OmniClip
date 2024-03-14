@@ -32,9 +32,8 @@ def upload_media():
         else:
             return "Error! Only upload media files."
 
-        file_path = sanitized_filename
-        file_path = utilities.truncate(file_path, 14)
-        print(file_path)
+        file_path = utilities.truncate(sanitized_filename, 18)
+        
         # Save the file to appropriate directory
         file.save(os.path.join(upload_dir, file_path))
         mediapaths.append(file_path)
