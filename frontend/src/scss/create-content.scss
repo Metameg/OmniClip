@@ -226,14 +226,16 @@
     }
 }
 
+.media-upload-card:hover {
+    cursor: pointer;
+    background-color: $disabled-color;
+}
+
 .custom-check-input {
     border-color: #0d6efd;
 }
 
 
-.media-upload-card:hover {
-    cursor: pointer;
-}
 #offcanvas-media-upload {
     background-color: #ffffff; 
     margin-top: 9%;

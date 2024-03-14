@@ -96,7 +96,21 @@ const uploadMediaUI = (function () {
                 console.log('none');
                 noUploadsMsg.style.display = 'none';
             }
+        },
+
+        checkboxToggleOnClick: function() {
+            const uploadCards = document.querySelectorAll('.media-upload-card');
+
+            uploadCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    var checkbox = card.querySelectorAll('input[type="checkbox"]');
+                    checkbox.checked = !checkbox.checked;
+                    console.log(checkbox.checked);
+                });
+            });
         }
+
+
     }
 
 })();

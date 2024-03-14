@@ -35,7 +35,12 @@
         <p id="no-uploads-msg">No media files uploaded.</p>
         
         <div id="all-uploads-content" class="row rounded"></div>
-            
+        <script>
+            function toggleCheckbox(div) {
+                const checkbox = div.querySelector('input[type="checkbox"]');
+                checkbox.checked = !checkbox.checked; // Toggle the checked state
+            }
+        </script>
     </div>
 </div>
 

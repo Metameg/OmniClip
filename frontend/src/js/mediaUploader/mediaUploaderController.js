@@ -3,7 +3,7 @@ import { mediaUploaderService } from "./mediaUploaderService.js";
 
 
 export function configureMediaUploader() {
-    // uploadMedia.configureDOM();
+    // uploadMediaUI.configureDOM();
     const mediaFiles = document.getElementById('hidden-file-input');
     // const allUploads = document.getElementById('all-uploads');
     const allUploadsContent = document.getElementById('all-uploads-content');
@@ -28,13 +28,15 @@ export function configureMediaUploader() {
         try {
             const response = await mediaUploaderService.submitMediaData(url, mediaData);
             allUploadsContent.innerHTML += response;
-            uploadMediaUI.toggleNoUploadsMsg()
+            uploadMediaUI.toggleNoUploadsMsg();
+            
+
             
         } catch (error) {
             // Handle errors if needed
             console.error(error);
         }
 
-        
+        // uploadMediaUI.checkboxToggleOnClick();
     });    
 }
