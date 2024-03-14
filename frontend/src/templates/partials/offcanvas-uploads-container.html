@@ -18,14 +18,29 @@
   </li>
 </ul>
 
-<div class="offcanvas-header ">
+<div class="offcanvas-header text-center mx-auto offcanvas-upload-centered">
     <h5 class="offcanvas-title" id="offcanvas-media-uploadLabel">Your Media</h5>
 
+
+
+
+    <p><strong>Drop files to upload</strong><br>or</p>
+    <label for="hidden-file-input" class="custom-file-input">Select Files</label>
+    <input id="hidden-file-input" type="file" class="form-control" name="mediaPath" multiple>
 </div>
 
-<div id="all-uploads" class="tab-pane fade show active" role="tabpanel" aria-labelledby="media-tab">
-    <p id="no-uploads-msg">No media files uploaded.</p>
+
+<div class="offcanvas-body" >
+    <div id="all-uploads" class="tab-pane fade show active" role="tabpanel" aria-labelledby="media-tab">
+        <p id="no-uploads-msg">No media files uploaded.</p>
+        
+        <div id="all-uploads-content" class="row rounded"></div>
+            
+    </div>
 </div>
+
+
+
 
 <div id="video-uploads" class="tab-pane fade" role="tabpanel" aria-labelledby="video-tab">
     VIDEO UPLOADS
@@ -57,15 +72,3 @@
     });
 
 </script>
-
-
-
-
-
-
-
-<div class="offcanvas-body text-center mx-auto offcanvas-upload-centered" >
-    <p><strong>Drop files to upload</strong><br>or</p>
-    <label for="hidden-file-input" class="custom-file-input">Select Files</label>
-    <input id="hidden-file-input" type="file" class="form-control" name="mediaPath" multiple>
-</div>

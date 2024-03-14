@@ -16,7 +16,8 @@ def register_blueprints(app):
     app.register_blueprint(login.blueprint)
 
 app = Flask(__name__, template_folder=os.path.join('..', 'frontend', 'src', 'templates'))
-app.permanent_session_lifetime = timedelta(minutes=1)
+# Set session length time
+app.permanent_session_lifetime = timedelta(days=2)
 
 load_dotenv()
 mysql_pwd = os.getenv('MYSQL_PWD')

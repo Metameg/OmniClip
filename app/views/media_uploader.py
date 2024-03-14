@@ -13,23 +13,27 @@ def upload_media():
     # Process each uploaded file
     mediapaths = []
     upload_dirs = []
+    tag_type = ''
     for file in files:
 
         sanitized_filename = utilities.sanitize_filename(file.filename)
 
         if utilities.is_video_file(file.filename):
             upload_dir =  'video_uploads'
-
+            tag_type = 'video'
         elif utilities.is_audio_file(file.filename):
             upload_dir = 'audio_uploads'
+            tag_type = 'audio'
 
         elif utilities.is_image_file(file.filename):
             upload_dir =  'watermark_uploads'
+            tag_type = 'img'
             
         else:
             return "Error! Only upload media files."
 
         file_path = sanitized_filename
+        file_path = utilities.truncate(file_path, 14)
         print(file_path)
         # Save the file to appropriate directory
         file.save(os.path.join(upload_dir, file_path))
@@ -37,7 +41,7 @@ def upload_media():
         upload_dirs.append(upload_dir)
 
     # Respond with the list of file names
-    return render_template('partials/media-uploads.html', upload_dirs=upload_dirs, mediapaths=mediapaths)
+    return render_template('partials/media-uploads.html', upload_dirs=upload_dirs, mediapaths=mediapaths, tag_type=tag_type)
     # threading.Thread(target=simulate_time_consuming_process, args=()).start()
     
 

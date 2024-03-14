@@ -1,15 +1,16 @@
-{% for i in range(mediapaths|length)  %}
+
     
-        
-    <div class="card media-upload-card">
-        <img src="{{ url_for('general.serve_media', upload_dir=upload_dirs[i], filename=mediapaths[i]) }}" class="card-img-top" alt="">
-        <div class="card-body">
-            <p class="card-text">{{ mediapaths[i] }}</p>
-            <input type="checkbox" class="form-check-input">
+{% for i in range(mediapaths|length)  %}
+    <div class="col-lg-4 col-md-4 col-sm-4 col-6 mb-4">    
+        <div class="card media-upload-card">
+            <{{tag_type}} src="{{ url_for('general.serve_media', upload_dir=upload_dirs[i], filename=mediapaths[i]) }}" class="card-img-top w-100" alt="" controls></{{tag_type}}>
+            <div class="mt-2">
+                <p class="card-text">{{ mediapaths[i] }}</p>
+                <input type="checkbox" class="form-check-input custom-check-input">
+            </div>
         </div>
     </div>
-    
-   
-
 {% endfor %}
+
+
 

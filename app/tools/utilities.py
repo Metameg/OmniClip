@@ -64,6 +64,7 @@ def is_image_file(filename):
     image_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg', '.webp']  # Add more extensions as needed
     return any(filename.lower().endswith(ext) for ext in image_extensions)
     
-
+def truncate(str, x):
+    return str[:x]
 
 

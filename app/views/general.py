@@ -22,9 +22,6 @@ def checkout():
     return render_template("pages/checkout.html")
 
 
-
-
-
 # Invalid URL
 @blueprint.errorhandler(404)
 def page_not_found(e):
