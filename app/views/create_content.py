@@ -18,50 +18,52 @@ def create_content():
 
 @blueprint.route('/create-content', methods=['POST'])
 def render():
-    print("here")
     # Validate the CSRF token
     csrf.protect()
     # json_data = request.get_json()
     # print(json_data)
     # if request.form.get("action") == "formData":
-    videos = request.files.getlist('mediaPath')
-    print(videos)
-    audios = request.files.getlist('audioPath')
-    print(audios)
-    watermarks = request.files.getlist('watermarkPath')
-    print(watermarks)
-    form_data = request.form
-    print(len(videos), len(audios), len(watermarks))
+    # videos = request.files.getlist('mediaPath')
+    # print(videos)
+    # audios = request.files.getlist('audioPath')
+    # print(audios)
+    # watermarks = request.files.getlist('watermarkPath')
+    # print(watermarks)
+    form_data = request.get_json()
+    # print(len(videos), len(audios), len(watermarks))
     # clippack_category = form_data['clippack']
-
+    try:
+        print(type(form_data['selectedMedia[]']))
+    except KeyError:
+        print("KeyError")
     for key, value in form_data.items():
         print(f"{key}: {value}")
 
     # if import videos was disabled, set video upload directory to appropriate clippack category
-    if len(videos) == 0:
-        # video_uploads_dir = os.path.join('clippack_categories', clippack_category)
-        video_uploads_dir = 'video_uploads'
-    else:
-        if videos[0].filename == '':
-            video_uploads_dir = 'video_uploads'
-        else:
-            video_uploads_dir = 'video_uploads'
-            upload_files(videos, video_uploads_dir)
+    # if len(videos) == 0:
+    #     # video_uploads_dir = os.path.join('clippack_categories', clippack_category)
+    #     video_uploads_dir = 'video_uploads'
+    # else:
+    #     if videos[0].filename == '':
+    #         video_uploads_dir = 'video_uploads'
+    #     else:
+    #         video_uploads_dir = 'video_uploads'
+    #         upload_files(videos, video_uploads_dir)
 
-    if len(audios) == 0:
-        audio_uploads_dir = 'audio_uploads'
+    # if len(audios) == 0:
+    #     audio_uploads_dir = 'audio_uploads'
 
-    elif  audios[0].filename != '':
-        upload_files(audios, 'audio_uploads')
+    # elif  audios[0].filename != '':
+    #     upload_files(audios, 'audio_uploads')
 
-    if len(watermarks) == 0:
-        watermark_uploads_dir = None
-    else:
-        if  watermarks[0].filename == '':
-            watermark_uploads_dir = None
-        else:
-            watermark_uploads_dir = 'watermark_uploads'
-            upload_files(watermarks, 'watermark_uploads')
+    # if len(watermarks) == 0:
+    #     watermark_uploads_dir = None
+    # else:
+    #     if  watermarks[0].filename == '':
+    #         watermark_uploads_dir = None
+    #     else:
+    #         watermark_uploads_dir = 'watermark_uploads'
+    #         upload_files(watermarks, 'watermark_uploads')
         
 
     
@@ -91,8 +93,8 @@ def render():
     voice = os.path.join('static', 'voices', form_data['voice'] + '.mp3')
     numvideos = int(form_data['numvideos'])
 
-    editor = AutoEditor(outpath, video_uploads_dir, audio_uploads_dir, 
-                        watermark_uploads_dir, fade_duration, target_duration, 
+    editor = AutoEditor(outpath, 'video_uploads', audio_uploads_dir, 
+                        'watermark_uploads', fade_duration, target_duration, 
                         'freedom', font_size, text_primary_color, text_outline_color, 
                         isBold, isItalic, isUnderline, 
                         alignment, watermark_opacity,

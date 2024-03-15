@@ -3,7 +3,8 @@ import { mediaUploaderService } from "./mediaUploaderService.js";
 
 
 export function configureMediaUploader() {
-    // uploadMediaUI.configureDOM();
+    uploadMediaUI.configureDOM();
+    
     const mediaFiles = document.getElementById('hidden-file-input');
     // const allUploads = document.getElementById('all-uploads');
     const allUploadsContent = document.getElementById('all-uploads-content');
@@ -18,7 +19,7 @@ export function configureMediaUploader() {
         var files = mediaFiles.files;
         var mediaData = new FormData();
         const url = '/upload-media'
-        // allUploads.innerHTML = '';
+        
        
         // Add each file to the FormData object
         for (var i = 0; i < files.length; i++) {

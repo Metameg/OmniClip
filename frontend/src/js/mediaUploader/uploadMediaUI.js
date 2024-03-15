@@ -1,5 +1,7 @@
 const uploadMediaUI = (function () {
     // Private functions and variables
+    var selectedMedia = [];
+
     function uploadFileUI(input, uploadContainer) {
         input.addEventListener('change', function(event) {
             const files = event.target.files;
@@ -60,14 +62,46 @@ const uploadMediaUI = (function () {
         }, 500); // Adjust the interval as needed
     }
 
+    function collectSelectedMedia() {
+        const uploadCards = document.querySelectorAll('.media-upload-card');
+        selectedMedia = [];
+        
+        uploadCards.forEach(card => {
+            const chekcbox = card.querySelector('.custom-check-input');
+            const mediaElement = card.querySelector('video, img, audio');
+            
+            if (chekcbox.checked) {
+                var src = mediaElement.getAttribute('src');
+                selectedMedia.push(src);
+            }
+
+        });
+
+        return selectedMedia;
+    }
+
+    function offCanvasCloseListener(offCanvasCloseBtn) {
+
+        offCanvasCloseBtn.addEventListener('click', function() {
+            console.log('click');
+            selectedMedia = collectSelectedMedia();
+            selectedMedia.forEach(media => {
+                console.log("media before: " + media);
+            });    
+        });
+    }
+
     // Public API
     return {
         configureDOM: function() {
-            const mediaFiles = document.getElementById('hidden-file-input');
-            const allUploads = document.getElementById('all-uploads');
-            const videoUploads = document.getElementById('video-uploads');
-            const audioUploads = document.getElementById('audio-uploads');
-            const watermarkUploads = document.getElementById('watermark-uploads');
+            const offcanvasCloseBtn = document.getElementById('offcanvas-upload-close');
+            
+            offCanvasCloseListener(offcanvasCloseBtn);
+            // const mediaFiles = document.getElementById('hidden-file-input');
+            // const allUploads = document.getElementById('all-uploads');
+            // const videoUploads = document.getElementById('video-uploads');
+            // const audioUploads = document.getElementById('audio-uploads');
+            // const watermarkUploads = document.getElementById('watermark-uploads');
             // const clippackPathInput = document.getElementById('clippack-path');
             // const uploadedVideosContainer = document.getElementById('uploaded-videos-container');
             // const audioPathInput = document.getElementById('audio-path');
@@ -78,10 +112,10 @@ const uploadMediaUI = (function () {
             // uploadFileUI(clippackPathInput, uploadedVideosContainer);
             // uploadFileUI(audioPathInput, uploadedAudiosContainer);
             // uploadFileUI(watermarkPathInput, uploadedWatermarksContainer);
-            uploadFileUI(mediaFiles, allUploads);
-            uploadFileUI(mediaFiles, videoUploads);
-            uploadFileUI(mediaFiles, audioUploads);
-            uploadFileUI(mediaFiles, watermarkUploads);
+            // uploadFileUI(mediaFiles, allUploads);
+            // uploadFileUI(mediaFiles, videoUploads);
+            // uploadFileUI(mediaFiles, audioUploads);
+            // uploadFileUI(mediaFiles, watermarkUploads);
         },
 
         toggleNoUploadsMsg: function() {
@@ -98,17 +132,29 @@ const uploadMediaUI = (function () {
             }
         },
 
-        checkboxToggleOnClick: function() {
-            const uploadCards = document.querySelectorAll('.media-upload-card');
-
-            uploadCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    var checkbox = card.querySelectorAll('input[type="checkbox"]');
-                    checkbox.checked = !checkbox.checked;
-                    console.log(checkbox.checked);
-                });
-            });
+        getSelectedMedia: function() {
+            return selectedMedia;
         }
+
+        // offCanvasClose: function() {
+
+        //     const offcanvasClose = document.getElementById('offcanvas-upload-close');
+        //     var selectedMedia = [];
+
+        //     offcanvasClose.addEventListener('click', function() {
+        //         console.log('click');
+        //         selectedMedia = collectSelectedMedia();
+        //         selectedMedia.forEach(media => {
+        //             console.log("media before: " + media);
+        //         });
+    
+                
+    
+        //         return selectedMedia;    
+        //     });
+            
+        //     return [];
+        // }
 
 
     }
