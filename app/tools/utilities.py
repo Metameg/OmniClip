@@ -65,6 +65,11 @@ def is_image_file(filename):
     return any(filename.lower().endswith(ext) for ext in image_extensions)
     
 def truncate(str, x):
-    return str[:x]
+    if len(str) >= x + 6:
+        return str[:x-6] + '...' + str[x-3:]
+    elif len(str) > x and len(str) < x + 6:
+        return str[:x-9] + str[x-3:]
+    else:
+        return str
 
 

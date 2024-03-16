@@ -11,10 +11,10 @@ import os
 # from flask_migrate import Migrate
 # from datetime import datetime
 import app.tools.utilities
-from app import app
+from app import create_app
 
-os.environ['FLASK_APP'] = 'app'
-
+# os.environ['FLASK_APP'] = 'app'
+app = create_app()
 
 # app = Flask(__name__, template_folder=os.path.join('..', 'frontend', 'src', 'templates'))
 # load_dotenv()

@@ -1,5 +1,5 @@
 from flask import Blueprint, request, flash, render_template, jsonify
-from app import db
+
 from app.tools import utilities
 import os
 

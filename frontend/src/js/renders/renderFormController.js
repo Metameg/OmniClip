@@ -27,7 +27,6 @@ export function configureRenderForm() {
         
         
         var renderData = new FormData($('#render-form')[0]);
-        console.log("renderData Before: " + renderData);
         renderData = appendMediaData(renderData);
        
         var renderDataObject = {};
@@ -42,7 +41,7 @@ export function configureRenderForm() {
             }
         });
 
-        console.log(renderDataObject);
+
         delete renderDataObject.mediaPath;
         delete renderDataObject.csrf_token;
         $('#video-content').html('');

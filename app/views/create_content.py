@@ -1,7 +1,7 @@
 import json
 from flask import Blueprint, request, flash, render_template
-from app import db, csrf
-from app.models.Users import Users
+from app.extensions import db, csrf
+from app.models.User import User
 from app.tools.utilities import generate_videos, upload_files
 from app.services.AutoEditor import AutoEditor
 import os
@@ -106,7 +106,7 @@ def render():
 
 @blueprint.route('/upload-media/<int:id>', methods=['GET', 'POST'])
 def upload_media(id):
-    user = Users.query.get_or_404(id)
+    user = User.query.get_or_404(id)
     if request.method == 'POST':
         user.name = request.form['name']
         user.email = request.form['email']
