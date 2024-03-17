@@ -31,7 +31,7 @@
                 <div class="divider-content-center">Or</div>
             </div>
 
-            <form action="#" method="post">
+            <form id="login-form" action="#" method="post">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> 
                 <div class="input-group mb-3">
                     <span class="input-group-text">
@@ -43,7 +43,8 @@
                     <span class="input-group-text">
                         <i class='bx bxs-lock-alt' ></i>
                     </span>
-                    <input type="password" class="form-control form-control-lg fs-6" placeholder="Password" name="password">     
+                    <input id="login-pwd" type="password" class="form-control form-control-lg fs-6" placeholder="Password">     
+                    <input id="login-hash" type="hidden" class="form-control form-control-lg fs-6" placeholder="Password" name="password">     
                 </div>
                 <div class="input-group mb-3 d-flex justify-content-between">
                     <div class="form-check">

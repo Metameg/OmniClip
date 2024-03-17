@@ -27,7 +27,8 @@ import { configureRenderForm } from './renders/renderFormController.js';
 import { configureQuoteGenerator } from './quoteGenerator/quoteController.js';
 import { configureAffiliate } from './affiliate/affiliateController.js';
 import { configureMediaUploader } from './mediaUploader/mediaUploaderController.js';
-
+import { configureLoginController } from './login/loginController.js';
+import { configureSignupController } from './login/signupController.js';
 
 
 $(document).ready(function() {
@@ -36,10 +37,16 @@ $(document).ready(function() {
         configureRenderForm();
         configureMediaUploader();
         configureQuoteGenerator();
-        // configureVideoStyler();
     }  
     if (window.location.pathname.startsWith('/affiliate-program/dashboard')) {
         configureAffiliate();
+    }  
+    if (window.location.pathname.startsWith('/login')) {
+        console.log("here");
+        configureLoginController();
+    }  
+    if (window.location.pathname.startsWith('/signup')) {
+        configureSignupController();
     }  
 }); 
 

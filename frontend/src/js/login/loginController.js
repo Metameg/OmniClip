@@ -1,24 +1,20 @@
-import { loginService } from "./loginService.js";
+import { sha256 } from "../shared/auth.js";
 
-
-export function configureMediaUploader() {
+export function configureLoginController() {
     
+    const loginForm  = document.getElementById('login-form');
+    
+    loginForm.addEventListener('submit', async function(event) {
+        const pwd = document.getElementById("login-pwd").value;
+        const loginHash  = document.getElementById('login-hash');
+        console.log(pwd);
+        // event.preventDefault();
+        let hash = await sha256(pwd);
+        loginHash.value = hash;
+        console.log(loginHash.value);
 
-    const renderForm = document.getElementById('render-form');
-
-    renderForm.addEventListener('submit', async function(event) {
-          
-        event.preventDefault();
-        var loginData = new FormData($('#render-form')[0]);
-       
-        
-        
-        try {
-            const response = await renderService.postFormData(renderDataObject);
-            $('#video-content').html(response);
-        } catch (error) {
-            // Handle errors if needed
-            console.error(error);
-        }
+        this.submit();
     });    
+
+     
 }
