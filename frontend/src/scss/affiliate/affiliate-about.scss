@@ -1,11 +1,5 @@
 @import '../variables.scss';
 
-body {
-    font-family: $font-family;
-    background-color: $background-color-primary;
-    color: #fff; // White text color
-}
-
 
 .affiliate-header {
     background: $background-gradient;
@@ -22,7 +16,7 @@ body {
     border-radius: 5px; /* Add border radius for rounded corners */
 
 
-        /* Center the div horizontally */
+       
     margin-left: auto;
     margin-right: auto;
     h2 {

@@ -5,7 +5,7 @@ import '../scss/checkout.scss';
 import '../scss/circular-progress.scss';
 import '../scss/create-content.scss';
 import '../scss/fine-tuning-box.scss';
-import '../scss/index.scss';
+import '../scss/home.scss';
 import '../scss/login.scss';
 import '../scss/pricing.scss';
 import '../scss/profile.scss';

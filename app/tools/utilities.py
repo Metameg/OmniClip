@@ -2,7 +2,7 @@ import os
 
 def get_root_path():
     this_directory = os.path.dirname(os.path.abspath(__file__))
-    root_path = os.path.join(this_directory, '..', '..')
+    root_path = os.path.join(this_directory, '..')
 
     return root_path
 

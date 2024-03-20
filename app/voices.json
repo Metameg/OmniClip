@@ -1,0 +1,61 @@
+{
+    "voices": [
+        {
+            "name": "Callum",
+            "audio": "static/voices/Callum.mp3"
+        },
+        {
+            "name": "Charlie",
+            "audio": "static/voices/Charlie.mp3"
+        },
+        {
+            "name": "Charlotte",
+            "audio": "static/voices/Charlotte.mp3"
+        },
+        {
+            "name": "Clyde",
+            "audio": "static/voices/Clyde.mp3"
+        },
+        {
+            "name": "Daniel",
+            "audio": "static/voices/Daniel.mp3"
+        },
+        {
+            "name": "Dave",
+            "audio": "static/voices/Dave.mp3"
+        },
+        {
+            "name": "Emily",
+            "audio": "static/voices/Emily.mp3"
+        },
+        {
+            "name": "Ethan",
+            "audio": "static/voices/Ethan.mp3"
+        },
+        {
+            "name": "Fin",
+            "audio": "static/voices/Fin.mp3"
+        },
+        {
+            "name": "Freya",
+            "audio": "static/voices/Freya.mp3"
+        },
+        {
+            "name": "Gigi",
+            "audio": "static/voices/Gigi.mp3"
+        },
+        {
+            "name": "Giovanni",
+            "audio": "static/voices/Giovanni.mp3"
+        },
+        {
+            "name": "Glinda",
+            "audio": "static/voices/Glinda.mp3"
+        },
+        {
+            "name": "Grace",
+            "audio": "static/voices/Grace.mp3"
+        }
+
+    ] 
+}

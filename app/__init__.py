@@ -6,7 +6,7 @@ from datetime import timedelta
 from app.models import Affiliate, SubscriptionPlan, User, Render, Media  
 
 def create_app():
-    app = Flask(__name__, template_folder=os.path.join('..', 'frontend', 'src', 'templates'))
+    app = Flask(__name__, static_folder=('static'), template_folder=('templates'))
     # Set session length time
     app.permanent_session_lifetime = timedelta(days=2)
 
