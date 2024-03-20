@@ -208,8 +208,11 @@
     padding: 12px; 
 }
 
-#all-uploads-content {
-    // background-color: $section-divider-color;
+#video-uploads, #audio-uploads, #img-uploads {
+    display: none;
+}
+
+#all-uploads-content, #video-uploads-content, #audio-uploads-content, #img-uploads-content {
     margin: 0 auto;
     padding-left: 7%;
 }

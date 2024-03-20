@@ -91,71 +91,69 @@ const uploadMediaUI = (function () {
         });
     }
 
+    function tabListener() {
+        // Click event handler for tab links
+        $(".upload-nav-link").on('click', function() {
+            // Remove 'active' class from all tab links
+            $(".upload-nav-link").removeClass('active');
+
+            var targetTabId = $(this).attr('aria-controls');
+            var targetEle = document.getElementById(targetTabId);
+            
+            // filter the files based on active tab
+            // showTabContent(targetEle, clickedID);
+            clearAllContent();
+            targetEle.style.display = 'flex';
+            
+            
+            // Add 'active' class to the clicked tab link
+            $(this).addClass('active');
+
+            // Optionally, show the corresponding content tab
+            $(".upload-tab-pane").removeClass('show active');
+            $("#" + targetTabId).addClass('show active');
+        });
+    }
+
+
+    function clearAllContent() {
+        const allContent = document.getElementById('all-uploads');
+        const videoContent = document.getElementById('video-uploads');
+        const audioContent = document.getElementById('audio-uploads');
+        const imgContent = document.getElementById('img-uploads');
+
+        allContent.style.display = 'none';
+        videoContent.style.display = 'none';
+        audioContent.style.display = 'none';
+        imgContent.style.display = 'none';
+    }
+
+
     // Public API
     return {
         configureDOM: function() {
             const offcanvasCloseBtn = document.getElementById('offcanvas-upload-close');
-            
+        
+            tabListener();
             offCanvasCloseListener(offcanvasCloseBtn);
-            // const mediaFiles = document.getElementById('hidden-file-input');
-            // const allUploads = document.getElementById('all-uploads');
-            // const videoUploads = document.getElementById('video-uploads');
-            // const audioUploads = document.getElementById('audio-uploads');
-            // const watermarkUploads = document.getElementById('watermark-uploads');
-            // const clippackPathInput = document.getElementById('clippack-path');
-            // const uploadedVideosContainer = document.getElementById('uploaded-videos-container');
-            // const audioPathInput = document.getElementById('audio-path');
-            // const uploadedAudiosContainer = document.getElementById('uploaded-audios-container');
-            // const watermarkPathInput = document.getElementById('watermark-path');
-            // const uploadedWatermarksContainer = document.getElementById('uploaded-watermarks-container');
-
-            // uploadFileUI(clippackPathInput, uploadedVideosContainer);
-            // uploadFileUI(audioPathInput, uploadedAudiosContainer);
-            // uploadFileUI(watermarkPathInput, uploadedWatermarksContainer);
-            // uploadFileUI(mediaFiles, allUploads);
-            // uploadFileUI(mediaFiles, videoUploads);
-            // uploadFileUI(mediaFiles, audioUploads);
-            // uploadFileUI(mediaFiles, watermarkUploads);
         },
 
-        toggleNoUploadsMsg: function() {
-            const uploads = document.querySelectorAll('.media-upload-card');
-            const noUploadsMsg = document.getElementById('no-uploads-msg');
-            var numUploads = uploads.length;
-        
+
+        toggleNoUploadsMsg: function(content, msg) {
+            var numUploads = content.querySelectorAll('.media-col').length;
+
+            console.log(content + ": " + numUploads);
             if (numUploads == 0) {
-                console.log('block');
-                noUploadsMsg.style.display = 'block';
+                msg.style.display = 'block';
             } else {
-                console.log('none');
-                noUploadsMsg.style.display = 'none';
+                msg.style.display = 'none';
             }
         },
+
 
         getSelectedMedia: function() {
             return selectedMedia;
         }
-
-        // offCanvasClose: function() {
-
-        //     const offcanvasClose = document.getElementById('offcanvas-upload-close');
-        //     var selectedMedia = [];
-
-        //     offcanvasClose.addEventListener('click', function() {
-        //         console.log('click');
-        //         selectedMedia = collectSelectedMedia();
-        //         selectedMedia.forEach(media => {
-        //             console.log("media before: " + media);
-        //         });
-    
-                
-    
-        //         return selectedMedia;    
-        //     });
-            
-        //     return [];
-        // }
-
 
     }
 

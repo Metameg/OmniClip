@@ -12,7 +12,6 @@ export const mediaUploaderService = {
                 processData: false,
                 contentType: false, 
                 success: function(data) {
-                    console.log("files[]: " + data);
                     resolve(data);
                 },
                 error: function(error) {
