@@ -1,74 +1,46 @@
-from flask import Blueprint, request, flash, render_template, jsonify
-
-from app.tools import utilities
-import os
+from flask import Blueprint, request, jsonify, session
+from app.tools import helpers, database
+from app.models.User import  User
+from app.models.Media import  Media
+from app.extensions import db
 
 blueprint = Blueprint('media_uploader', __name__)
 
 @blueprint.route('/upload-media', methods=['POST'])
 def upload_media():
-    
+    if "user" in session:
+        username = session["user"]
+        user_id = database.retrieve(User, username=username).id
+    else:
+        user_id = None
+
     files = request.files.getlist('files[]')
+    if user_id:
+        for file in files:
+            database.create(db, Media, user_id=user_id, filename=file.filename)
 
-    # Process each uploaded file
-    mediapaths = []
-    upload_dirs = []
-    tag_type = ''
-    template = "partials/uploader/all-media.html"
-
-    html_data = [
-        {"allMedia": "" },
-        {"videos": ""},
-        {"audios": ""},
-        {"images": ""}
-    ]
-
-    video_content = ""
-    audio_content = ""
-    image_content = ""
-
-    for file in files:
-
-        sanitized_filename = utilities.sanitize_filename(file.filename)
-        file_path = utilities.truncate(sanitized_filename, 18)
-
-        if utilities.is_video_file(file.filename):
-            upload_dir =  'video_uploads'
-            tag_type = 'video'
-            video_content = render_template(template, upload_dirs=[upload_dir], mediapaths=[file_path], tag_type=tag_type)
-            html_data[1]["videos"] += video_content
-
-        elif utilities.is_audio_file(file.filename):
-            upload_dir = 'audio_uploads'
-            tag_type = 'audio'
-            audio_content = render_template(template, upload_dirs=[upload_dir], mediapaths=[file_path], tag_type=tag_type)
-            html_data[2]["audios"] += audio_content
-
-        elif utilities.is_image_file(file.filename):
-            upload_dir =  'watermark_uploads'
-            tag_type = 'img'
-            image_content = render_template(template, upload_dirs=[upload_dir], mediapaths=[file_path], tag_type=tag_type)
-            html_data[3]["images"] += image_content
-            
-        else:
-            return "Error! Only upload media files."
-
-        
-        
-        # Save the file to appropriate directory
-        file.save(os.path.join(upload_dir, file_path))
-        mediapaths.append(file_path)
-        upload_dirs.append(upload_dir)
-
-        # Add file to the all media html data
-        aggregate_content = render_template(template, upload_dirs=upload_dirs, mediapaths=mediapaths, tag_type=tag_type)
-        html_data[0]["allMedia"] = aggregate_content
-
+    html_data = helpers.build_media_html(files)
     
     return jsonify(html_data)
     # threading.Thread(target=simulate_time_consuming_process, args=()).start()
     
+@blueprint.route('/retrieve-user-media')
+def retrieve_medias():
+    
+    if "user" in session:
+        username = session["user"]
+    else:
+        data = [
+            {"allMedia": "" },
+            {"videos": ""},
+            {"audios": ""},
+            {"images": ""}
+        ]   
+        return jsonify(data)
+    
+    data = database.retrieve_from_join(db, User, Media, username)
+    html_data = helpers.build_media_html(data)
 
+    return html_data
 
-# @blueprint.route('/retrieve-videos')
-# def retrieve_videos():
+    return jsonify(data)

@@ -141,8 +141,6 @@ const uploadMediaUI = (function () {
 
         toggleNoUploadsMsg: function(content, msg) {
             var numUploads = content.querySelectorAll('.media-col').length;
-
-            console.log(content + ": " + numUploads);
             if (numUploads == 0) {
                 msg.style.display = 'block';
             } else {

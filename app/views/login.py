@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, url_for, redirect, session, flash
 from app.extensions import db, csrf
-# from app import csrf
+from app.tools.database import create
 from app.models.User import User
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -53,13 +53,7 @@ def signup():
         user_username = User.query.filter_by(username=username).first()
 
         if user_email is None and user_username is None:
-            new_user = User(first_name=fname,
-                        last_name=lname,
-                        username=username, 
-                        password_hash=hashed_pw,
-                        email=email)
-            db.session.add(new_user)
-            db.session.commit()
+            create(db, User, first_name=fname, last_name=lname, username=username, password_hash=hashed_pw, email=email)
 
             # Start User Session
             session.permanent = True  
@@ -89,5 +83,6 @@ def user():
 @blueprint.route('/logout')
 def logout():
     session.pop("user", None)
+    session.clear()
     return render_template('pages/login/logout.html')
         
