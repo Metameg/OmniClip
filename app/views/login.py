@@ -3,6 +3,8 @@ from app.extensions import db, csrf
 from app.tools.database import create
 from app.models.User import User
 from werkzeug.security import generate_password_hash, check_password_hash
+from app.tools.utilities import get_root_path
+import os
 
 blueprint = Blueprint('login', __name__)
 
@@ -54,6 +56,10 @@ def signup():
 
         if user_email is None and user_username is None:
             create(db, User, first_name=fname, last_name=lname, username=username, password_hash=hashed_pw, email=email)
+
+            # Create Media Directory
+            media_dir = os.path.join(get_root_path(), '..', 'userData', username)
+            os.mkdir(media_dir)
 
             # Start User Session
             session.permanent = True  

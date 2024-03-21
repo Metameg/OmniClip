@@ -69,6 +69,13 @@ def truncate(str, x):
         return str[:x-9] + str[x-3:]
     else:
         return str
+
+def get_file_size(file):
+    file.seek(0, 2)  # Move the file pointer to the end of the file
+    file_size = file.tell()  # Get the current position of the file pointer (which is the size of the file)
+
+    return file_size
+
     
 
 
