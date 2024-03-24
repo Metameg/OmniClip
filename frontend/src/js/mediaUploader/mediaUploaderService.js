@@ -23,3 +23,21 @@ export const mediaUploaderService = {
     }
 }
 
+export function retrieveMedia() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: '/retrieve-user-media',
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                // Handle the data returned by the server
+                resolve(data);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Handle errors
+                reject(errorThrown);
+            }
+        });
+    });
+}
+

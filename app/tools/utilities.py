@@ -30,6 +30,11 @@ def get_output_count():
 
     return num_files
 
+def get_media_dir(username):
+    
+    return os.path.join(get_root_path(), '..', 'userData', username)
+
+
 def get_file_extension(file_path):
     _, extension = os.path.splitext(file_path)
     return extension.lower()

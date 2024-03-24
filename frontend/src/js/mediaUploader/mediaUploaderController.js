@@ -1,6 +1,6 @@
 import uploadMediaUI from "./uploadMediaUI.js";
-import { mediaUploaderService } from "./mediaUploaderService.js";
-import { retrieveMedia } from "../shared/database.js";
+import { mediaUploaderService, retrieveMedia } from "./mediaUploaderService.js";
+// import { retrieveMedia } from "../shared/database.js";
 
 function uploadFilesListener(mediaFiles, contentContainers, msgElements) {
     mediaFiles.addEventListener('change', async function(event) {
@@ -35,11 +35,22 @@ function uploadFilesListener(mediaFiles, contentContainers, msgElements) {
     });    
 }
 
-function offCanvasToggleListener(toggle) {
+function offCanvasToggleListener(toggle, contentContainers, msgElements) {
     toggle.addEventListener('click', function() {
     retrieveMedia()
         .then(data => {
             console.log('Data:', data);
+            // Add html from server to divs
+            contentContainers[0].innerHTML = data[0]["allMedia"];
+            contentContainers[1].innerHTML = data[1]["videos"];
+            contentContainers[2].innerHTML = data[2]["audios"];
+            contentContainers[3].innerHTML = data[3]["images"];
+
+            // Toggle the no uploads messages for each div
+            uploadMediaUI.toggleNoUploadsMsg(contentContainers[0], msgElements[0]);
+            uploadMediaUI.toggleNoUploadsMsg(contentContainers[1], msgElements[1]);
+            uploadMediaUI.toggleNoUploadsMsg(contentContainers[2], msgElements[2]);
+            uploadMediaUI.toggleNoUploadsMsg(contentContainers[3], msgElements[3]);
         })
         .catch(error => {
             console.error('Error:', error);
@@ -61,11 +72,11 @@ export function configureMediaUploader() {
     const audiosNoUploadsMsg = document.getElementById('audio-no-uploads-msg');
     const imgsNoUploadsMsg = document.getElementById('img-no-uploads-msg');
     const offCanvasToggle = document.getElementById('upload-offcanvas-toggle');
-
     const contentContainers = [allUploadsContent, videoUploadsContent, audioUploadsContent, imgUploadsContent];
     const msgElements = [allNoUploadsMsg, videosNoUploadsMsg, audiosNoUploadsMsg, imgsNoUploadsMsg];
+
     uploadMediaUI.toggleNoUploadsMsg(allUploadsContent, allNoUploadsMsg);
     uploadFilesListener(mediaFiles, contentContainers, msgElements);
-    offCanvasToggleListener(offCanvasToggle);
+    offCanvasToggleListener(offCanvasToggle, contentContainers, msgElements);
    
 }
