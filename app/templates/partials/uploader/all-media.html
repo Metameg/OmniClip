@@ -1,16 +1,19 @@
 
     
-{% for i in range(mediapaths|length)  %}
+
     <div class="col-lg-4 col-md-4 col-sm-4 col-6 mb-2 media-col">    
         <div class="card media-upload-card" onclick="toggleCheckbox(this);">
-            <{{tag_type}} src="{{ url_for('general.serve_media', user_dir=upload_dirs[i], filename=mediapaths[i]) }}" class="card-img-top w-100" alt="" controls></{{tag_type}}>
+            <{{tag_type}} src="{{ url_for('general.serve_media', user_dir=directory, filename=mediapath) }}" class="card-img-top w-100" alt="" controls></{{tag_type}}>
             <div class="mt-2">
-                <p class="card-text">{{ mediapaths[i] }}</p>
-                <input type="checkbox" class="form-check-input custom-check-input" onclick="event.stopPropagation();">
+                <p class="card-text">{{ filename_trunc }}</p>
+                <div class="d-flex justify-content-around">
+                    <input type="checkbox" class="form-check-input custom-check-input" onclick="event.stopPropagation();">
+                    <button type="button" class="btn btn-danger" onclick="event.stopPropagation();"><i class='bx bx-trash'></i></button>
+                </div>
             </div>
         </div>
     </div>
-{% endfor %}
+
 
 
 

@@ -83,10 +83,9 @@ const uploadMediaUI = (function () {
     function offCanvasCloseListener(offCanvasCloseBtn) {
 
         offCanvasCloseBtn.addEventListener('click', function() {
-            console.log('click');
             selectedMedia = collectSelectedMedia();
             selectedMedia.forEach(media => {
-                console.log("media before: " + media);
+                console.log("media before: " + media + typeof(media));
             });    
         });
     }

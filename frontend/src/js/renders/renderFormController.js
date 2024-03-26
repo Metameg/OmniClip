@@ -10,7 +10,6 @@ function appendMediaData(renderData) {
     selectedMedia.forEach(function(media) {
         // Append each media item as a key-value pair in the FormData object
         renderData.append('selectedMedia[]', media);
-        console.log("append: " + media);
     });
 
     return renderData;

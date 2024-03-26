@@ -2,7 +2,8 @@ import json
 from flask import Blueprint, request, flash, render_template
 from app.extensions import db, csrf
 from app.models.User import User
-from app.tools.utilities import generate_videos, upload_files
+from app.tools.utilities import generate_videos
+from app.tools.helpers import classify_file_type
 from app.services.AutoEditor import AutoEditor
 import os
 
@@ -20,25 +21,19 @@ def create_content():
 def render():
     # Validate the CSRF token
     csrf.protect()
-    # json_data = request.get_json()
-    # print(json_data)
-    # if request.form.get("action") == "formData":
-    # videos = request.files.getlist('mediaPath')
-    # print(videos)
-    # audios = request.files.getlist('audioPath')
-    # print(audios)
-    # watermarks = request.files.getlist('watermarkPath')
-    # print(watermarks)
+    
     form_data = request.get_json()
-    # print(len(videos), len(audios), len(watermarks))
     # clippack_category = form_data['clippack']
-    try:
-        print(type(form_data['selectedMedia[]']))
-    except KeyError:
-        print("KeyError")
+    # try:
+    #     print(type(form_data['selectedMedia[]']))
+    # except KeyError:
+    #     print("KeyError")
     for key, value in form_data.items():
         print(f"{key}: {value}")
 
+    for path in form_data['selectedMedia[]']:
+
+        print(type(path), path)
     # if import videos was disabled, set video upload directory to appropriate clippack category
     # if len(videos) == 0:
     #     # video_uploads_dir = os.path.join('clippack_categories', clippack_category)
