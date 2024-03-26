@@ -11,6 +11,15 @@ def clean_temp():
     for transition in transitions:
         os.remove(os.path.join(get_root_path(), 'temp', transition))
 
+def clear_directory(directory):
+    # Iterate over all files in the directory
+    for filename in os.listdir(directory):
+        file_path = os.path.join(directory, filename)
+        # Check if the path is a file
+        if os.path.isfile(file_path):
+            # Remove the file
+            os.remove(file_path)
+
 def move_file_to_output_dir(file, filename):
     output_path = os.path.join(get_root_path(), 'output', filename)
     os.rename(file, output_path)
@@ -21,9 +30,18 @@ def get_output_count():
 
     return num_files
 
+def get_media_dir(username):
+    
+    return os.path.join(get_root_path(), '..', 'userData', username)
+
+
 def get_file_extension(file_path):
     _, extension = os.path.splitext(file_path)
     return extension.lower()
+
+def split_filename(file_path):
+    return os.path.splitext(file_path)
+    
 
 
 def sanitize_filename(filename):
@@ -52,17 +70,6 @@ def generate_videos(editor, numvideos):
 
     return videos
 
-def is_audio_file(filename):
-    audio_extensions = ['.mp3', '.wav', '.ogg', '.flac', '.aac', '.wma']  
-    return any(filename.lower().endswith(ext) for ext in audio_extensions)
-
-def is_video_file(filename):
-    video_extensions = ['.mp4', '.avi', '.mov', '.wmv', '.mkv', '.flv']  # Add more extensions as needed
-    return any(filename.lower().endswith(ext) for ext in video_extensions)
-
-def is_image_file(filename):
-    image_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg', '.webp']  # Add more extensions as needed
-    return any(filename.lower().endswith(ext) for ext in image_extensions)
     
 def truncate(str, x):
     if len(str) >= x + 6:
@@ -71,5 +78,13 @@ def truncate(str, x):
         return str[:x-9] + str[x-3:]
     else:
         return str
+
+def get_file_size(file):
+    file.seek(0, 2)  # Move the file pointer to the end of the file
+    file_size = file.tell()  # Get the current position of the file pointer (which is the size of the file)
+
+    return file_size
+
+    
 
 

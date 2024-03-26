@@ -1,5 +1,70 @@
 import uploadMediaUI from "./uploadMediaUI.js";
-import { mediaUploaderService } from "./mediaUploaderService.js";
+import { mediaUploaderService, retrieveMedia } from "./mediaUploaderService.js";
+// import { retrieveMedia } from "../shared/database.js";
+
+function nullUploadFilesListener(mediaFiles) {
+    mediaFiles.addEventListener('click', function() {
+        // Clear the value of the file input field
+        this.value = null;
+    });
+}
+
+function uploadFilesListener(mediaFiles, contentContainers, msgElements) {
+    mediaFiles.addEventListener('change', async function(event) {
+        console.log(mediaFiles + " changed");
+        var files = mediaFiles.files;
+        var mediaData = new FormData();
+        const url = '/upload-media'
+        
+        // Add each file to the FormData object
+        for (var i = 0; i < files.length; i++) {
+            mediaData.append('files[]', files[i]);
+        }
+        
+        try {
+            const response = await mediaUploaderService.submitMediaData(url, mediaData);
+            
+            // Add html from server to divs
+            contentContainers[0].innerHTML += response[0]["allMedia"];
+            contentContainers[1].innerHTML += response[1]["videos"];
+            contentContainers[2].innerHTML += response[2]["audios"];
+            contentContainers[3].innerHTML += response[3]["images"];
+
+            // Toggle the no uploads messages for each div
+            uploadMediaUI.toggleNoUploadsMsg(contentContainers[0], msgElements[0]);
+            uploadMediaUI.toggleNoUploadsMsg(contentContainers[1], msgElements[1]);
+            uploadMediaUI.toggleNoUploadsMsg(contentContainers[2], msgElements[2]);
+            uploadMediaUI.toggleNoUploadsMsg(contentContainers[3], msgElements[3]);
+            
+        } catch (error) {
+            // Handle errors if needed
+            console.error(error);
+        }
+    });    
+}
+
+function offCanvasToggleListener(toggle, contentContainers, msgElements) {
+    toggle.addEventListener('click', function() {
+    retrieveMedia()
+        .then(data => {
+            console.log('Data:', data);
+            // Add html from server to divs
+            contentContainers[0].innerHTML = data[0]["allMedia"];
+            contentContainers[1].innerHTML = data[1]["videos"];
+            contentContainers[2].innerHTML = data[2]["audios"];
+            contentContainers[3].innerHTML = data[3]["images"];
+
+            // Toggle the no uploads messages for each div
+            uploadMediaUI.toggleNoUploadsMsg(contentContainers[0], msgElements[0]);
+            uploadMediaUI.toggleNoUploadsMsg(contentContainers[1], msgElements[1]);
+            uploadMediaUI.toggleNoUploadsMsg(contentContainers[2], msgElements[2]);
+            uploadMediaUI.toggleNoUploadsMsg(contentContainers[3], msgElements[3]);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+}
 
 export function configureMediaUploader() {
     uploadMediaUI.configureDOM();
@@ -14,38 +79,13 @@ export function configureMediaUploader() {
     const videosNoUploadsMsg = document.getElementById('video-no-uploads-msg');
     const audiosNoUploadsMsg = document.getElementById('audio-no-uploads-msg');
     const imgsNoUploadsMsg = document.getElementById('img-no-uploads-msg');
+    const offCanvasToggle = document.getElementById('upload-offcanvas-toggle');
+    const contentContainers = [allUploadsContent, videoUploadsContent, audioUploadsContent, imgUploadsContent];
+    const msgElements = [allNoUploadsMsg, videosNoUploadsMsg, audiosNoUploadsMsg, imgsNoUploadsMsg];
 
     uploadMediaUI.toggleNoUploadsMsg(allUploadsContent, allNoUploadsMsg);
-    
-    mediaFiles.addEventListener('change', async function(event) {
-        var files = mediaFiles.files;
-        var mediaData = new FormData();
-        const url = '/upload-media'
-        
-       
-        // Add each file to the FormData object
-        for (var i = 0; i < files.length; i++) {
-            mediaData.append('files[]', files[i]);
-        }
-        
-        try {
-            const response = await mediaUploaderService.submitMediaData(url, mediaData);
-            
-            // Add html from server to divs
-            allUploadsContent.innerHTML += response[0]["allMedia"];
-            videoUploadsContent.innerHTML += response[1]["videos"];
-            audioUploadsContent.innerHTML += response[2]["audios"];
-            imgUploadsContent.innerHTML += response[3]["images"];
-
-            // Toggle the no uploads messages for each div
-            uploadMediaUI.toggleNoUploadsMsg(allUploadsContent, allNoUploadsMsg);
-            uploadMediaUI.toggleNoUploadsMsg(videoUploadsContent, videosNoUploadsMsg);
-            uploadMediaUI.toggleNoUploadsMsg(audioUploadsContent, audiosNoUploadsMsg);
-            uploadMediaUI.toggleNoUploadsMsg(imgUploadsContent, imgsNoUploadsMsg);
-            
-        } catch (error) {
-            // Handle errors if needed
-            console.error(error);
-        }
-    });    
+    uploadFilesListener(mediaFiles, contentContainers, msgElements);
+    nullUploadFilesListener(mediaFiles);
+    offCanvasToggleListener(offCanvasToggle, contentContainers, msgElements);
+   
 }

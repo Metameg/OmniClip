@@ -36,9 +36,9 @@ def internal_server_error(e):
 def serve_output(filename):
     return send_from_directory(os.path.join(utilities.get_root_path(), 'output'), filename)
 
-@blueprint.route('/<upload_dir>/<filename>')
-def serve_media(upload_dir, filename):
-    return send_from_directory(os.path.join(utilities.get_root_path(), upload_dir), filename)
+@blueprint.route('/<user_dir>/<filename>')
+def serve_media(user_dir, filename):
+    return send_from_directory(os.path.join(utilities.get_root_path(), user_dir), filename)
 
 @blueprint.route('/loading_container_partial', methods=['GET'])
 def loading_container_partial():
