@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, session
 from app.tools import helpers, database
-from app.tools.utilities import get_file_size, get_root_path, truncate, sanitize_filename, get_media_dir
+from app.tools.utilities import get_file_size, get_root_path, truncate, sanitize_filename, get_media_dir, split_filename
 from app.models.User import  User
 from app.models.Media import  Media
 from app.extensions import db
@@ -12,8 +12,8 @@ blueprint = Blueprint('media_uploader', __name__)
 def upload_media():
     files = request.files.getlist('files[]')
 
-    
-
+    for file in files:
+        print("uploaded:\n\n" , file)
     if "user" in session:
         username = session["user"]
         user_id = database.retrieve(User, username=username).id
@@ -25,11 +25,19 @@ def upload_media():
         media_dir = os.path.join(get_root_path(), 'temp', 'guest')
 
     file_paths = []
+    media_files = os.listdir(media_dir)
     for file in files:
         filename = truncate(sanitize_filename(file.filename), 18)
         path = os.path.join(media_dir, filename)
-        file_paths.append(path)
-        file.save(path)
+        if filename not in media_files:
+            file_paths.append(path)
+            file.save(path)
+        else:
+            copyidx = helpers.get_num_copies(filename, media_files)
+            base, extension = split_filename(filename)
+            path = os.path.join(media_dir, f"{base}({copyidx+1}){extension}")
+            file_paths.append(path)
+            file.save(path)
 
     if user_id:
         for path in file_paths:

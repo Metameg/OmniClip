@@ -2,8 +2,16 @@ import uploadMediaUI from "./uploadMediaUI.js";
 import { mediaUploaderService, retrieveMedia } from "./mediaUploaderService.js";
 // import { retrieveMedia } from "../shared/database.js";
 
+function nullUploadFilesListener(mediaFiles) {
+    mediaFiles.addEventListener('click', function() {
+        // Clear the value of the file input field
+        this.value = null;
+    });
+}
+
 function uploadFilesListener(mediaFiles, contentContainers, msgElements) {
     mediaFiles.addEventListener('change', async function(event) {
+        console.log(mediaFiles + " changed");
         var files = mediaFiles.files;
         var mediaData = new FormData();
         const url = '/upload-media'
@@ -77,6 +85,7 @@ export function configureMediaUploader() {
 
     uploadMediaUI.toggleNoUploadsMsg(allUploadsContent, allNoUploadsMsg);
     uploadFilesListener(mediaFiles, contentContainers, msgElements);
+    nullUploadFilesListener(mediaFiles);
     offCanvasToggleListener(offCanvasToggle, contentContainers, msgElements);
    
 }

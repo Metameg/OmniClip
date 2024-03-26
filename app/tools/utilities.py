@@ -39,6 +39,10 @@ def get_file_extension(file_path):
     _, extension = os.path.splitext(file_path)
     return extension.lower()
 
+def split_filename(file_path):
+    return os.path.splitext(file_path)
+    
+
 
 def sanitize_filename(filename):
     # Replace spaces with underscores and remove other special characters
