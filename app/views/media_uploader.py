@@ -27,6 +27,11 @@ def upload_media():
     for file in files:
         filename = sanitize_filename(file.filename)
         path = os.path.join(media_dir, filename)
+        print("path: ", path)
+        if helpers.classify_file_type(path) == 'unknown':
+            print("Unknown file type in one or more of your files. Only upload media files.")
+            break
+        
         if filename not in media_files:
             file_paths.append(path)
             file.save(path)

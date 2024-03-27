@@ -11,7 +11,7 @@ function appendMediaData(renderData) {
         // Append each media item as a key-value pair in the FormData object
         renderData.append('selectedMedia[]', media);
     });
-
+    
     return renderData;
 }
 

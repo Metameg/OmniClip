@@ -64,8 +64,10 @@ class AutoEditor():
 
             # Get duration of selected file and add to duration of selections
             # probe = ffmpeg.probe(os.path.join(folder, selection), show_entries='format=duration')
-            selection_path = os.path.join(folder, selection)
-            file_duration = fmpgapi.get_length(selection_path)
+            # selection_path = os.path.join(folder, selection)
+            print("selection", selection, type(selection))
+            file_duration = fmpgapi.get_length(selection)
+            # file_duration = fmpgapi.get_length(selection_path)
             selected_files_duration += file_duration
             
             print("file duration: ", file_duration)
@@ -76,7 +78,8 @@ class AutoEditor():
     
     def _select_random_files(self, folder, hasDuration=False):
         # Get all video file names in the specified folder
-        files = [file for file in os.listdir(folder)]
+        files = [file for file in folder]
+        # files = [file for file in os.listdir(folder)]
         
         if len(files) == 0:
             return []
@@ -85,11 +88,11 @@ class AutoEditor():
         else:
             return random.choice(files)
        
-        random_paths = [os.path.join(folder, file) for file in selected_files]
-        for r in random_paths:
-            print(r, '\n')
+        # random_paths = [os.path.join(folder, file) for file in selected_files]
+        # for r in random_paths:
+        #     print(r, '\n')
             
-        return random_paths
+        return selected_files
 
 
     def _wrap_text(self, text, max_width):
@@ -185,12 +188,14 @@ class AutoEditor():
         if self.overlay_folder is not None:
             # Select Image Overlay
             img = self._select_random_files(self.overlay_folder, False)
-            imgpath = os.path.join(utilities.get_root_path(), self.overlay_folder, img)
+            # imgpath = os.path.join(utilities.get_root_path(), self.overlay_folder, img)
             print("\n\n\n\n\n Watermark render...\n\n\n\n\n")
             if text_videopath is not None:
-                full_render = fmpgapi.add_watermark(imgpath, text_videopath)
+                full_render = fmpgapi.add_watermark(img, text_videopath)
+                # full_render = fmpgapi.add_watermark(imgpath, text_videopath)
             else: 
-                full_render = fmpgapi.add_watermark(imgpath, transitions_video)
+                full_render = fmpgapi.add_watermark(img, transitions_video)
+                # full_render = fmpgapi.add_watermark(imgpath, transitions_video)
             
 
         end_time = time.time()

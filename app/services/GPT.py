@@ -17,6 +17,7 @@ class QuoteGenerator():
 			messages=[
 				{"role": "system", "content": "You work in digital marketing. You need to create a catchy, feel-good, one-liner quote that will act as a promotional sentence for a video your company has created. The guidelines of the quote will be given to you by the user."},
 				{"role": "system", "content": "This quote should not have quotation marks in it. The "" characters should never be included in your response."},
+				{"role": "system", "content": "This quote never includes any emojiis."},
 
 				{"role": "user", "content": f'Here are your guidelines for this video: {self.content}.\n Create a short opening sentence that is no longer than 20 words for this promotional video.'},
 			]

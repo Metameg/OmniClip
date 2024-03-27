@@ -2,7 +2,7 @@ import json
 from flask import Blueprint, request, flash, render_template
 from app.extensions import db, csrf
 from app.models.User import User
-from app.tools.utilities import generate_videos
+from app.tools.utilities import generate_videos, get_root_path, decode_path
 from app.tools.helpers import classify_file_type
 from app.services.AutoEditor import AutoEditor
 import os
@@ -31,9 +31,32 @@ def render():
     for key, value in form_data.items():
         print(f"{key}: {value}")
 
-    for path in form_data['selectedMedia[]']:
+    selected_media = form_data['selectedMedia[]']
+    if isinstance(selected_media, str):
+        selected_media = [form_data['selectedMedia[]']]
+    
+    has_video = False
+    video_uploads = []
+    audio_uploads = []
+    watermark_uploads = []
 
+    for path in selected_media:
+        path = decode_path(path)
         print(type(path), path)
+        if classify_file_type(path) == 'video':
+            has_video = True
+            video_uploads.append(path)
+        elif classify_file_type(path) == 'audio':
+            audio_uploads.append(path)
+        elif classify_file_type(path) == 'img':
+            watermark_uploads.append(path)
+
+            
+    
+    # if has_video:
+
+            
+    
     # if import videos was disabled, set video upload directory to appropriate clippack category
     # if len(videos) == 0:
     #     # video_uploads_dir = os.path.join('clippack_categories', clippack_category)
@@ -63,7 +86,6 @@ def render():
 
     
     outpath = 'output'
-    audio_uploads_dir = 'audio_uploads'
     fade_duration = float(form_data['fadeoutDuration'])
     target_duration = float(form_data['totalLength'])
     font_name = form_data['fontName']
@@ -76,7 +98,7 @@ def render():
         text_outline_color = form_data['outlineColor']
     except Exception:
         text_outline_color = '#00000000'
-    
+
 
     isBold = form_data['isBold']
     isItalic = form_data['isItalic']
@@ -88,8 +110,9 @@ def render():
     voice = os.path.join('static', 'voices', form_data['voice'] + '.mp3')
     numvideos = int(form_data['numvideos'])
 
-    editor = AutoEditor(outpath, 'video_uploads', audio_uploads_dir, 
-                        'watermark_uploads', fade_duration, target_duration, 
+    
+    editor = AutoEditor(outpath, video_uploads, audio_uploads, 
+                        watermark_uploads, fade_duration, target_duration, 
                         'freedom', font_size, text_primary_color, text_outline_color, 
                         isBold, isItalic, isUnderline, 
                         alignment, watermark_opacity,

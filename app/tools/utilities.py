@@ -1,4 +1,5 @@
 import os
+import urllib
 
 def get_root_path():
     this_directory = os.path.dirname(os.path.abspath(__file__))
@@ -86,5 +87,16 @@ def get_file_size(file):
     return file_size
 
     
+def decode_path(path_with_percent):
+    print(path_with_percent)
+    # Decode the path with percent-encoded characters
+    decoded_path = urllib.parse.unquote(path_with_percent)
 
+    # Replace backslashes with forward slashes
+    normalized_path = path_with_percent.replace('%5C', '/')
+    
+    if normalized_path[0] == '/':
+        normalized_path = normalized_path[1:]
+
+    return normalized_path
 
