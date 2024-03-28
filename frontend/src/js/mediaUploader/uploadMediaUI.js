@@ -63,9 +63,9 @@ const uploadMediaUI = (function () {
     }
 
     function collectSelectedMedia() {
-        const uploadCards = document.querySelectorAll('.media-upload-card');
-        selectedMedia = [];
         
+        selectedMedia = [];
+        const uploadCards = document.querySelectorAll('.media-upload-card');
         uploadCards.forEach(card => {
             const chekcbox = card.querySelector('.custom-check-input');
             const mediaElement = card.querySelector('video, img, audio');
@@ -74,15 +74,14 @@ const uploadMediaUI = (function () {
                 var src = mediaElement.getAttribute('src');
                 selectedMedia.push(src);
             }
-
         });
 
         return selectedMedia;
     }
 
     function offCanvasCloseListener(offCanvasCloseBtn) {
-
         offCanvasCloseBtn.addEventListener('click', function() {
+            console.log(selectedMedia);
             selectedMedia = collectSelectedMedia();
             selectedMedia.forEach(media => {
                 console.log("media before: " + media + typeof(media));
@@ -132,8 +131,9 @@ const uploadMediaUI = (function () {
     return {
         configureDOM: function() {
             const offcanvasCloseBtn = document.getElementById('offcanvas-upload-close');
-        
+            
             tabListener();
+            // removeMediaListener(selectedMedia);
             offCanvasCloseListener(offcanvasCloseBtn);
         },
 

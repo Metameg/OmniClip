@@ -1,4 +1,3 @@
-from app.tools import helpers
 
 def create(db, model, **params):
     new_entry = model(**params)
@@ -21,4 +20,13 @@ def retrieve_from_join(db, model1, model2, username):
     print(data)
     
     return data
+
+def remove(db, model, path):
+    media_to_delete = retrieve(model, path=path)
+
+    try: 
+        db.session.delete(media_to_delete)
+        db.session.commit()
+    except:
+        print("Error deleting media file.")
 

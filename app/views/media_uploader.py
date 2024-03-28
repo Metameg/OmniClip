@@ -31,14 +31,15 @@ def upload_media():
         if helpers.classify_file_type(path) == 'unknown':
             print("Unknown file type in one or more of your files. Only upload media files.")
             break
-        
+
         if filename not in media_files:
             file_paths.append(path)
             file.save(path)
         else:
             copyidx = helpers.get_num_copies(filename, media_files)
             base, extension = split_filename(filename)
-            path = os.path.join(media_dir, f"{base}({copyidx+1}){extension}")
+            filename = f"{base}({copyidx}){extension}"
+            path = os.path.join(media_dir, filename)
             file_paths.append(path)
             file.save(path)
 
@@ -75,6 +76,35 @@ def retrieve_medias():
             {"images": ""}
         ]   
         return jsonify(html_data)
+    
+    html_data = helpers.build_media_html(file_paths)
+    print("\n data:\n", html_data)
+
+    return jsonify(html_data)
+
+@blueprint.route('/remove-user-media/<path:path>', methods=['POST'])
+def remove_media(path):
+    
+    # if "user" in session:
+    username = session["user"]
+    # print("username: ", username)
+    path = path.replace('/', os.path.sep)
+    print("path: ", path)
+    database.remove(db, Media, path)
+    os.remove(path)
+    medias = database.retrieve_from_join(db, User, Media, username)
+    file_paths = [database.retrieve(Media, media_id=media.media_id).path for media in medias]
+
+    s3_urls = [f"https://<bucket_name>.s3.amazonaws.com/{file_path}" for file_path in file_paths]
+   
+    # else:
+    #     html_data = [
+    #         {"allMedia": "" },
+    #         {"videos": ""},
+    #         {"audios": ""},
+    #         {"images": ""}
+    #     ]   
+    # return jsonify(html_data)
     
     html_data = helpers.build_media_html(file_paths)
     print("\n data:\n", html_data)
