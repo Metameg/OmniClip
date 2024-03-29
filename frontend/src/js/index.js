@@ -9,7 +9,6 @@ import '../scss/home.scss';
 import '../scss/login.scss';
 import '../scss/pricing.scss';
 import '../scss/profile.scss';
-import '../scss/partials/uploads-grid.scss';
 import '../scss/affiliate/affiliate-dashboard.scss';
 import '../scss/affiliate/affiliate-signup.scss';
 import '../scss/affiliate/affiliate-about.scss';

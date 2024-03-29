@@ -61,12 +61,13 @@ def upload_files(files, export_folder):
 
 def generate_videos(editor, numvideos):
     videos = []
+    outpath = os.path.join(get_root_path(), 'output')
     for _ in range(numvideos):
         # thread = threading.Thread(target=render_video, args=(editor,))
         # thread.start()
         # thread.join()
         editor.render()
-        videopath = sorted(os.listdir('output'))[-1]
+        videopath = sorted(os.listdir(outpath))[-1]
         videos.append(videopath)
 
     return videos

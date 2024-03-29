@@ -12,6 +12,10 @@ body {
 .container-fluid {
     padding-right: 60px;
     min-width: 300px;
+    img {
+        width: 185px;
+        height: 104px;
+    }
 }
 
 .navbar-collapse {

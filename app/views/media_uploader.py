@@ -84,18 +84,31 @@ def retrieve_medias():
 
 @blueprint.route('/remove-user-media/<path:path>', methods=['POST'])
 def remove_media(path):
-    
-    # if "user" in session:
-    username = session["user"]
-    # print("username: ", username)
-    path = path.replace('/', os.path.sep)
-    print("path: ", path)
-    database.remove(db, Media, path)
-    os.remove(path)
-    medias = database.retrieve_from_join(db, User, Media, username)
-    file_paths = [database.retrieve(Media, media_id=media.media_id).path for media in medias]
+    file_paths = []
+    if "user" in session:
+        username = session["user"]  
+        path = path.replace('/', os.path.sep)
+        print("path: ", path)
+        database.remove(db, Media, path)
+        os.remove(path)
+        medias = database.retrieve_from_join(db, User, Media, username)
+        file_paths = [database.retrieve(Media, media_id=media.media_id).path for media in medias]
 
-    s3_urls = [f"https://<bucket_name>.s3.amazonaws.com/{file_path}" for file_path in file_paths]
+        s3_urls = [f"https://<bucket_name>.s3.amazonaws.com/{file_path}" for file_path in file_paths]
+
+    else:
+        os.remove(path)
+        guest_dir = os.path.join(get_root_path(), 'temp', 'guest')
+        for filename in os.listdir(guest_dir):
+            # Join directory path with each file name to get the full path
+            file_path = os.path.join(guest_dir, filename)
+            
+            # Check if the path points to a file (and not a directory)
+            if os.path.isfile(file_path):
+                # Append the full path to the list
+                file_paths.append(file_path)
+    # print("username: ", username)
+    
    
     # else:
     #     html_data = [

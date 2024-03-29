@@ -79,8 +79,8 @@ const uploadMediaUI = (function () {
         return selectedMedia;
     }
 
-    function offCanvasCloseListener(offCanvasCloseBtn) {
-        offCanvasCloseBtn.addEventListener('click', function() {
+    function offCanvasDoneListener(offCanvasDoneBtn) {
+        offCanvasDoneBtn.addEventListener('click', function() {
             console.log(selectedMedia);
             selectedMedia = collectSelectedMedia();
             selectedMedia.forEach(media => {
@@ -130,11 +130,11 @@ const uploadMediaUI = (function () {
     // Public API
     return {
         configureDOM: function() {
-            const offcanvasCloseBtn = document.getElementById('offcanvas-upload-close');
+            const offCanvasDoneBtn = document.getElementById('offcanvas-done');
             
             tabListener();
             // removeMediaListener(selectedMedia);
-            offCanvasCloseListener(offcanvasCloseBtn);
+            offCanvasDoneListener(offCanvasDoneBtn);
         },
 
 

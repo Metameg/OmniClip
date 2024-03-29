@@ -436,21 +436,42 @@ def add_audio(video, audios, duration):
     
     return outpath
     
-def add_watermark(img, video):
+def add_opacity(img, opacity):
+    outpath = os.path.join(utilities.get_root_path(), 'temp', f'watermark_opacity.png')
+    ffmpeg_command = [
+        'ffmpeg',
+        '-hide_banner',
+        '-loglevel',
+        'quiet',
+        '-i', img,
+        '-filter_complex',
+        f'[0:v]format=rgba,colorchannelmixer=aa={opacity}[overlay]',
+        '-map', '[overlay]',
+        '-y',
+        '-strict', 'experimental',
+        outpath
+    ]
+
+    subprocess.run(ffmpeg_command)
+    # ffmpeg_command_str = ' '.join(map(str, ffmpeg_command))
+    # print(ffmpeg_command_str)
+    return outpath
+
+def add_watermark(img, video, opacity):
     outpath = os.path.join(utilities.get_root_path(), 'temp', f'watermark_video.mp4')
     size = '300:180'
     img_resized = _resize_img(img, size)
+
+    img_opacity = add_opacity(img_resized, opacity)
     ffmpeg_command = [
         'ffmpeg',
         '-hide_banner',
         '-loglevel',
         'quiet',
         '-i', video,
-        '-i', img_resized,
+        '-i', img_opacity,
         '-filter_complex',
-        f'[1:v]format=rgba,colorchannelmixer=aa=0.5[overlay];[0:v][overlay]overlay=10:10[video]',
-        '-map', '[video]',
-        '-map', '0:a',
+        '[0:v][1:v]overlay=(W-w)/2:25[bg];[bg][1:v]overlay=(W-w)/2:main_h/2-overlay_h/2[bg];[bg][1:v]overlay=(W-w)/2:main_h-overlay_h-25',
         '-c:v', 'libx264',
         '-c:a', 'aac',
         '-y',

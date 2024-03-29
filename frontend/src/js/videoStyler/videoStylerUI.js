@@ -23,7 +23,6 @@ const videoStylerUI = (function () {
     }
 
     function updateVideoStyler(inputs, sampleText) {
-
         var fontName = inputs[0].value;
         var fontSize = inputs[1].value;
         var isBold = inputs[2].checked;
@@ -87,17 +86,17 @@ const videoStylerUI = (function () {
             const aspectRatioSelect = document.getElementById("aspect-ratio");
             const mockVideo = document.getElementById("mock-video");
             const sampleText = document.getElementById("sample-text");
+            
             // const inputs = [fontNameSelect, fontSizeSelect, boldCheckbox, italicCheckbox, underlineCheckbox, positionXInput, positionYInput, aspectRatioSelect, mockVideo];
             const inputs = [fontNameSelect, fontSizeSelect, boldCheckbox, 
-                            italicCheckbox, underlineCheckbox, primaryColorInput,
-                            outlineColorInput, outlineTransparentBln, alignment,
+                italicCheckbox, underlineCheckbox, primaryColorInput,
+                outlineColorInput, outlineTransparentBln, alignment,
                             aspectRatioSelect, mockVideo];
 
             updateHiddenBln(boldBlnHidden, boldCheckbox);
             updateHiddenBln(italicBlnHidden, italicCheckbox);
             updateHiddenBln(underlineBlnHidden, underlineCheckbox);
             notEnableFromCheckbox(outlineTransparentBln, outlineColorInput);
-            // notEnableFromCheckbox(backTransparentBln, backColorInput);
             updateVideoStylerListener(inputs, sampleText);
         }
     }
