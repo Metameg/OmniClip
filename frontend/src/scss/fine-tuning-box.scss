@@ -120,6 +120,7 @@
 }
 
 
+
 #mock-video {
     position: relative;
     margin: 0 auto;
@@ -131,13 +132,17 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    // background: url('static/images/mock-video-thumbnail.jpg') cover;
-    background: url('../images/omniclipv2-logo.png') $section-divider-color;
-    background-size: contain;
-    opacity: 0.75;
+    // background: url('../images/omniclipv2-logo.png') $section-divider-color;
+    // background-size: contain;
+    // opacity: 0.75;
 
     span {
         position: absolute;
+    }
+
+    img {
+        align-self: flex-start;
+        opacity: 0.35;
     }
 }
 

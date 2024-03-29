@@ -35,7 +35,8 @@ const videoStylerUI = (function () {
         var outlineColor = isOutlineTransparent ? '#00000000' : inputs[6].value;
         var alignment = inputs[8].value;
         var aspectRatio = inputs[9].value;
-        var mockVideoEle = inputs[10];
+        var watermarkOpacity = inputs[10].value;
+        var mockVideoEle = inputs[11];
 
 
         // Remove existing left, right, top, or bottom properties
@@ -81,7 +82,7 @@ const videoStylerUI = (function () {
             const outlineColorInput = document.getElementById("outline-color");
             // const backColorInput = document.getElementById("back-color");
             const outlineTransparentBln = document.getElementById('outline-transparent-bln');
-            // const backTransparentBln = document.getElementById('background-transparent-bln');
+            const watermarkOpacity = document.getElementById('watermark-opacity-val');
             const alignment = document.getElementById('subtitle-alignment');
             const aspectRatioSelect = document.getElementById("aspect-ratio");
             const mockVideo = document.getElementById("mock-video");
@@ -91,7 +92,7 @@ const videoStylerUI = (function () {
             const inputs = [fontNameSelect, fontSizeSelect, boldCheckbox, 
                 italicCheckbox, underlineCheckbox, primaryColorInput,
                 outlineColorInput, outlineTransparentBln, alignment,
-                            aspectRatioSelect, mockVideo];
+                            aspectRatioSelect, watermarkOpacity, mockVideo];
 
             updateHiddenBln(boldBlnHidden, boldCheckbox);
             updateHiddenBln(italicBlnHidden, italicCheckbox);
