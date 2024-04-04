@@ -101,6 +101,7 @@ const Validators = (function() {
                     // Enforce min and max values
                     inputValue = Math.min(Math.max(inputValue, parseFloat(range.min)), parseFloat(range.max));
                     input.value = inputValue;
+    
                     if (needsLengthRecal){
                         this.calculateTotalLength();
                     }

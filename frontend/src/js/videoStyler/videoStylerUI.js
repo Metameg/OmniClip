@@ -1,4 +1,5 @@
 import { notEnableFromCheckbox, updateHiddenBln } from "../shared/utils.js";
+import Validators from "../renders/validators.js";
 
 const videoStylerUI = (function () {
     // Private Variables and Functions
@@ -31,13 +32,12 @@ const videoStylerUI = (function () {
         var primaryColor = inputs[5].value;
         
         var isOutlineTransparent = inputs[7].checked;
-        // var isBackTransparent = inputs[9].checked;
         var outlineColor = isOutlineTransparent ? '#00000000' : inputs[6].value;
         var alignment = inputs[8].value;
         var aspectRatio = inputs[9].value;
         var watermarkOpacity = inputs[10].value;
-        var mockVideoEle = inputs[11];
-
+        var mockVideoEle = inputs[12];
+        var watermarks = document.querySelectorAll('.watermark-img');
 
         // Remove existing left, right, top, or bottom properties
         sampleText.style.removeProperty('left');
@@ -48,13 +48,10 @@ const videoStylerUI = (function () {
 
         // Apply styles to the sample text
         Object.keys(styles).forEach(property => {
-            console.log(property, ': ', styles[property]);
             sampleText.style[property] = styles[property];
-            console.log(sampleText.style[property], ': ', styles[property]);
         });
 
         
-
         sampleText.textContent = 'Sample';
         sampleText.style.fontFamily = fontName;
         sampleText.style.fontSize = fontSize + 'px';
@@ -66,6 +63,10 @@ const videoStylerUI = (function () {
         
         mockVideoEle.style.width =  aspectRatio === "16:9" ? "406px" : "230px";
         mockVideoEle.style.height = aspectRatio === "9:16" ? "406px" : "230px";
+
+        watermarks.forEach(watermark => {
+            watermark.style.opacity = watermarkOpacity;
+        });
     }
 
     return {
@@ -80,9 +81,9 @@ const videoStylerUI = (function () {
             const underlineBlnHidden = document.getElementById('underline-value');
             const primaryColorInput = document.getElementById("primary-color");
             const outlineColorInput = document.getElementById("outline-color");
-            // const backColorInput = document.getElementById("back-color");
             const outlineTransparentBln = document.getElementById('outline-transparent-bln');
             const watermarkOpacity = document.getElementById('watermark-opacity-val');
+            const watermarkOpacityRange = document.getElementById('watermark-opacity-range');
             const alignment = document.getElementById('subtitle-alignment');
             const aspectRatioSelect = document.getElementById("aspect-ratio");
             const mockVideo = document.getElementById("mock-video");
@@ -92,8 +93,9 @@ const videoStylerUI = (function () {
             const inputs = [fontNameSelect, fontSizeSelect, boldCheckbox, 
                 italicCheckbox, underlineCheckbox, primaryColorInput,
                 outlineColorInput, outlineTransparentBln, alignment,
-                            aspectRatioSelect, watermarkOpacity, mockVideo];
-
+                aspectRatioSelect, watermarkOpacity, watermarkOpacityRange, mockVideo];
+            
+            Validators.slides.validateRange(watermarkOpacityRange, watermarkOpacity, false);
             updateHiddenBln(boldBlnHidden, boldCheckbox);
             updateHiddenBln(italicBlnHidden, italicCheckbox);
             updateHiddenBln(underlineBlnHidden, underlineCheckbox);

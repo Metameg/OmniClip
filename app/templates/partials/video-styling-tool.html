@@ -1,5 +1,7 @@
 <div id="mock-video">
-    <img src="{{url_for('static', filename='/images/omniclipv2-logo-nav.png')}}"/>
+    <img id="watermark-top" class="watermark-img" src="{{url_for('static', filename='/images/omniclipv2-logo-nav.png')}}"/>
+    <img id="watermark-mid" class="watermark-img" src="{{url_for('static', filename='/images/omniclipv2-logo-nav.png')}}"/>
+    <img id="watermark-bottom" class="watermark-img" src="{{url_for('static', filename='/images/omniclipv2-logo-nav.png')}}"/>
     <span id="sample-text" class="p-3">Sample</span>
 </div>
 <div class="d-flex justify-content-center">
@@ -98,14 +100,6 @@
             <label for="outline-transparent-bln" class="form-check-label mt-2">Transparent</label>
             <input type="checkbox" id="outline-transparent-bln" class="form-check-input mt-2" aria-label="Transparent Outline" checked>
         </div>
-        <!-- <div class="mb-3">
-            <label for="back-color" class="form-label">Background Color</label>
-            <div>
-                <input type="text" id="back-color" class="form-control" name="backColor" value="#FFFFFF" aria-label="Background Color" data-coloris disabled>
-            </div>
-            <label for="background-transparent-bln" class="form-check-label mt-2">Transparent</label>
-            <input type="checkbox" id="background-transparent-bln" class="form-check-input" aria-label="Transparent Background" checked>
-        </div> -->
 
         <script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
         <script>
@@ -120,26 +114,8 @@
                     themeMode: 'dark',
                     alpha: false
                 });
-            });
-            // document.getElementById('back-color').addEventListener('click', e => {
-            //     Coloris({
-            //         themeMode: 'dark',
-            //         alpha: false
-            //     });
-            // });
-            
+            });     
         </script>
-
-        <!-- <div class="mb-3">
-            <label for="position-x" class="form-label">position X</label>
-            <input type="range" id="position-x" class="form-range" name="positionX" min="-380.0" max="400.0" step="1" value="1" aria-label="position X">
-        </div>
-        <div class="mb-3">
-            <label for="position-y" class="form-label">position Y</label>
-            <input type="range" id="position-y" class="form-range" name="positionY" min="-500.0" max="500.0" step="1" value="1" aria-label="position Y">
-        </div> -->
-
-        
 
         <div class="mb-3">
             <label for="watermark-opacity-range" class="form-label mt-3">Watermark Opacity</label>

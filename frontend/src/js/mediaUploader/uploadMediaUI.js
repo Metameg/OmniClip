@@ -1,6 +1,7 @@
 const uploadMediaUI = (function () {
     // Private functions and variables
     var selectedMedia = [];
+    var selectedMediaTexts = [];
 
     function uploadFileUI(input, uploadContainer) {
         input.addEventListener('change', function(event) {
@@ -62,30 +63,40 @@ const uploadMediaUI = (function () {
         }, 500); // Adjust the interval as needed
     }
 
+    function selectDuplicateCards(cards, cardText) {
+        console.log("texts: " + selectedMediaTexts);
+        console.log("text to match: " + cardText);
+        cards.forEach(card => {
+            if(card.querySelector('.card-text').textContent === cardText) {
+                const checkbox = card.querySelector('.custom-check-input');
+                console.log("checkbox: " + checkbox);
+                checkbox.checked = !checkbox.checked;
+            }
+        });
+    }
+
     function collectSelectedMedia() {
-        
+        selectedMediaTexts = []
         selectedMedia = [];
         const uploadCards = document.querySelectorAll('.media-upload-card');
         uploadCards.forEach(card => {
-            const chekcbox = card.querySelector('.custom-check-input');
+            const checkbox = card.querySelector('.custom-check-input');
             const mediaElement = card.querySelector('video, img, audio');
             
-            if (chekcbox.checked) {
-                var src = mediaElement.getAttribute('src');
-                selectedMedia.push(src);
+            if (checkbox.checked) {
+                var src = mediaElement.getAttribute('src');          
+                selectedMedia.push(src);  
             }
         });
 
+        selectedMedia = selectedMedia.filter((item, index, array) => array.indexOf(item) === index);
         return selectedMedia;
     }
 
     function offCanvasDoneListener(offCanvasDoneBtn) {
         offCanvasDoneBtn.addEventListener('click', function() {
             console.log(selectedMedia);
-            selectedMedia = collectSelectedMedia();
-            selectedMedia.forEach(media => {
-                console.log("media before: " + media + typeof(media));
-            });    
+            // selectedMedia = collectSelectedMedia();  
         });
     }
 
@@ -126,18 +137,35 @@ const uploadMediaUI = (function () {
         imgContent.style.display = 'none';
     }
 
-
     // Public API
     return {
         configureDOM: function() {
             const offCanvasDoneBtn = document.getElementById('offcanvas-done');
-            
+            const uploadCards = document.querySelectorAll('.media-upload-card');
+            this.toggleCheckboxListener(uploadCards);
             tabListener();
-            // removeMediaListener(selectedMedia);
             offCanvasDoneListener(offCanvasDoneBtn);
         },
 
-
+        toggleCheckboxListener: function(cards) {
+            const uploadCards = document.querySelectorAll('.media-upload-card');
+            cards.forEach(card => {
+                console.log(card);
+                const checkbox = card.querySelector('input[type="checkbox"]');
+                card.addEventListener('click', () => {
+                    checkbox.checked = !checkbox.checked; 
+                    collectSelectedMedia();
+                    
+                    var text = card.querySelector('.card-text').textContent;
+                    console.log("card-text: " + text);
+                    console.log("uploadCards: " + uploadCards);
+                    const duplicateCards =  Array.from(uploadCards).filter(duplicate => duplicate.querySelector('.card-text').textContent === text && duplicate !== card);
+                    duplicateCards.map(card => card.querySelector('input[type="checkbox"]').checked = !card.querySelector('input[type="checkbox"]').checked);
+                    collectSelectedMedia();
+                });
+            })
+        },
+    
         toggleNoUploadsMsg: function(content, msg) {
             var numUploads = content.querySelectorAll('.media-col').length;
             if (numUploads == 0) {

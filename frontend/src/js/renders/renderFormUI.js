@@ -53,24 +53,6 @@ const renderFormDOM = (function () {
         });
     }
 
-    // function populateDropdownFromImport (importField, dropdown) {
-    //     importField.addEventListener('change', function(event) {
-    //         const files = event.target.files;
-
-    //         // Clear existing options
-    //         dropdown.innerHTML = '';
-
-    //         // Populate dropdown with file names
-    //         for (let i = 0; i < files.length; i++) {
-    //             if (Validators.audioFile.validate(files[i])) {
-    //                 const option = document.createElement('option');
-    //                 option.text = files[i].name;
-    //                 dropdown.add(option);
-    //             }
-    //         }
-    //     });
-    // }
-
     function updateHiddenInput (hiddenElement, selectElement) {
         selectElement.addEventListener('change', function() {
             hiddenElement.value = selectElement.value;
@@ -124,8 +106,6 @@ const renderFormDOM = (function () {
             const quoteManualInput = document.getElementById('quote-manual');
             const quoteManualConfirmBtn = document.getElementById('manual-confirm-btn');
             const quoteManualRetryBtn = document.getElementById('manual-retry-btn');
-            const watermarkOpacity = document.getElementById('watermark-opacity-val');
-            const watermarkOpacityRange = document.getElementById('watermark-opacity-range');
             const fadeDuration = document.getElementById('fade-duration-val');
             const fadeDurationRange = document.getElementById('fade-duration-range');
             const voice = document.getElementById('voice-val');
@@ -148,7 +128,6 @@ const renderFormDOM = (function () {
             // Validators.imports.validateImage(watermarkPath);
             Validators.inputField.validateNumber(totalLength);
             Validators.slides.validateRange(numvideosRange, numvideos, false);
-            Validators.slides.validateRange(watermarkOpacityRange, watermarkOpacity, false);
             Validators.slides.validateRange(fadeDurationRange, fadeDuration, false);
             notEnableFromCheckbox(sameCategoryBln, quoteCategory);
             voiceSelect(voice, voiceRadios);

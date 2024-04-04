@@ -128,7 +128,7 @@
     width: 230px;
     height: 406px;
     border: 3px solid white;
-    display: flex;
+    display: grid;
     justify-content: center;
     align-items: center;
     overflow: hidden;
@@ -138,11 +138,23 @@
 
     span {
         position: absolute;
+        justify-self: center;
     }
 
-    img {
-        align-self: flex-start;
+    .watermark-img {
         opacity: 0.35;
+    }
+
+    #watermark-top {
+        align-self: flex-start;
+    }
+
+    #watermark-mid {
+        align-self: center;
+    }
+
+    #watermark-bottom {
+        align-self: flex-end;
     }
 }
 

@@ -41,6 +41,8 @@ function uploadFilesListener(mediaFiles, contentContainers, msgElements) {
             console.error(error);
         }
 
+        const cards = document.querySelectorAll('.media-upload-card');
+        uploadMediaUI.toggleCheckboxListener(cards);
         configureRemoveMediaListeners(contentContainers, msgElements);
     });    
 }
@@ -62,6 +64,8 @@ function offCanvasToggleListener(toggle, contentContainers, msgElements) {
             uploadMediaUI.toggleNoUploadsMsg(contentContainers[2], msgElements[2]);
             uploadMediaUI.toggleNoUploadsMsg(contentContainers[3], msgElements[3]);
 
+            const cards = document.querySelectorAll('.media-upload-card');
+            uploadMediaUI.toggleCheckboxListener(cards);
             configureRemoveMediaListeners(contentContainers, msgElements);
         })
         .catch(error => {
