@@ -31,7 +31,7 @@ def affiliate_about():
 
     return render_template("pages/affiliate/affiliate-about.html")
 
-@blueprint.route('/affiliate-program/signup')
+@blueprint.route('/signup')
 def affiliate_signup():
     if "user" not in session:
         return redirect(url_for('login.login'))
@@ -45,12 +45,12 @@ def affiliate_signup():
     
     return render_template("pages/affiliate/affiliate-signup.html")
 
-@blueprint.route('/affiliate-program/register')
+@blueprint.route('/register', methods=['POST'])
 def affiliate_register():
     username = session["user"]
     user = database.retrieve(User, username=username)
     print("affiliate_id: ", user.affiliate_id)
-    
+
     key = helpers.generate_key(12)
     database.create(db, Affiliate, key=key)
     user.affiliate_id = database.retrieve(Affiliate, key=key).affiliate_id
@@ -64,3 +64,5 @@ def affiliate_register():
     print("affiliate_id: ", user.affiliate_id)
     print("key: ", key)
     affiliate_key = database.retrieve_from_join(db, User, Media, username)
+
+    return redirect(url_for('login.user'))
