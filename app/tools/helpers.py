@@ -3,6 +3,8 @@ import os
 from app.tools.utilities import truncate
 import re
 import mimetypes
+import string
+import secrets
 
 def classify_file_type(file_path):
     # Create a magic.Magic instance
@@ -76,3 +78,10 @@ def build_media_html(file_paths):
         html_data[0]["allMedia"] += aggregate_content
 
     return html_data
+
+def generate_key(length):
+    alphabet = string.ascii_letters + string.digits
+    # Generate a random string of length 10
+    random_string = ''.join(secrets.choice(alphabet) for i in range(length))
+
+    return random_string

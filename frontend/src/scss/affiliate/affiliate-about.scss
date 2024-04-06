@@ -2,10 +2,19 @@
 
 
 .affiliate-header {
-    background: $background-gradient;
-    color: rgba(255, 255, 255, 0.9); // Adjust text opacity here (0.9 means 90% opaque)
-    padding: 20px 0;
-    text-align: center;
+
+    h1 {
+        background: $background-gradient;
+        color: rgba(255, 255, 255, 0.9); // Adjust text opacity here (0.9 means 90% opaque)
+        padding: 20px 0;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
+    p{
+        text-align: left;
+        margin-left: 1.3rem;
+    };
 }
 
 .affiliate-about-section {

@@ -1,0 +1,22 @@
+#signup-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #0e0e0e;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+#signup-submit {
+    width: 100%;
+}
+
+
+.notice-message {
+    text-align: center;
+    color: #555;
+}

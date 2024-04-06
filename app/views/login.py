@@ -19,9 +19,7 @@ def login():
         if user is None:
             print("Username not found!")
             return render_template("pages/login/login.html")
-        
-        print("incoming: ", entered_password)
-        print(user.password_hash)
+
         passed = check_password_hash(user.password_hash, entered_password)
 
         

@@ -19,6 +19,8 @@ class User(db.Model):
     # Establish relationships with renders and medias
     renders = db.relationship('Render', backref='user_renders', lazy=True)
     medias = db.relationship('Media', backref='user_medias', lazy=True)
+    # affiliates = db.relationship('Affiliate', backref='user_affiliate', lazy=True)
+
     @property
     def password(self):
         raise AttributeError('password is not a readable attribue!')
