@@ -50,7 +50,7 @@ def create_db_session():
     # Create the SQLAlchemy engine
     engine = create_engine(db_connection_string)
 
-    # # Create a sessionmaker bound to the engine
+    # Create a sessionmaker bound to the engine
     Session = sessionmaker(bind=engine)
 
     return Session()

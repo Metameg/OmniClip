@@ -5,12 +5,16 @@ from app.models.User import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.tools.utilities import get_root_path
 import os
+from urllib.parse import urlparse
 
 blueprint = Blueprint('login', __name__)
 
 @blueprint.route('/login', methods=['POST', 'GET'])
 def login():
     csrf.protect()
+    referrer = session.get('referrer', None)
+    print("parsed: ", referrer)
+
     if request.method == 'POST':
         # Authenticate User
         username = request.form["username"]   
@@ -27,11 +31,23 @@ def login():
         if passed:
             session.permanent = True
             session["user"] = username
-            return redirect(url_for('login.user'))
+            
+
+            if  referrer == '/affiliate-program/about':
+                print('here')
+                return redirect(url_for('affiliate.affiliate_signup'))
+            else:
+                print('there')
+                return redirect(url_for('login.user'))
         else:
             print("Incorrect Password!")
             return render_template("pages/login/login.html")
     else:
+        referrer = request.referrer
+        session['referrer'] = urlparse(referrer).path if referrer else None
+        print("Referrer: " , request.referrer)
+        print("Parsed: " , session['referrer'])
+
         return render_template("pages/login/login.html")
 
 @blueprint.route('/signup', methods=['POST', 'GET'])
