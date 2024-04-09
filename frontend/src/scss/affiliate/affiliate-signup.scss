@@ -1,5 +1,6 @@
 #affiliate-signup-container {
     max-width: 600px;
+    min-width: 280px;
     margin: 100px auto;
     padding: 20px;
     background-color: #0e0e0e;
@@ -11,10 +12,24 @@
     margin-bottom: 20px;
 }
 
+.form-group-half {
+    display: flex;
+    div {
+        margin: 0 2rem 2rem 0;
+    }
+}
+
+.social-links {
+    margin: 1.3rem;
+    display: flex;
+    i {
+        margin-right: 1rem;
+    }
+}
+
 #affiliate-signup-submit {
     width: 100%;
 }
-
 
 .notice-message {
     text-align: center;
