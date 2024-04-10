@@ -83,7 +83,6 @@ main h2 {
 }
 
 .main-text {
-    text-align: center;
     font-size: 36px;
     font-style: normal;
     font-weight: 700;
@@ -92,7 +91,6 @@ main h2 {
 }
 .sub-text {
     color: $font-color-primary;
-    text-align: center;
     font-size: 18px;
     font-style: normal;
     font-weight: 400;
@@ -111,11 +109,15 @@ main h2 {
 }
 
 .hero-section {
+    display: flex;
     width: 100%;
-    margin-top: 25px;
+    justify-content: center;
     height: auto;
+    
     video {
         width: 100%;
+        max-width: 800px;
+        min-width: 250px;
         height: 100%;
         border-radius: 60px;
     }
