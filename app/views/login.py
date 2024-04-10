@@ -61,15 +61,14 @@ def signup():
         email = request.form['email']
         username = request.form['username']
         password = request.form['password']
-        print("incoming: ", password)
+        referral = request.form['referral'] if request.form['referral'] != '' else None
         
         hashed_pw = generate_password_hash(password)
-        print(hashed_pw)
         user_email = User.query.filter_by(email=email).first()
         user_username = User.query.filter_by(username=username).first()
 
         if user_email is None and user_username is None:
-            create(db, User, first_name=fname, last_name=lname, username=username, password_hash=hashed_pw, email=email)
+            create(db, User, first_name=fname, last_name=lname, username=username, password_hash=hashed_pw, email=email, referral=referral)
 
             # Create Media Directory
             media_dir = os.path.join(get_root_path(), '..', 'userData', username)

@@ -15,6 +15,7 @@ class User(db.Model):
     subscription_id = db.Column(db.Integer, db.ForeignKey('subscription_plans.plan_id'), nullable=True)
     affiliate_id = db.Column(db.Integer, db.ForeignKey('affiliates.affiliate_id'), nullable=True)
     date_added = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    referral = db.Column(db.String(50), nullable=True, default=None)
 
     # Establish relationships with renders and medias
     renders = db.relationship('Render', backref='user_renders', lazy=True)

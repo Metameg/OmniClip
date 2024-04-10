@@ -12,11 +12,11 @@
 
         <div class="form-group">
             <label for="fname">First Name</label>
-            <input type="text" id="fname-affiliate" name="fname" class="form-control form-control-lg fs-6" placeholder="First Name" required>
+            <input type="text" id="fname-affiliate" name="first_name" class="form-control form-control-lg fs-6" placeholder="First Name" required>
         </div>
         <div class="form-group">
             <label for="lname">Last Name</label>
-            <input type="text" id="lname-affiliate" name="lname" class="form-control form-control-lg fs-6" placeholder="Last Name" required>
+            <input type="text" id="lname-affiliate" name="last_name" class="form-control form-control-lg fs-6" placeholder="Last Name" required>
         </div>
         <div class="form-group">
             <label for="email">Email</label>
@@ -26,11 +26,11 @@
         <h2>Mailing Address</h2>
         <div class="form-group">
             <label for="street-addr1">Street Address</label>
-            <input type="text" id="street-addr1" name="address1" class="form-control form-control-lg fs-6" placeholder="Street Address" required>
+            <input type="text" id="street-addr1" name="addr1" class="form-control form-control-lg fs-6" placeholder="Street Address" required>
         </div>
         <div class="form-group">
             <label for="street-addr2">Street Address 2</label>
-            <input type="text" id="street-addr2" name="address2" class="form-control form-control-lg fs-6">
+            <input type="text" id="street-addr2" name="addr2" class="form-control form-control-lg fs-6">
         </div>
         <div class="form-group-half">
             <div class="form-group">
@@ -39,7 +39,7 @@
             </div>
             <div class="form-group ">
                 <label for="state">State</label>
-                <select id="state" class="form-select">
+                <select id="state" class="form-select" name="state" required>
                     {% include 'partials/states.html'%}
                 </select>
             </div>
@@ -47,7 +47,7 @@
 
         <div class="form-group">
             <label for="zip">Zip / Postal Code</label>
-            <input type="text" id="zip" name="zipCode" class="form-control form-control-lg fs-6" placeholder="Zip/Postal Code" required>
+            <input type="text" id="zip" name="zip_code" class="form-control form-control-lg fs-6" placeholder="Zip/Postal Code" required>
         </div>
         
         <h2>Business Information</h2>
@@ -57,11 +57,11 @@
         </div>
         <div class="form-group">
             <label for="phone">Telephone</label>
-            <input type="tel" id="phone" name="phone" class="form-control form-control-lg fs-6" placeholder="111-111-1111">
+            <input type="tel" id="phone" name="telephone" class="form-control form-control-lg fs-6" placeholder="111-111-1111">
         </div>
         <label for="business-type">Business Type</label>
-        <select id="business-type" class="form-select-sm">
-            <option value="none" selected></option>
+        <select id="business-type" class="form-select-sm" name="business_type">
+            <option value="" selected></option>
             <option value="creator">Creator</option>
             <option value="blogger">Blogger</option>
             <option value="ecommerce">E-Commerce</option>

@@ -23,11 +23,7 @@ def render():
     csrf.protect()
     
     form_data = request.get_json()
-    # clippack_category = form_data['clippack']
-    # try:
-    #     print(type(form_data['selectedMedia[]']))
-    # except KeyError:
-    #     print("KeyError")
+
     for key, value in form_data.items():
         print(f"{key}: {value}")
 
@@ -50,39 +46,6 @@ def render():
             audio_uploads.append(path)
         elif classify_file_type(path) == 'img':
             watermark_uploads.append(path)
-
-            
-    
-    # if has_video:
-
-            
-    
-    # if import videos was disabled, set video upload directory to appropriate clippack category
-    # if len(videos) == 0:
-    #     # video_uploads_dir = os.path.join('clippack_categories', clippack_category)
-    #     video_uploads_dir = 'video_uploads'
-    # else:
-    #     if videos[0].filename == '':
-    #         video_uploads_dir = 'video_uploads'
-    #     else:
-    #         video_uploads_dir = 'video_uploads'
-    #         upload_files(videos, video_uploads_dir)
-
-    # if len(audios) == 0:
-    #     audio_uploads_dir = 'audio_uploads'
-
-    # elif  audios[0].filename != '':
-    #     upload_files(audios, 'audio_uploads')
-
-    # if len(watermarks) == 0:
-    #     watermark_uploads_dir = None
-    # else:
-    #     if  watermarks[0].filename == '':
-    #         watermark_uploads_dir = None
-    #     else:
-    #         watermark_uploads_dir = 'watermark_uploads'
-    #         upload_files(watermarks, 'watermark_uploads')
-        
 
     
     outpath = 'output'

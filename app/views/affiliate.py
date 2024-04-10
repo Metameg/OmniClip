@@ -49,10 +49,35 @@ def affiliate_signup():
 def affiliate_register():
     username = session["user"]
     user = database.retrieve(User, username=username)
-    print("affiliate_id: ", user.affiliate_id)
+
+    form_copy = dict(request.form)
+    for key, value in form_copy.items():
+        print(f"{key}: {value}") 
+        if value == '':
+            form_copy[key] = None
 
     key = helpers.generate_key(12)
-    database.create(db, Affiliate, key=key)
+    database.create(db, Affiliate, 
+                    first_name=form_copy['first_name'], 
+                    last_name=form_copy['last_name'],
+                    email=form_copy['email'],
+                    addr1=form_copy['addr1'],
+                    addr2=form_copy['addr2'],
+                    city=form_copy['city'],
+                    state=form_copy['state'],
+                    zip_code=form_copy['zip_code'],
+                    domain=form_copy['domain'],
+                    telephone=form_copy['telephone'],
+                    business_type=form_copy['business_type'],
+                    twitter=form_copy['twitter'],
+                    fb=form_copy['fb'],
+                    instagram=form_copy['instagram'],
+                    youtube=form_copy['youtube'],
+                    tiktok=form_copy['tiktok'],
+                    twitch=form_copy['twitch'],
+                    paypal = form_copy['paypal'],
+                    key=key)
+    
     user.affiliate_id = database.retrieve(Affiliate, key=key).affiliate_id
     try:
         db.session.commit()
@@ -60,9 +85,7 @@ def affiliate_register():
     except:
         print("Unable to update user!")
 
-    print("user: ", user.username)
-    print("affiliate_id: ", user.affiliate_id)
-    print("key: ", key)
+    # retrieve affiliate key given username
     affiliate_key = database.retrieve_from_join(db, User, Media, username)
 
     return redirect(url_for('login.user'))
