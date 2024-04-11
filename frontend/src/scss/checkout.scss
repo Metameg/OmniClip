@@ -1,44 +1,84 @@
 @import "./_variables.scss";
 
-.product-line-price {
-    float: right;
-    clear: left;
-    width: auto;
-    margin-top: 10px;
-}
-
-.product .product-line-price:before {
-    content: 'Item Total: $';
+.checkout-container {
+    min-width: 280px;
+    background-color: $background-color-secondary;
+    display: flex;
 }
 
 .product-title {
-    font-size: 36px;
-    margin-right: 20px;
+    font-size: 2.2rem;
     font-weight: bold;
 }
-.product-description {
-    margin: 5px 20px 5px 0;
-    line-height: 1.4em;
+
+.card-subtitle {
+    font-size: 1.6rem;
+    margin: 1.2rem;
 }
 
-.totals .totals-item{ 
-    width: 100%;
-    margin-bottom: 10px;
-}
-        
-.totals > label {
-    width: 79%;
-    text-align: right;
+.checkout-card { 
+    width: 50%;
+    min-width: 200px;
+    margin: 1.2rem;
 }
 
-.totals-value {
-    float: right;
-    width: 21%;
-    text-align: right;
+.section-divider {
+    background-color: $border-color-primary;
+    border: none;
+    height: 2px;
+    margin: 20px 0; 
+    min-width: 280px;
 }
 
-.totals-item-total {
-    border-top: solid 2px #000000;
-    font-weight: bold;
+.specs-container {
+    margin: auto auto;
+    ul {
+        list-style-type: none;
+    }
 }
-    
+
+.totals {
+    background-color: $background-color-secondary;
+    padding: 1.2rem;
+    min-width: 250px;
+
+    .totals-item{ 
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    label {
+        width: 79%;
+        text-align: left;
+    }
+
+    .totals-value {
+        float: right;
+        width: 21%;
+        text-align: right;
+    }
+
+    .totals-item-total {
+        border-top: solid 2px #000000;
+        font-weight: bold;
+        padding-top: 1.2rem;
+    }
+}
+
+.paypal-container {
+    background-color: $background-color-secondary;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 1.2rem;
+}
+
+@media screen and (max-width: 768px) {
+    .checkout-container {
+        flex-direction: column;
+    }
+
+    .checkout-card {
+        margin: 1.2rem auto;
+    };
+}

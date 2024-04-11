@@ -2,94 +2,101 @@
 
 {% block content %}
 
-{{ package }}
-<div class="d-flex flex-column m-3 p-3 rounded" style="background-color: #ffffff; min-width: 350px;">
-    <h2 class="text-center rounded">Checkout</h2>
-    <div class="card mb-4 box-shadow">
-        <div class="product-image">
-            <img src="https://s.cdpn.io/3/dingo-dog-bones.jpg" width="64" height="64">
+<main class="m-3 p-3 rounded">
+    <h2>Checkout</h2>
+    <section class="checkout-container">
+        <div class="card checkout-card">
+            <!-- <div class="product-image">
+                <img src="https://s.cdpn.io/3/dingo-dog-bones.jpg" width="64" height="64">
+            </div> -->
+            <div class="text-center m-3 product-title">Starter Pack</div>
+            <h3 class="text-center card-subtitle m-3">$24.99 <small class="text-muted">/ mo</small></h3>
         </div>
-        <div class="product-title">Starter Pack</div>
-        <h1 class="card-title pricing-card-title">$24.99 <small class="text-muted">/ mo</small></h1>
-        <div class="card-body text-center">
-            <ul class="list-unstyled mt-3 mb-4">
-                <li><i class='bx bxs-star bx-rotate-90' style="color: #4f2797"></i>10 users included</li>
-                <li><i class='bx bxs-star bx-rotate-90' style="color: #4f2797"></i>2 GB of storage</li>
-                <li><i class='bx bxs-star bx-rotate-90' style="color: #4f2797"></i>Email support</li>
-                <li><i class='bx bxs-star bx-rotate-90' style="color: #4f2797"></i>Help center access</li>
-            </ul>
+        <div class="card checkout-card">
+            <div class="specs-container">
+                <h3 class="card-subtitle"><u>Specifications</u></h3>
+                <ul>
+                    <li>- <strong>10 users </strong>included</li>
+                    <li>- <strong>2 GB </strong>of storage</li>
+                    <li>- Email support</li>
+                    <li>- Help center access</li>
+                </ul>
+            </div>
         </div>
-    </div>
+    </section>
     
-    <div class="totals">
+    <hr class="section-divider">
+
+    <section class="totals">
         <div class="totals-item">
             <label>Subtotal (First month)</label>
-            <div class="totals-value" id="cart-subtotal">24.99</div>
+            <div class="totals-value">24.99</div>
         </div>
         <div class="totals-item">
             <label>Tax (7.5%)</label>
-            <div class="totals-value" id="cart-tax">1.60</div>
+            <div class="totals-value">1.60</div>
         </div>
         <div class="totals-item">
             <label>Processing Fee (5%)</label>
-            <div class="totals-value" id="cart-shipping">3.00</div>
+            <div class="totals-value">3.00</div>
         </div>
         <div class="totals-item totals-item-total">
             <label>Grand Total</label>
-            <div class="totals-value" id="cart-total">30.00</div>
+            <div class="totals-value">30.00</div>
         </div>
-    </div>
+    </section>
     
 
-<div id="paypal-container" class="d-flex flex-column align-items-center">
-    <h3><u>Pay Now</u></h3>
-    <div id="paypal-button-container" class="mt-3" style="width: 33%; min-width: 250px;"></div>
-    <p id="result-message"></p>
+    <section class="paypal-container">
+        <h2>Pay Now</h2>
+        <div id="paypal-button-container" class="mt-3" style="width: 33%; min-width: 250px;"></div>
+        <p id="result-message"></p>
 
-    <script type="text/javascript" src="https://www.paypal.com/sdk/js?client-id=AeKSoG7ueATSYqBRKyWYBy5r6NxmNWbORH1ruWttBRuBuXUsOs11pEitl_doWfJn00ynN3BHrelHg6Sr">
-    </script>
-    <script>
-        paypal.Buttons({
+        <script type="text/javascript" src="https://www.paypal.com/sdk/js?client-id=AeKSoG7ueATSYqBRKyWYBy5r6NxmNWbORH1ruWttBRuBuXUsOs11pEitl_doWfJn00ynN3BHrelHg6Sr">
+        </script>
+        <script>
+            paypal.Buttons({
+                
+                createOrder: (data, actions) => {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                            value:'0.01'
+                            }
+                        }]
+                    });
+                },
+                onApprove: (data, actions) => {
+                    return actions.order.capture().then(function(orderData) {
+
+                        // if (orderData.error === 'INSTRUMENT_DECLINED') // Your server response structure and key names are what you choose
+                        //     return actions.restart();
+                        console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                        const transaction = orderData.purchase_units[0].payments.captures[0];
+                        // resultMessage(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for info.`);
+                        resultMessage(`Transaction Approved! Your transaction id is ${transaction.id}.`, '#02ff0042');
+                    });
+                },
+
+                onCancel: (data, actions) => {
+                    resultMessage('Transaction was cancelled. Please try again.', '#ff000042');
+                },
+
+                onError: (err) => {
+                    // For example, redirect to a specific error page
+                    resultMessage('Transaction Failed. Please try again.', '#ff000042');
+                }
+            }).render("#paypal-button-container");
+
             
-            createOrder: (data, actions) => {
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                        value:'0.01'
-                        }
-                    }]
-                });
-            },
-            onApprove: (data, actions) => {
-                return actions.order.capture().then(function(orderData) {
-
-                    // if (orderData.error === 'INSTRUMENT_DECLINED') // Your server response structure and key names are what you choose
-                    //     return actions.restart();
-                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-                    const transaction = orderData.purchase_units[0].payments.captures[0];
-                    // resultMessage(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for info.`);
-                    resultMessage(`Transaction Approved! Your transaction id is ${transaction.id}.`, '#02ff0042');
-                });
-            },
-
-            onCancel: (data, actions) => {
-                resultMessage('Transaction was cancelled. Please try again.', '#ff000042');
-            },
-
-            onError: (err) => {
-                // For example, redirect to a specific error page
-                resultMessage('Transaction Failed. Please try again.', '#ff000042');
+            function resultMessage(message, color) {
+                const messageContainer = document.querySelector("#result-message");
+                messageContainer.style.background = color;
+                messageContainer.innerHTML = message;
             }
-        }).render("#paypal-button-container");
-
-        
-        function resultMessage(message, color) {
-            const messageContainer = document.querySelector("#result-message");
-            messageContainer.style.background = color;
-            messageContainer.innerHTML = message;
-        }
-    </script>
-</div>
+        </script>
+    </div>
+</main>
 
 {% endblock content %}
 

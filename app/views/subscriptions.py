@@ -17,18 +17,19 @@ def checkout(package):
     
     username = session["user"]
     user = database.retrieve(User, username=username)
+    
 
-    if package == 'pro':
-        print(user.subscription_id)
-        user.subscription_id = 1
-    if package == 'enterprise':
-        user.subscription_id = 2
+    # if package == 'pro':
+    #     print(user.subscription_id)
+    #     user.subscription_id = 1
+    # if package == 'enterprise':
+    #     user.subscription_id = 2
 
-    try:
-        db.session.commit()
-        print("User subscription_id added!")
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        print("Unable to update user!", e)
+    # try:
+    #     db.session.commit()
+    #     print("User subscription_id added!")
+    # except SQLAlchemyError as e:
+    #     db.session.rollback()
+    #     print("Unable to update user!", e)
 
     return render_template("pages/checkout.html", package=package)
