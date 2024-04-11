@@ -1,26 +1,18 @@
-from flask import Blueprint, render_template, send_from_directory
-from app.tools import utilities
+from flask import Blueprint, render_template, send_from_directory, session, redirect, url_for
+from app.tools import utilities, database
+from app.models.User import  User
+from app.extensions import db
 import os
 
 blueprint = Blueprint('general', __name__)
 
 @blueprint.route('/')
 def index():
-    stuff = "This is <strong>Bold</strong>"
-    return render_template("pages/home.html", stuff=stuff)
+    return render_template("pages/home.html")
 
 @blueprint.route('/about')
 def about():
     return render_template("pages/about.html")
-
-@blueprint.route('/pricing')
-def pricing():
-    return render_template("pages/pricing.html")
-
-@blueprint.route('/checkout')
-def checkout():
-    return render_template("pages/checkout.html")
-
 
 # Invalid URL
 @blueprint.errorhandler(404)

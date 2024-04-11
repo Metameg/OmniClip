@@ -5,7 +5,6 @@ from app.models.User import  User
 from app.models.Media import  Media
 from app.models.Affiliate import  Affiliate
 from app.extensions import db
-import os
 
 blueprint = Blueprint('affiliate', __name__)
 

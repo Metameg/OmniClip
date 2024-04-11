@@ -2,52 +2,7 @@
 
 {% block content %}
 
-<!-- <div style="background-color: #b9b9b9;"> -->
-<!-- <style>
-    
-    .product-line-price {
-        float: right;
-        clear: left;
-        width: auto;
-        margin-top: 10px;
-    }
-    
-    .product .product-line-price:before {
-        content: 'Item Total: $';
-    }
-  
-    .product-title {
-        font-size: 36px;
-        margin-right: 20px;
-        font-weight: bold;
-    }
-    .product-description {
-      margin: 5px 20px 5px 0;
-      line-height: 1.4em;
-    }
-  
-    .totals .totals-item{ 
-        width: 100%;
-        margin-bottom: 10px;
-    }
-            
-    .totals > label {
-        width: 79%;
-        text-align: right;
-    }
-    
-    .totals-value {
-        float: right;
-        width: 21%;
-        text-align: right;
-    }
-
-    .totals-item-total {
-        border-top: solid 2px #000000;
-        font-weight: bold;
-    }
-    
-</style>     -->
+{{ package }}
 <div class="d-flex flex-column m-3 p-3 rounded" style="background-color: #ffffff; min-width: 350px;">
     <h2 class="text-center rounded">Checkout</h2>
     <div class="card mb-4 box-shadow">
@@ -65,20 +20,7 @@
             </ul>
         </div>
     </div>
-    <!-- <div class="product">
-        <div class="product-image">
-            <img src="https://s.cdpn.io/3/dingo-dog-bones.jpg" width="64" height="64">
-        </div>
-        <div class="product-details d-flex flex-column align-items-center">
-            <div class="product-title">Starter Pack</div>
-            <ul class="product-description">
-                <li>20GB space</li>
-                <li>20GB space</li>
-                <li>20GB space</li>
-                <li>20GB space</li>
-            </ul>
-        </div>
-    </div> -->
+    
     <div class="totals">
         <div class="totals-item">
             <label>Subtotal (First month)</label>
@@ -98,8 +40,6 @@
         </div>
     </div>
     
-<!-- </div> -->
-<!-- </div> -->
 
 <div id="paypal-container" class="d-flex flex-column align-items-center">
     <h3><u>Pay Now</u></h3>

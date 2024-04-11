@@ -5,6 +5,7 @@ from app.extensions import csrf, db, migrate
 from datetime import timedelta
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+# Needed for sqlalchemy mappings
 from app.models import Affiliate, SubscriptionPlan, User, Render, Media  
 
 def create_app():
@@ -34,7 +35,7 @@ def create_app():
     return app
 
 def register_blueprints(app):
-    from app.views import general, create_content, affiliate,quote_generator, media_uploader, login
+    from app.views import general, create_content, affiliate,quote_generator, media_uploader, login, subscriptions
     
     app.register_blueprint(general.blueprint)
     app.register_blueprint(create_content.blueprint)
@@ -42,6 +43,7 @@ def register_blueprints(app):
     app.register_blueprint(quote_generator.blueprint, url_prefix='/quote-generator')
     app.register_blueprint(media_uploader.blueprint)
     app.register_blueprint(login.blueprint)
+    app.register_blueprint(subscriptions.blueprint)
 
 def create_db_session():
     load_dotenv()
