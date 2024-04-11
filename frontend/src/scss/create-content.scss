@@ -169,7 +169,7 @@
 #fine-tuning {
     color: $font-color-primary;
     min-width: 445px;
-    background: $background-gradient;
+    background: $background-gradient-overlay-color;
     padding: 20px;
     border: 2px solid $border-color-primary;
     border-radius: 20px;
@@ -182,7 +182,7 @@
 .param-header {
     color: $font-color-primary;
     text-shadow: $text-shadow-xy;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    
 }
 
 .range-inputbox {
