@@ -1,18 +1,23 @@
 import json
-from flask import Blueprint, request, flash, render_template
+from flask import Blueprint, request, flash, render_template, session
 from app.extensions import db, csrf
 from app.models.User import User
 from app.tools.utilities import generate_videos, get_root_path, decode_path
 from app.tools.helpers import classify_file_type
 from app.services.AutoEditor import AutoEditor
 import os
+from flask_wtf.csrf import CSRFError
 
 blueprint = Blueprint('create_content', __name__)
+
+
+
 
 @blueprint.route('/create-content', methods=['GET'])
 def create_content():
     with open('voices.json', 'r') as f:
         voices = json.load(f)['voices']
+    print("csrf app: " , session['csrf_token'])
     
     return render_template("pages/create-content.html", voices=voices)
 

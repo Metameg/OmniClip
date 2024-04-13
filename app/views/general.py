@@ -1,7 +1,5 @@
 from flask import Blueprint, render_template, send_from_directory, session, redirect, url_for
-from app.tools import utilities, database
-from app.models.User import  User
-from app.extensions import db
+from app.tools import utilities
 import os
 
 blueprint = Blueprint('general', __name__)

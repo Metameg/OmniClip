@@ -50,43 +50,72 @@
     <section class="paypal-container">
         <h2>Pay Now</h2>
         <div id="paypal-button-container" class="mt-3" style="width: 33%; min-width: 250px;"></div>
-        <p id="result-message"></p>
+        <!-- <a href="https://www.paypal.com/ncp/payment/HNHKZTQZ83H5C"><button>Paypal</button></a> -->
+        <p id="result-message">{{msg}}</p>
+        
 
-        <script type="text/javascript" src="https://www.paypal.com/sdk/js?client-id=AeKSoG7ueATSYqBRKyWYBy5r6NxmNWbORH1ruWttBRuBuXUsOs11pEitl_doWfJn00ynN3BHrelHg6Sr">
+        <script type="text/javascript" src="https://www.paypal.com/sdk/js?client-id=AeKSoG7ueATSYqBRKyWYBy5r6NxmNWbORH1ruWttBRuBuXUsOs11pEitl_doWfJn00ynN3BHrelHg6Sr&currency=USD">
         </script>
         <script>
             paypal.Buttons({
                 
-                createOrder: (data, actions) => {
+                createOrder: (data, actions) => {        
                     return actions.order.create({
                         purchase_units: [{
                             amount: {
-                            value:'0.01'
+                                value:'{{price}}'
                             }
                         }]
                     });
                 },
+
                 onApprove: (data, actions) => {
-                    return actions.order.capture().then(function(orderData) {
-
-                        // if (orderData.error === 'INSTRUMENT_DECLINED') // Your server response structure and key names are what you choose
-                        //     return actions.restart();
-                        console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-                        const transaction = orderData.purchase_units[0].payments.captures[0];
-                        // resultMessage(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for info.`);
-                        resultMessage(`Transaction Approved! Your transaction id is ${transaction.id}.`, '#02ff0042');
+                    
+                    return fetch(`http://localhost:5000/payments/{{package}}/${data.orderID}/capture`, {
+                        method: "post",
+                    })
+                    .then(() => {
+                        // After the fetch call is complete, do any client-side logic if needed
+                        // For example, you can display a message to the user
+                        console.log('Payment processed successfully!');
+                    })
+                    .catch(error => {
+                        console.error('Error processing payment:', error);
                     });
-                },
-
-                onCancel: (data, actions) => {
-                    resultMessage('Transaction was cancelled. Please try again.', '#ff000042');
-                },
-
-                onError: (err) => {
-                    // For example, redirect to a specific error page
-                    resultMessage('Transaction Failed. Please try again.', '#ff000042');
+                    // .then((response) => response.json())
+                    // .then((orderData) => {
+                        // Successful capture! For dev/demo purposes:
+                        // console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                        // const transaction = orderData.purchase_units[0].payments.captures[0];
+                        // alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+                        // When ready to go live, remove the alert and show a success message within this page. For example:
+                        // const element = document.getElementById('paypal-button-container');
+                        // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                        // Or go to another URL:  actions.redirect('thank_you.html');
+                //     });
+                    
                 }
-            }).render("#paypal-button-container");
+            }).render('#paypal-button-container');
+            //         return actions.order.capture().then(function(orderData) {
+
+            //             // if (orderData.error === 'INSTRUMENT_DECLINED') // Your server response structure and key names are what you choose
+            //             //     return actions.restart();
+            //             console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+            //             const transaction = orderData.purchase_units[0].payments.captures[0];
+            //             // resultMessage(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for info.`);
+            //             resultMessage(`Transaction Approved! Your transaction id is ${transaction.id}.`, '#02ff0042');
+            //         });
+            //     },
+
+            //     onCancel: (data, actions) => {
+            //         resultMessage('Transaction was cancelled. Please try again.', '#ff000042');
+            //     },
+
+            //     onError: (err) => {
+            //         // For example, redirect to a specific error page
+            //         resultMessage('Transaction Failed. Please try again.', '#ff000042');
+            //     }
+            // }).render("#paypal-button-container");
 
             
             function resultMessage(message, color) {
@@ -95,7 +124,7 @@
                 messageContainer.innerHTML = message;
             }
         </script>
-    </div>
+    </section>
 </main>
 
 {% endblock content %}

@@ -5,7 +5,6 @@ const quoteService = {
         var csrfToken = $('input[name="csrf_token"]').val();
 
         return new Promise((resolve, reject) => {
-            console.log(quoteData, url);
             $.ajax({
                 url: url,  
                 type: 'POST',
