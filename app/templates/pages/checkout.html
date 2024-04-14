@@ -73,26 +73,39 @@
                     return fetch(`http://127.0.0.1:5000/payments/{{package}}/${data.orderID}/capture`, {
                         method: "post",
                     })
-                    .then(() => {
-                        // After the fetch call is complete, do any client-side logic if needed
-                        // For example, you can display a message to the user
-                        console.log('Payment processed successfully!');
+                    .then((response) => response.json())
+                    // .then(() => {
+                    //     // After the fetch call is complete, do any client-side logic if needed
+                    //     // For example, you can display a message to the user
+                    //     console.log('Payment processed successfully!');
+                    // })
+                    .then((orderData) => {
+                        console.log('{{access_token}}');
+                        fetch('http://127.0.0.1:5000/payments/protected', {
+                            headers: {
+                                'Authorization': 'Bearer {{ access_token }}'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                        })
+                        .catch(error => console.error('Error:', error));
                     })
-                    .catch(error => {
-                        console.error('Error processing payment:', error);
-                    });
-                    // .then((response) => response.json())
-                    // .then((orderData) => {
-                        // Successful capture! For dev/demo purposes:
-                        // console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-                        // const transaction = orderData.purchase_units[0].payments.captures[0];
-                        // alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
-                        // When ready to go live, remove the alert and show a success message within this page. For example:
-                        // const element = document.getElementById('paypal-button-container');
-                        // element.innerHTML = '<h3>Thank you for your payment!</h3>';
-                        // Or go to another URL:  actions.redirect('thank_you.html');
-                //     });
-                    
+                    .catch(error => console.error('Error:', error));
+                        
+                    //     // Successful capture! For dev/demo purposes:
+                    //     // console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                    //     const transaction = orderData.purchase_units[0].payments.captures[0];
+                    //     // alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+                    //     // When ready to go live, remove the alert and show a success message within this page. For example:
+                    //     const element = document.getElementById('paypal-button-container');
+                    //     element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                    //     // Or go to another URL:  actions.redirect('thank_you.html');
+                    // })
+                    // .catch(error => {
+                    //     console.error('Error processing payment:', error);
+                    // });    
                 }
             }).render('#paypal-button-container');
             //         return actions.order.capture().then(function(orderData) {

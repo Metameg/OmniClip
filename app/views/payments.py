@@ -5,7 +5,7 @@ from app.models.Media import  Media
 from app.extensions import db, csrf
 import requests
 from requests.auth import HTTPBasicAuth
-# from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required
 import os
 import json
 from dotenv import load_dotenv
@@ -26,6 +26,21 @@ def capture_payment(package, order_id):  # Checks and confirms payment
     captured_payment = approve_payment(package, order_id)
     # print(captured_payment) # or you can do some checks from this captured data details
     return jsonify(captured_payment)
+
+
+# JWT-protected route
+@blueprint.route('/protected', methods=['GET'])
+@jwt_required()
+def protected():
+    # Access token is valid
+    # return jsonify({'message': 'You have access to this route'}), 200
+    return redirect(url_for('thank_you'))
+
+# Thank you page (also protected by JWT)
+@blueprint.route('/thank_you')
+@jwt_required()
+def thank_you():
+    return '<h1>Thank you for your payment!</h1>'
 
 def approve_payment(package, order_id):
     pro_price = "15.99"
@@ -58,4 +73,4 @@ def approve_payment(package, order_id):
             # return redirect(url_for('subscriptions.checkout', package=package, msg=msg))
 
 
-    return json_data
+    # return json_data
