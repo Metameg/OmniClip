@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask
-from app.extensions import csrf, db, migrate
+from app.extensions import csrf, db, migrate, jwt
 from datetime import timedelta
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -11,21 +11,26 @@ from app.models import Affiliate, SubscriptionPlan, User, Render, Media
 
 def create_app():
     app = Flask(__name__, static_folder=('static'), template_folder=('templates'))
-    CORS(app)
+    CORS(app, origins=["https://www.paypal.com", "https://www.sandbox.paypal.com"])
     # Set session length time
-    app.permanent_session_lifetime = timedelta(days=2)
+    app.permanent_session_lifetime = timedelta(hours=24)
+    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
 
     load_dotenv()
     mysql_pwd = os.getenv('MYSQL_PWD')
     flask_key = os.getenv('FLASK_KEY')
+    # jwt_secret = os.getenv('JWT_SECRET_KEY')
     # Config MySQL database
     app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:' + mysql_pwd + '@localhost/omniclip_users_dev'
     # Config CSRF for form
     app.config['SECRET_KEY'] = flask_key
+    app.config['JWT_SECRET_KEY'] = jwt_secret
+    
 
     csrf.init_app(app)
     db.init_app(app)
     migrate.init_app(app, db)
+    jwt.init_app(app)
 
     
     # from app.models import Affiliate, SubscriptionPlan, User, Render, Media  # Import your model classes

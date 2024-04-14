@@ -51,7 +51,7 @@
         <h2>Pay Now</h2>
         <div id="paypal-button-container" class="mt-3" style="width: 33%; min-width: 250px;"></div>
         <!-- <a href="https://www.paypal.com/ncp/payment/HNHKZTQZ83H5C"><button>Paypal</button></a> -->
-        <p id="result-message">{{msg}}</p>
+        <p id="result-message"></p>
         
 
         <script type="text/javascript" src="https://www.paypal.com/sdk/js?client-id=AeKSoG7ueATSYqBRKyWYBy5r6NxmNWbORH1ruWttBRuBuXUsOs11pEitl_doWfJn00ynN3BHrelHg6Sr&currency=USD">
@@ -70,8 +70,7 @@
                 },
 
                 onApprove: (data, actions) => {
-                    
-                    return fetch(`http://localhost:5000/payments/{{package}}/${data.orderID}/capture`, {
+                    return fetch(`http://127.0.0.1:5000/payments/{{package}}/${data.orderID}/capture`, {
                         method: "post",
                     })
                     .then(() => {

@@ -1,14 +1,15 @@
 from flask import Blueprint, request, jsonify, session, redirect, url_for
 from app.tools import helpers, database
-from app.tools.utilities import get_file_size, get_root_path, sanitize_filename, get_media_dir, split_filename
 from app.models.User import  User
 from app.models.Media import  Media
 from app.extensions import db, csrf
 import requests
 from requests.auth import HTTPBasicAuth
+# from flask_jwt_extended import jwt_required
 import os
 import json
 from dotenv import load_dotenv
+
 
 
 load_dotenv()
@@ -18,6 +19,7 @@ blueprint = Blueprint('payments', __name__)
 csrf.exempt(blueprint)
 
 @blueprint.route('<package>/<order_id>/capture', methods=['POST'])
+# @jwt_required()
 def capture_payment(package, order_id):  # Checks and confirms payment
     print("processing payment")
     # csrf.protect()
