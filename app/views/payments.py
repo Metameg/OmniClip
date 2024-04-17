@@ -1,84 +1,109 @@
 from flask import Blueprint, request, jsonify, session, redirect, url_for
 from app.tools import helpers, database
 from app.models.User import  User
-from app.models.Media import  Media
+from app.models.SubscriptionPlan import SubscriptionPlan
 from app.extensions import db, csrf
 import requests
 from requests import HTTPError
-from requests.auth import HTTPBasicAuth
+from sqlalchemy.exc import SQLAlchemyError
 from flask_jwt_extended import jwt_required
 import os
 import json
 from dotenv import load_dotenv
 
  #FIXME Replace this for production ->  "https://api-m.paypal.com"
-PAYPAL_ORDER_BASE_URL = "https://api-m.sandbox.paypal.com/v2/checkout/orders"
+# PAYPAL_ORDER_BASE_URL = "https://api-m.sandbox.paypal.com/v2/checkout/orders"
 PAYPAL_SUBSCRIPTION_BASE_URL = "https://api-m.sandbox.paypal.com/v1/billing/subscriptions"
+blueprint = Blueprint('payments', __name__)
 
+# def create_order(
+#     *,
+#     value_usd: str,
+# ) -> dict:
+#     """Create a PayPal order."""
 
+#     headers = construct_paypal_auth_headers()
 
-
-
-
-def create_order(
-    *,
-    value_usd: str,
-) -> dict:
-    """Create a PayPal order."""
-
-    headers = construct_paypal_auth_headers()
-
-    response = requests.post(
+#     response = requests.post(
        
-        url=PAYPAL_ORDER_BASE_URL,
-        headers=headers,
-        json={
-            "intent": "CAPTURE",
-            "purchase_units": [
-                {
-                    "amount": {
-                        "currency_code": "USD",
-                        "value": value_usd,
-                    },
-                },
-            ],
-        },
-    )
+#         url=PAYPAL_ORDER_BASE_URL,
+#         headers=headers,
+#         json={
+#             "intent": "CAPTURE",
+#             "purchase_units": [
+#                 {
+#                     "amount": {
+#                         "currency_code": "USD",
+#                         "value": value_usd,
+#                     },
+#                 },
+#             ],
+#         },
+#     )
+#     try:
+#         response.raise_for_status()
+#     except HTTPError as error:
+#         print(error)
+
+#     return response.json()
+
+
+# def capture_order(
+#     *,
+#     paypal_order_id: str,
+# ) -> dict:
+#     headers = construct_paypal_auth_headers()
+
+#     response = requests.post(
+#         url=f"{PAYPAL_ORDER_BASE_URL}/{paypal_order_id}/capture",
+#         headers=headers,
+#         # Uncomment one of these to force an error for negative testing
+#         # (in sandbox mode only).
+#         # Documentation:
+#         # https://developer.paypal.com/tools/sandbox/negative-testing/request-headers/
+#         # "PayPal-Mock-Response": '{"mock_application_codes": "INSTRUMENT_DECLINED"}'
+#         # "PayPal-Mock-Response": '{"mock_application_codes": "TRANSACTION_REFUSED"}'
+#         # "PayPal-Mock-Response": '{"mock_application_codes": "INTERNAL_SERVER_ERROR"}'
+#     )
+
+#     try:
+#         response.raise_for_status()
+#     except HTTPError as error:
+#         print(error)
+
+#     return response.json()
+
+
+@blueprint.route('/link-paypal-subscription', methods=['POST'])
+def link_paypal_subscription() -> dict:
+    body_json = request.get_json()
+     
+    print("link func: " , body_json)
+    subscription_id = body_json['subscription_id']
+    if  subscription_id is None:
+        return jsonify({"success": False})
+    
+    username = session["user"]
+    user = database.retrieve(User, username=username)
+    # subscription = database.retrieve_from_join(db, User, SubscriptionPlan, username)[0]
+    # subscription_paypal_id = subscription.paypal_plan_id
+    
+    subscription_json = get_subscription(subscription_id)
+    print("sub body: ", subscription_json)
+    plan_id = subscription_json['plan_id'] 
+    if plan_id == 'P-4Y884424610529704MYP7XJQ':
+        user.subscription_id = 1
+    # if package == 'enterprise':
+    #     user.subscription_id = 2
+
     try:
-        response.raise_for_status()
-    except HTTPError as error:
-        print(error)
+        db.session.commit()
+        print("User subscription_id added!")
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        print("Unable to update user!", e)
 
-    return response.json()
-
-
-def capture_order(
-    *,
-    paypal_order_id: str,
-) -> dict:
-    headers = construct_paypal_auth_headers()
-
-    response = requests.post(
-        url=f"{PAYPAL_ORDER_BASE_URL}/{paypal_order_id}/capture",
-        headers=headers,
-        # Uncomment one of these to force an error for negative testing
-        # (in sandbox mode only).
-        # Documentation:
-        # https://developer.paypal.com/tools/sandbox/negative-testing/request-headers/
-        # "PayPal-Mock-Response": '{"mock_application_codes": "INSTRUMENT_DECLINED"}'
-        # "PayPal-Mock-Response": '{"mock_application_codes": "TRANSACTION_REFUSED"}'
-        # "PayPal-Mock-Response": '{"mock_application_codes": "INTERNAL_SERVER_ERROR"}'
-    )
-
-    try:
-        response.raise_for_status()
-    except HTTPError as error:
-        print(error)
-
-    return response.json()
-
-
-
+    return jsonify({"success": True})
 
 def get_auth_token() -> str:
     """Get an auth token from PayPal."""
@@ -114,7 +139,6 @@ def construct_paypal_auth_headers() -> dict[str, str]:
 
 
 def get_subscription(
-    *,
     paypal_subscription_id: str,
 ) -> dict:
     headers = construct_paypal_auth_headers()
@@ -163,10 +187,16 @@ def subscription_is_active(
 
 
 
+
+
+
+
+
+
 # load_dotenv()
 # paypal_secret = os.getenv('PAYPAL_SECRET')
 
-# blueprint = Blueprint('payments', __name__)
+
 # csrf.exempt(blueprint)
 
 # @blueprint.route('<package>/<order_id>/capture', methods=['POST'])

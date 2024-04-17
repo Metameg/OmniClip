@@ -55,9 +55,10 @@
         
 
 
-        <div id="paypal-button-container-P-2KX03657XT304925AMYPVWSY"></div>
-<script src="https://www.paypal.com/sdk/js?client-id=sb&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
+        <div id="paypal-button-container"></div>
+<script src="https://www.paypal.com/sdk/js?client-id=AeKSoG7ueATSYqBRKyWYBy5r6NxmNWbORH1ruWttBRuBuXUsOs11pEitl_doWfJn00ynN3BHrelHg6Sr&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
 <script>
+    console.log('{{ plan_id }}');
   paypal.Buttons({
       style: {
           shape: 'rect',
@@ -68,20 +69,44 @@
       createSubscription: function(data, actions) {
         return actions.subscription.create({
           /* Creates the subscription */
-          plan_id: 'P-2KX03657XT304925AMYPVWSY'
+          plan_id: '{{ plan_id }}'
         });
       },
       onApprove: function(data, actions) {
-        alert(data.subscriptionID); // You can add optional success message for the subscriber here
+        console.log(data.subscriptionID);
+
+        return fetch('{{ link_paypal_subscription_url }}', {
+                method: 'post',
+                headers: {
+                    'content-type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token() }}'
+
+                },
+                body: JSON.stringify({
+                    subscription_id: data.subscriptionID
+                })
+            }).then(function(response) {
+                // response success true means subscription was created
+                if (response.ok) {
+                    console.log("completed");
+                    // reload the page
+                    // to trigger a redirect to Manage Subscription page
+                    location.reload();
+                } else {
+                    return response.json().then(function(error) {
+                        console.log(error.message);
+                    });
+                }
+            });
       }
-  }).render('#paypal-button-container-P-2KX03657XT304925AMYPVWSY'); // Renders the PayPal button
+  }).render('#paypal-button-container'); // Renders the PayPal button
 </script>
 
 
 
 
         
-        <script type="text/javascript" src="https://www.paypal.com/sdk/js?client-id=AeKSoG7ueATSYqBRKyWYBy5r6NxmNWbORH1ruWttBRuBuXUsOs11pEitl_doWfJn00ynN3BHrelHg6Sr&currency=USD">
+        <!-- <script type="text/javascript" src="https://www.paypal.com/sdk/js?client-id=AeKSoG7ueATSYqBRKyWYBy5r6NxmNWbORH1ruWttBRuBuXUsOs11pEitl_doWfJn00ynN3BHrelHg6Sr&currency=USD">
         </script>
         <script>
             paypal.Buttons({
@@ -164,7 +189,7 @@
                 messageContainer.style.background = color;
                 messageContainer.innerHTML = message;
             }
-        </script>
+        </script> -->
     </section>
 </main>
 

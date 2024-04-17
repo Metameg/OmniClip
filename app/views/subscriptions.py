@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, make_response, session, redirect, 
 from app.tools import database
 from app.models.User import  User
 from app.extensions import db
+
+
 from flask_jwt_extended import create_access_token
 
 blueprint = Blueprint('subscriptions', __name__)
@@ -12,31 +14,26 @@ def pricing():
 
 @blueprint.route('/checkout/<string:package>')
 def checkout(package):
+    print(session["user"])
     if "user" not in session:
         return redirect(url_for('login.login'))
     
     username = session["user"]
-    # user = database.retrieve(User, username=username)
-
-    #     print(user.subscription_id)
-    #     user.subscription_id = 1
-    # if package == 'enterprise':
-    #     user.subscription_id = 2
-
-    # try:
-    #     db.session.commit()
-    #     print("User subscription_id added!")
-    # except SQLAlchemyError as e:
-    #     db.session.rollback()
-    #     print("Unable to update user!", e)
+    
+    user = database.retrieve(User, username=username)
+    if user.subscription_id != 0:
+        return redirect(url_for('login.login'))
+    
+    
     if package == 'pro':
         price = 15.99
+        plan_id = 'P-4Y884424610529704MYP7XJQ'
     if package == 'enterprise':
         price = 24.99
 
-    access_token = create_access_token(identity=username)
-    print(access_token)
+    # access_token = create_access_token(identity=username)
+    # print(access_token)
     # response = make_response(render_template("pages/checkout.html", package=package, price=price))
     # set_access_cookies(response, access_token)
-
-    return render_template("pages/checkout.html", package=package, price=price, access_token=access_token)
+    link_paypal_subscription_url = 'http://127.0.0.1:5000/payments/link-paypal-subscription'
+    return render_template("pages/checkout.html", package=package, price=price, plan_id=plan_id, link_paypal_subscription_url=link_paypal_subscription_url)

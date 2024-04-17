@@ -12,7 +12,7 @@ class User(db.Model):
     username = db.Column(db.String(50), nullable=False, unique=True)
     password_hash = db.Column(db.String(300), nullable=False)
     email = db.Column(db.String(150), nullable=False, unique=True)
-    subscription_id = db.Column(db.Integer, db.ForeignKey('subscription_plans.plan_id'), nullable=False, default=0)
+    subscription_id = db.Column('subscription_id', db.Integer, db.ForeignKey('subscription_plans.id'), nullable=False, default=0)
     affiliate_id = db.Column(db.Integer, db.ForeignKey('affiliates.affiliate_id'), nullable=True)
     date_added = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     referral = db.Column(db.String(50), nullable=True, default=None)

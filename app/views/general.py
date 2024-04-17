@@ -34,3 +34,4 @@ def serve_media(user_dir, filename):
 @blueprint.route('/loading_container_partial', methods=['GET'])
 def loading_container_partial():
     return render_template("partials/loading-container.html")
+

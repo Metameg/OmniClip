@@ -34,10 +34,8 @@ def login():
             
 
             if  referrer == '/affiliate-program/about':
-                print('here')
                 return redirect(url_for('affiliate.affiliate_signup'))
             else:
-                print('there')
                 return redirect(url_for('login.user'))
         else:
             print("Incorrect Password!")
