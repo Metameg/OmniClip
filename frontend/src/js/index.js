@@ -42,7 +42,6 @@ $(document).ready(function() {
         configureAffiliate();
     }  
     if (window.location.pathname.startsWith('/login')) {
-        console.log("here");
         configureLoginController();
     }  
     if (window.location.pathname.startsWith('/signup')) {

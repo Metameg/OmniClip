@@ -35,3 +35,6 @@ def serve_media(user_dir, filename):
 def loading_container_partial():
     return render_template("partials/loading-container.html")
 
+@blueprint.route('/profile_subscription/<selected_pill>')
+def login_subscription(selected_pill):
+    return render_template('pages/profile.html', selected_pill=selected_pill)

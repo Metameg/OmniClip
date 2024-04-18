@@ -22,7 +22,7 @@ def checkout(package):
     
     user = database.retrieve(User, username=username)
     if user.subscription_id != 0:
-        return redirect(url_for('login.login'))
+        return redirect(url_for('general.login_subscription', selected_pill='subscription'))
     
     
     if package == 'pro':
