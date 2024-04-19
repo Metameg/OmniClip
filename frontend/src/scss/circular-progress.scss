@@ -12,6 +12,7 @@
     height: 100px;
     width: 100px;
     border-radius: 50%;
+    box-shadow: 1px 1px 4px 0px #000000;
 }
 
 .circular-progress-bar div span {
@@ -26,6 +27,7 @@
     text-align: center;
     border-radius: 50%;
     background-color: $background-gradient-overlay-color;
+    color: $font-color-primary;
 }
 
 .circular-progress-bar .background { background-color: #b3cef6; }

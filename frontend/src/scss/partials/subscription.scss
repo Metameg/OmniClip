@@ -1,9 +1,10 @@
 @import "../variables.scss";
 
 .subscription-card {
-    color: $font-color-primary;
+    color: #000000;
     background-color: $background-gradient-overlay-color;
 }
+
 
 
 @media (max-width : 496px) {

@@ -4,10 +4,10 @@
         <div class="col-sm-6 mb-3 mb-sm-0 p-1">
             <div class="card text-center align-items-center dashboard-card">
                 <div class="card-body">
-                    <h5 class="card-title">Generated From AI</h5>
+                    <h5 class="card-title">Custom Videos</h5>
                     {% set attribs = 'data-numerator=1 data-denominator=2'%}
                     {% include 'partials/circular-progress.html' %}
-                    <p class="card-text mt-2">created from from prompt-to-video AI</p>
+                    <!-- <p class="card-text mt-2">Custom Content</p> -->
                     <a href="#" class="btn btn-primary">Create New</a>
                 </div>
             </div>
@@ -15,9 +15,9 @@
         <div class="col-sm-6  p-1">
             <div class="card text-center align-items-center dashboard-card">
                 <div class="card-body">
-                    <h5 class="card-title">Generated From Parameters</h5>
+                    <h5 class="card-title">Category Videos</h5>
                     {% include 'partials/circular-progress.html' %}
-                    <p class="card-text mt-2">created from parameters</p>
+                    <!-- <p class="card-text mt-2">created from parameters</p> -->
                     <a href="{{ url_for('create_content.create_content', tab='params-tab') }}" class="btn btn-primary">Create new</a>
                     
                 </div>
