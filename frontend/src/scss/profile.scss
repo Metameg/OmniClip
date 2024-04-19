@@ -28,22 +28,20 @@
     }
 }
 
+#nav-lg-screen {
+    display: flex;
+}
 
-@media (max-width: 575px) {
+#offcanvas-btn {
+    display: none;
+}
+
+@media (max-width: 768px) {
     #nav-lg-screen {
         display: none;
-    }
-    #offcanvas-btn {
-        display: block;
-    }
-
-}
-@media (min-width: 576px) {
-    #nav-lg-screen {
-        display: flex;
     }
     #offcanvas-btn, #offcanvas {
-        display: none;
+        display: flex;
     }
 
 }

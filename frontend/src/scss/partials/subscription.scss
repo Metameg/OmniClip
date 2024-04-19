@@ -3,5 +3,15 @@
 .subscription-card {
     color: $font-color-primary;
     background-color: $background-gradient-overlay-color;
-    min-width: 158px;
+}
+
+
+@media (max-width : 496px) {
+    #renders-container {
+        min-width: 307px;
+    }  
+    .subscription-main-section {
+        flex-direction: column;
+    }
+
 }
