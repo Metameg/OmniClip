@@ -14,7 +14,6 @@ def pricing():
 
 @blueprint.route('/checkout/<string:package>')
 def checkout(package):
-    print(session["user"])
     if "user" not in session:
         return redirect(url_for('login.login'))
     
@@ -22,7 +21,7 @@ def checkout(package):
     
     user = database.retrieve(User, username=username)
     if user.subscription_id != 0:
-        return redirect(url_for('general.login_subscription', selected_pill='subscription'))
+        return redirect(url_for('general.login_subscription', username=username, selected_pill='subscription'))
     
     
     if package == 'pro':

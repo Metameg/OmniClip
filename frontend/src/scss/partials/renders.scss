@@ -1,12 +1,16 @@
 @import "../_variables.scss";
 
+#renders-container {
+    width: auto;
+}
 .render-card {
-    color: $font-color-primary;
-    background: $background-gradient;
+    color: #000000;
+    background: #ffffff;
     min-width: 190px;
     border: 1px solid $border-color-primary;
     border-radius: inherit;
     padding: 10px;
+    box-shadow: 2px 2px 0 0 $section-divider-color;
 }
 
 .video-component {
@@ -14,8 +18,24 @@
     min-height: 127px;
 }
 
-@media (max-width : 990px) {
-    .render-card {
-        flex-direction: column;
+.sub-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (max-width : 776px) {
+    #renders-container {
+        min-width: 540px;
     }  
+    .render-card {
+        width: 280px;
+        flex-direction: column;
+    } 
+}
+@media (max-width : 575px) {
+    #renders-container {
+        min-width: 307px;
+    }  
+
 }
