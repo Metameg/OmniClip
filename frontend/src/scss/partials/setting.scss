@@ -41,11 +41,10 @@
     color: $font-color-primary;
     font-size: 20px;
     cursor: pointer;
-    
 }
 
 .settings-sub-section {
-    background-color: $background-gradient-overlay-color;
+    background-color: var(--bs-body-bg);
     width: 66%; 
     margin: 0 auto;
 }

@@ -218,6 +218,22 @@
     justify-content: center;
 }
 
+#offcanvas-uploader-container {
+    overflow-y: scroll;
+}
+
+#uploader-loading-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: none;
+    flex-direction: column;
+
+    p {
+        margin-left: -2px;
+    }
+}
+
 .upload-offcanvas-toggle {
     align-self: center;
     width: 140px;

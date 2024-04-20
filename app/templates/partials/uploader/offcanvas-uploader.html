@@ -1,58 +1,58 @@
-<button id="offcanvas-upload-close" type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+<div id="uploader-loading-container">
+  <img id="loading-spinner" src="{{ url_for('static', filename='images/logo-spinner.gif')}}"
+  width=50>
+  <p id="loading-percentage">Loading...</p>
+</div>
 
+<div id="offcanvas-uploader-container">
 
-
-
-<ul class="nav nav-tabs" role="tablist">
+  <button id="offcanvas-upload-close" type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation">
+          <a data-mdb-tab-init id="media-tab" class="nav-link upload-nav-link active" href="#" role="tab" aria-controls="all-uploads" aria-selected="true" >Media Uploads</a>
+      </li>
     <li role="presentation">
-        <a data-mdb-tab-init id="media-tab" class="nav-link upload-nav-link active" href="#" role="tab" aria-controls="all-uploads" aria-selected="true" >Media Uploads</a>
+      <a data-mdb-tab-init id="video-tab" class="nav-link upload-nav-link" href="#" role="tab" aria-controls="video-uploads" aria-selected="true" >Video Uploads</a>
     </li>
-  <li role="presentation">
-    <a data-mdb-tab-init id="video-tab" class="nav-link upload-nav-link" href="#" role="tab" aria-controls="video-uploads" aria-selected="true" >Video Uploads</a>
-  </li>
-  <li role="presentation">
-    <a data-mdb-tab-init id="audio-tab" class="nav-link upload-nav-link" href="#" role="tab" aria-controls="audio-uploads" aria-selected="false">Audio Uploads</a>
-  </li>
-  <li role="presentation">
-    <a data-mdb-tab-init id="img-tab" class="nav-link upload-nav-link" href="#" role="tab" aria-controls="img-uploads" aria-selected="false">Watermark Uploads</a>
-  </li>
-</ul>
+    <li role="presentation">
+      <a data-mdb-tab-init id="audio-tab" class="nav-link upload-nav-link" href="#" role="tab" aria-controls="audio-uploads" aria-selected="false">Audio Uploads</a>
+    </li>
+    <li role="presentation">
+      <a data-mdb-tab-init id="img-tab" class="nav-link upload-nav-link" href="#" role="tab" aria-controls="img-uploads" aria-selected="false">Watermark Uploads</a>
+    </li>
+  </ul>
 
-<div class="offcanvas-header text-center mx-auto offcanvas-upload-centered">
-    <h5 class="offcanvas-title" id="offcanvas-media-uploadLabel">Your Media</h5>
+  <div class="offcanvas-header text-center mx-auto offcanvas-upload-centered">
+      <h5 class="offcanvas-title" id="offcanvas-media-uploadLabel">Your Media</h5>
+      <p><strong>Drop files to upload</strong><br>or</p>
+      <label for="hidden-file-input" class="custom-file-input">Select Files</label>
+      <input id="hidden-file-input" type="file" class="form-control" name="mediaPath" multiple>
+  </div>
 
 
+  <div class="offcanvas-body" >
+      <div id="all-uploads" class="tab-pane upload-tab-pane fade show active" role="tabpanel" aria-labelledby="media-tab">
+          <p id="all-no-uploads-msg">No media files uploaded</p>
+          <div id="all-uploads-content" class="row"></div>
+      </div>
 
 
-    <p><strong>Drop files to upload</strong><br>or</p>
-    <label for="hidden-file-input" class="custom-file-input">Select Files</label>
-    <input id="hidden-file-input" type="file" class="form-control" name="mediaPath" multiple>
+      <div id="video-uploads" class="tab-pane upload-tab-pane fade" role="tabpanel" aria-labelledby="video-tab">
+          <p id="video-no-uploads-msg">No video files uploaded.</p>
+          <div id="video-uploads-content" class="row"></div>
+              
+      </div>
+
+      <div id="audio-uploads" class="tab-pane upload-tab-pane fade" role="tabpanel" aria-labelledby="audio-tab">
+          <p id="audio-no-uploads-msg">No audio files uploaded.</p>
+          <div id="audio-uploads-content" class="row"></div>
+      </div>
+
+      <div id="img-uploads" class="tab-pane upload-tab-pane fade" role="tabpanel" aria-labelledby="img-tab">
+          <p id="img-no-uploads-msg">No image files uploaded.</p>
+          <div id="img-uploads-content" class="row"></div>
+      </div>
+
+  <button id="offcanvas-done" type="button" class="btn btn-primary" data-bs-dismiss="offcanvas" aria-label="Done">Done</button>
+  </div>
 </div>
-
-
-<div class="offcanvas-body" >
-    <div id="all-uploads" class="tab-pane upload-tab-pane fade show active" role="tabpanel" aria-labelledby="media-tab">
-        <p id="all-no-uploads-msg">No media files uploaded</p>
-        <div id="all-uploads-content" class="row"></div>
-    </div>
-
-
-    <div id="video-uploads" class="tab-pane upload-tab-pane fade" role="tabpanel" aria-labelledby="video-tab">
-        <p id="video-no-uploads-msg">No video files uploaded.</p>
-        <div id="video-uploads-content" class="row"></div>
-            
-    </div>
-
-    <div id="audio-uploads" class="tab-pane upload-tab-pane fade" role="tabpanel" aria-labelledby="audio-tab">
-        <p id="audio-no-uploads-msg">No audio files uploaded.</p>
-        <div id="audio-uploads-content" class="row"></div>
-    </div>
-
-    <div id="img-uploads" class="tab-pane upload-tab-pane fade" role="tabpanel" aria-labelledby="img-tab">
-        <p id="img-no-uploads-msg">No image files uploaded.</p>
-        <div id="img-uploads-content" class="row"></div>
-    </div>
-
-<button id="offcanvas-done" type="button" class="btn btn-primary" data-bs-dismiss="offcanvas" aria-label="Done">Done</button>
-</div>
-

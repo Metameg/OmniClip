@@ -1,7 +1,9 @@
 export const mediaUploaderService = {
     csrfToken: $('input[name="csrf_token"]').val(),
+    
     submitMediaData: function(url, mediaData) {
-        // var csrfToken = $('input[name="csrf_token"]').val();
+        $('#uploader-loading-container').show();
+        $('#offcanvas-uploader-container').css('opacity', '0.15');
         return new Promise((resolve, reject) => {
             $.ajax({
                 url: url,  
@@ -13,9 +15,13 @@ export const mediaUploaderService = {
                 processData: false,
                 contentType: false, 
                 success: function(data) {
+                    $('#uploader-loading-container').hide();
+                    $('#offcanvas-uploader-container').css('opacity', '1.0');
                     resolve(data);
                 },
                 error: function(error) {
+                    $('#uploader-loading-container').hide();
+                    $('#offcanvas-uploader-container').css('opacity', '1.0');
                     reject(error);
                 },
                 resetForm: true
@@ -24,16 +30,22 @@ export const mediaUploaderService = {
     },
 
     retrieveMedia: function() {
+        $('#uploader-loading-container').show();
+        $('#offcanvas-uploader-container').css('opacity', '0.15');
         return new Promise((resolve, reject) => {
             $.ajax({
                 url: '/retrieve-user-media',
                 method: 'GET',
                 dataType: 'json',
                 success: function(data) {
+                    $('#uploader-loading-container').hide();
+                    $('#offcanvas-uploader-container').css('opacity', '1.0');
                     // Handle the data returned by the server
                     resolve(data);
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
+                    $('#uploader-loading-container').hide();
+                    $('#offcanvas-uploader-container').css('opacity', '1.0');
                     // Handle errors
                     reject(errorThrown);
                 }

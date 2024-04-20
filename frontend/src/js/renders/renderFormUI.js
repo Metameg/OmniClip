@@ -3,7 +3,6 @@ import { notEnableFromCheckbox, enableFromCheckbox, updateHiddenBln } from "../s
 
 const renderFormDOM = (function () {
     // Private variables and functions
-    
 
     function voiceSelect (voice, radios) {
         radios.forEach(function (radioButton) {

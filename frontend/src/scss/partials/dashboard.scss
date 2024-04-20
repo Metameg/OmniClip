@@ -7,7 +7,7 @@
 
 .dashboard-card {
     color: #000000;
-    background-color: $background-gradient-overlay-color;
+    background-color: var(--bs-body-bg);
     min-width: 132px;
     height: 350px;
 }
@@ -24,5 +24,5 @@
 }
 .dashboard-sub-section {
     color: #000000;
-    background-color: $background-gradient-overlay-color;
+    background-color: var(--bs-body-bg);
 }
