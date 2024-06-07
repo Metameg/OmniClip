@@ -17,7 +17,6 @@ blueprint = Blueprint('create_content', __name__)
 def create_content():
     with open('voices.json', 'r') as f:
         voices = json.load(f)['voices']
-    print("csrf app: " , session['csrf_token'])
     
     return render_template("pages/create-content.html", voices=voices)
 

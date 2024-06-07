@@ -54,7 +54,6 @@ def upload_files(files, export_folder):
     for file in files:
         sanitized_filename = sanitize_filename(file.filename)
        
-        
         # Save the file to the 'uploads' directory with the sanitized filename
         file.save(os.path.join(export_folder, sanitized_filename))
         # print(test_jpeg(file.getvalue()))
