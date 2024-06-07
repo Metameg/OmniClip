@@ -111,7 +111,7 @@ const uploadMediaUI = (function () {
             
             // filter the files based on active tab
             // showTabContent(targetEle, clickedID);
-            clearAllContent();
+            // clearAllContent();
             targetEle.style.display = 'flex';
             
             

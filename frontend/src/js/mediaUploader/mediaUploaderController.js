@@ -48,8 +48,9 @@ function uploadFilesListener(mediaFiles, contentContainers, msgElements) {
 }
 
 function offCanvasToggleListener(toggle, contentContainers, msgElements) {
-    toggle.addEventListener('click', function() {
-    mediaUploaderService.retrieveMedia()
+    // toggle.addEventListener('click', function() {
+    // document.addEventListener('DOMContentLoaded', (event) => {
+        mediaUploaderService.retrieveMedia()
         .then(data => {
             console.log('Data:', data);
             // Add html from server to divs
@@ -71,12 +72,14 @@ function offCanvasToggleListener(toggle, contentContainers, msgElements) {
         .catch(error => {
             console.error('Error:', error);
         });
-    });
+    // });
 }
 
 function configureRemoveMediaListeners(contentContainers, msgElements) {
     let selectedMedia = uploadMediaUI.getSelectedMedia();
-
+    // const sessionDataDiv = document.getElementById('session-data');
+    // const user = sessionDataDiv.getAttribute('data-user');
+    // console.log("user: " + user);
     const uploadCards = document.querySelectorAll('.media-upload-card');
     uploadCards.forEach(card => {
         const deleteBtn = card.querySelector('.media-delete');
@@ -89,7 +92,7 @@ function configureRemoveMediaListeners(contentContainers, msgElements) {
                 selectedMedia.splice(indexToRemove, 1);
             }               
             
-      
+            // if (user != '') {
             try {
                 const url = `/remove-user-media/${src}`
                 const response = await  mediaUploaderService.removeMediaData(url, src);
@@ -109,6 +112,7 @@ function configureRemoveMediaListeners(contentContainers, msgElements) {
                 // Handle errors if needed
                 console.error(error);
             }
+            // }
             // // Remove the card from the DOM
             // card.remove();
 
@@ -138,5 +142,10 @@ export function configureMediaUploader() {
     uploadFilesListener(mediaFiles, contentContainers, msgElements);
     nullUploadFilesListener(mediaFiles);
     offCanvasToggleListener(offCanvasToggle, contentContainers, msgElements);
+
+    window.addEventListener('beforeunload', function(event) {
+        console.log('cleanup finished');
+        mediaUploaderService.removeGuestMedia();
+    });
    
 }

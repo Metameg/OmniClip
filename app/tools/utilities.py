@@ -100,3 +100,9 @@ def decode_path(path_with_percent):
 
     return normalized_path
 
+def remove_guest_temp_files():
+    guest_dir = os.path.join(get_root_path(), 'temp', 'guest')
+    for file in os.listdir(guest_dir):
+        os.remove(os.path.join(guest_dir, file))
+
+

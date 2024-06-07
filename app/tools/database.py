@@ -17,7 +17,6 @@ def retrieve_from_join(db, model1, model2, username):
         model1.username == username
     ).all()
     data = db.session.query(model2).join(model1).filter(model1.username == username).all()
-    print(data)
     
     return data
 

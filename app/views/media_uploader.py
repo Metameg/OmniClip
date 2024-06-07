@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, session
-from app.tools import helpers, database
+from app.tools import helpers, database, utilities
 from app.tools.utilities import get_file_size, get_root_path, sanitize_filename, get_media_dir, split_filename
 from app.models.User import  User
 from app.models.Media import  Media
@@ -58,7 +58,6 @@ def upload_media():
     
 @blueprint.route('/retrieve-user-media')
 def retrieve_medias():
-    
     if "user" in session:
         username = session["user"]
         print("username: ", username)
@@ -78,7 +77,6 @@ def retrieve_medias():
         return jsonify(html_data)
     
     html_data = helpers.build_media_html(file_paths)
-    print("\n data:\n", html_data)
 
     return jsonify(html_data)
 
@@ -89,6 +87,7 @@ def remove_media(path):
         username = session["user"]  
         path = path.replace('/', os.path.sep)
         print("path: ", path)
+        print("username: ", username)
         database.remove(db, Media, path)
         os.remove(path)
         medias = database.retrieve_from_join(db, User, Media, username)
@@ -97,6 +96,9 @@ def remove_media(path):
         s3_urls = [f"https://<bucket_name>.s3.amazonaws.com/{file_path}" for file_path in file_paths]
 
     else:
+       
+        path = path.replace('/', os.path.sep)
+        print("path: ", path)
         os.remove(path)
         guest_dir = os.path.join(get_root_path(), 'temp', 'guest')
         for filename in os.listdir(guest_dir):
@@ -107,20 +109,14 @@ def remove_media(path):
             if os.path.isfile(file_path):
                 # Append the full path to the list
                 file_paths.append(file_path)
-    # print("username: ", username)
-    
-   
-    # else:
-    #     html_data = [
-    #         {"allMedia": "" },
-    #         {"videos": ""},
-    #         {"audios": ""},
-    #         {"images": ""}
-    #     ]   
-    # return jsonify(html_data)
     
     html_data = helpers.build_media_html(file_paths)
-    print("\n data:\n", html_data)
 
     return jsonify(html_data)
 
+@blueprint.route('/remove-guest-media', methods=['GET'])
+def remove_guest_media():
+    print("removing...\n\n\n\n")
+    utilities.remove_guest_temp_files()
+
+    return ('', 204)

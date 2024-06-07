@@ -73,7 +73,23 @@ export const mediaUploaderService = {
                 resetForm: true
             });
         });
-    }
+    },
+
+    removeGuestMedia: function() {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: '/remove-guest-media',
+                type: 'GET',
+                contentType: 'application/json',
+                success: function(response) {
+                    // Handle success response if needed
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error triggering Flask route:', error);
+                }
+            });
+        });
+    },
 }
 
 
