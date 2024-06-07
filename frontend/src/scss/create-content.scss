@@ -313,11 +313,24 @@
     padding: 18px;
 }
 
-#offcanvas-done {
+// .offcanvas-header {
+//     position: relative;
+// }
+
+.controls-menu {
+    width: 100%;
+    background-color: #fff;
+    border-top: 1px solid #000;
     position: absolute;
-    right: 25px;
     bottom: 0;
-    padding: 7px;
+    border-bottom-right-radius: 5%;
+    border-bottom-left-radius: 18%;
+}
+
+#offcanvas-done, #offcanvas-select-all {
+    height: 50px;
+    float: right;
+    margin: 7px;
 }
 
 .custom-file-input {
