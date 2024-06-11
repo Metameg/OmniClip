@@ -57,6 +57,7 @@ def build_media_html(file_paths):
         directory= os.path.dirname(path)
         filename = os.path.basename(path)
         tag_type = classify_file_type(path)
+        print('dirname', directory + 'filename', filename)
         
         if tag_type == 'video':
             video_content = render_template(template, directory=directory, mediapath=filename, filename_trunc=truncate(filename, 18), tag_type=tag_type)
@@ -66,12 +67,10 @@ def build_media_html(file_paths):
             audio_content = render_template(template, directory=directory, mediapath=filename, filename_trunc=truncate(filename, 18), tag_type=tag_type)
             html_data[2]["audios"] += audio_content
 
-        elif tag_type == 'img': 
+        elif tag_type == 'img':
             image_content = render_template(template, directory=directory, mediapath=filename, filename_trunc=truncate(filename, 18), tag_type=tag_type)
             html_data[3]["images"] += image_content
             
-        
-        
         
         # Add file to the all media html data
         aggregate_content = render_template(template, directory=directory, mediapath=filename, filename_trunc=truncate(filename, 18), tag_type=tag_type)

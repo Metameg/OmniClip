@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, send_from_directory, session, redirect, url_for
 from app.tools import utilities
-import os
+import os, urllib
 
 blueprint = Blueprint('general', __name__)
 
@@ -29,7 +29,10 @@ def serve_output(filename):
 
 @blueprint.route('/<user_dir>/<filename>')
 def serve_media(user_dir, filename):
-    return send_from_directory(os.path.join(utilities.get_root_path(), user_dir), filename)
+    user_dir = urllib.parse.unquote(user_dir)
+    full_path = os.path.join(utilities.get_root_path(), user_dir)
+
+    return send_from_directory(full_path, filename)
 
 @blueprint.route('/loading_container_partial', methods=['GET'])
 def loading_container_partial():

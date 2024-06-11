@@ -3,7 +3,10 @@
 
     <div class="col-lg-4 col-md-4 col-sm-4 col-6 mb-2 media-col">    
         <div class="card media-upload-card">
-            <{{tag_type}} src="{{ url_for('general.serve_media', user_dir=directory, filename=mediapath) }}" class="card-img-top w-100" alt="" controls></{{tag_type}}>
+            {% set encoded_directory = directory | replace('/', '%2F') %}
+            {% set media_url = url_for('general.serve_media', user_dir=encoded_directory, filename=mediapath) %}
+            <{{tag_type}} src="{{ media_url }}" class="card-img-top w-100" alt="" controls></{{tag_type}}>
+            
             <div class="mt-2">
                 <p class="card-text">{{ filename_trunc }}</p>
                 <div class="d-flex justify-content-around">

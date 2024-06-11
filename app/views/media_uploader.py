@@ -4,7 +4,7 @@ from app.tools.utilities import get_file_size, get_root_path, sanitize_filename,
 from app.models.User import  User
 from app.models.Media import  Media
 from app.extensions import db
-import os
+import os, urllib
 
 blueprint = Blueprint('media_uploader', __name__)
 
@@ -24,10 +24,12 @@ def upload_media():
 
     file_paths = []
     media_files = os.listdir(media_dir)
+
     for file in files:
         filename = sanitize_filename(file.filename)
         path = os.path.join(media_dir, filename)
         print("path: ", path)
+        
         if helpers.classify_file_type(path) == 'unknown':
             print("Unknown file type in one or more of your files. Only upload media files.")
             break
@@ -83,6 +85,11 @@ def retrieve_medias():
 @blueprint.route('/remove-user-media/<path:path>', methods=['POST'])
 def remove_media(path):
     file_paths = []
+    path = urllib.parse.unquote(path)
+    path = path.replace('/', os.path.sep).replace('\\', os.path.sep)
+    if os.name == 'posix' and not path.startswith('/'):
+        path = '/' + path
+
     if "user" in session:
         username = session["user"]  
         path = path.replace('/', os.path.sep)
@@ -96,8 +103,6 @@ def remove_media(path):
         s3_urls = [f"https://<bucket_name>.s3.amazonaws.com/{file_path}" for file_path in file_paths]
 
     else:
-       
-        path = path.replace('/', os.path.sep)
         print("path: ", path)
         os.remove(path)
         guest_dir = os.path.join(get_root_path(), 'temp', 'guest')

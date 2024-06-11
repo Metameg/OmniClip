@@ -23,13 +23,13 @@ function uploadFilesListener(mediaFiles, contentContainers, msgElements) {
         
         try {
             const response = await mediaUploaderService.submitMediaData(url, mediaData);
-            
+            console.log("finished " + response);
             // Add html from server to divs
             contentContainers[0].innerHTML += response[0]["allMedia"];
             contentContainers[1].innerHTML += response[1]["videos"];
             contentContainers[2].innerHTML += response[2]["audios"];
             contentContainers[3].innerHTML += response[3]["images"];
-
+            
             // Toggle the no uploads messages for each div
             uploadMediaUI.toggleNoUploadsMsg(contentContainers[0], msgElements[0]);
             uploadMediaUI.toggleNoUploadsMsg(contentContainers[1], msgElements[1]);
@@ -144,7 +144,6 @@ export function configureMediaUploader() {
     offCanvasToggleListener(offCanvasToggle, contentContainers, msgElements);
 
     window.addEventListener('beforeunload', function(event) {
-        console.log('cleanup finished');
         mediaUploaderService.removeGuestMedia();
     });
    
