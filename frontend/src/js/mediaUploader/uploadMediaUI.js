@@ -185,22 +185,30 @@ const uploadMediaUI = (function () {
         },
 
         toggleCheckboxListener: function(cards) {
-            const uploadCards = document.querySelectorAll('.media-upload-card');
+            
             cards.forEach(card => {
                 console.log(card);
                 const checkbox = card.querySelector('input[type="checkbox"]');
                 card.addEventListener('click', () => {
                     checkbox.checked = !checkbox.checked; 
                     // collectSelectedMedia();
-                    
-                    var text = card.querySelector('.card-text').textContent;
-                    const duplicateCards =  Array.from(uploadCards).filter(duplicate => duplicate.querySelector('.card-text').textContent === text && duplicate !== card);
-                    duplicateCards.map(card => card.querySelector('input[type="checkbox"]').checked = !card.querySelector('input[type="checkbox"]').checked);
+                    this.toggleDuplicateCards(card);
+                    // var text = card.querySelector('.card-text').textContent;
+                    // const duplicateCards =  Array.from(uploadCards).filter(duplicate => duplicate.querySelector('.card-text').textContent === text && duplicate !== card);
+                    // duplicateCards.map(card => card.querySelector('input[type="checkbox"]').checked = !card.querySelector('input[type="checkbox"]').checked);
                     collectSelectedMedia();
                 });
             })
         },
     
+        toggleDuplicateCards: function(card) {
+            const uploadCards = document.querySelectorAll('.media-upload-card');
+            
+            var text = card.querySelector('.card-text').textContent;
+            const duplicateCards =  Array.from(uploadCards).filter(duplicate => duplicate.querySelector('.card-text').textContent === text && duplicate !== card);
+            duplicateCards.map(card => card.querySelector('input[type="checkbox"]').checked = !card.querySelector('input[type="checkbox"]').checked);
+        },
+
         toggleNoUploadsMsg: function(content, msg) {
             var numUploads = content.querySelectorAll('.media-col').length;
             if (numUploads == 0) {
@@ -212,7 +220,13 @@ const uploadMediaUI = (function () {
 
         getSelectedMedia: function() {
             return selectedMedia;
+        },
+
+        setSelectedMedia: function(val) {
+            selectedMedia = val;
         }
+
+
 
     }
 

@@ -87,13 +87,15 @@ function configureRemoveMediaListeners(contentContainers, msgElements) {
         deleteBtn.addEventListener('click', async function() {
             let selectedMedia = uploadMediaUI.getSelectedMedia();
             var src = mediaElement.getAttribute('src');
+            // let indexToRemove = selectedMedia.indexOf(mediaElement);
             let indexToRemove = selectedMedia.indexOf(src);
-
+            
             if (indexToRemove !== -1) {
                 selectedMedia.splice(indexToRemove, 1);
-            }  
+                // Update selected media variable in uploadMediaUI instance
+                uploadMediaUI.setSelectedMedia(selectedMedia);
+            } 
             
-            console.log("sel " + selectedMedia + "index " + indexToRemove);
                 
             // if (user != '') {
             try {
@@ -110,6 +112,14 @@ function configureRemoveMediaListeners(contentContainers, msgElements) {
                 uploadMediaUI.toggleNoUploadsMsg(contentContainers[1], msgElements[1]);
                 uploadMediaUI.toggleNoUploadsMsg(contentContainers[2], msgElements[2]);
                 uploadMediaUI.toggleNoUploadsMsg(contentContainers[3], msgElements[3]);
+
+                selectedMedia.forEach(src => {
+                    let card = getCardBySrc(src);
+                    const checkbox = card.querySelector('input[type="checkbox"]');
+                    checkbox.checked = true;
+                    uploadMediaUI.toggleDuplicateCards(card);
+                });
+
                 
             } catch (error) {
                 // Handle errors if needed
@@ -121,6 +131,21 @@ function configureRemoveMediaListeners(contentContainers, msgElements) {
             configureRemoveMediaListeners(contentContainers, msgElements);
         });
     });
+}
+
+function getCardBySrc(src) {
+    // Find the media element by its src attribute
+    const mediaElement = document.querySelector(`video[src="${src}"], img[src="${src}"], audio[src="${src}"]`);
+    
+    // If the media element is found, find the associated checkbox
+    if (mediaElement) {
+        const cardElement = mediaElement.closest('.card');
+        
+        return cardElement;
+    } else {
+        console.error('Media element with the specified src not found.');
+        return null;
+    }
 }
 
 export function configureMediaUploader() {
