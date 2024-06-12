@@ -111,8 +111,14 @@ const uploadMediaUI = (function () {
     }
     function offCanvasClearListener(offCanvasClearBtn) {
         offCanvasClearBtn.addEventListener('click', function() {
-            console.log(selectedMedia);
-            // selectedMedia = collectSelectedMedia();  
+            const offCanvasBody = document.getElementById('offcanvas-uploader-body');
+
+        offCanvasClearBtn.addEventListener('click', function() {
+            var checkboxes = offCanvasBody.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = false;
+            });
+        });
         });
     }
     
