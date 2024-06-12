@@ -76,7 +76,6 @@ function offCanvasToggleListener(toggle, contentContainers, msgElements) {
 }
 
 function configureRemoveMediaListeners(contentContainers, msgElements) {
-    let selectedMedia = uploadMediaUI.getSelectedMedia();
     // const sessionDataDiv = document.getElementById('session-data');
     // const user = sessionDataDiv.getAttribute('data-user');
     // console.log("user: " + user);
@@ -84,14 +83,18 @@ function configureRemoveMediaListeners(contentContainers, msgElements) {
     uploadCards.forEach(card => {
         const deleteBtn = card.querySelector('.media-delete');
         const mediaElement = card.querySelector('video, img, audio');
+
         deleteBtn.addEventListener('click', async function() {
-            console.log("deleted");
+            let selectedMedia = uploadMediaUI.getSelectedMedia();
             var src = mediaElement.getAttribute('src');
             let indexToRemove = selectedMedia.indexOf(src);
+
             if (indexToRemove !== -1) {
                 selectedMedia.splice(indexToRemove, 1);
-            }               
+            }  
             
+            console.log("sel " + selectedMedia + "index " + indexToRemove);
+                
             // if (user != '') {
             try {
                 const url = `/remove-user-media/${src}`
@@ -112,9 +115,8 @@ function configureRemoveMediaListeners(contentContainers, msgElements) {
                 // Handle errors if needed
                 console.error(error);
             }
-            // }
-            // // Remove the card from the DOM
-            // card.remove();
+            
+            
 
             configureRemoveMediaListeners(contentContainers, msgElements);
         });

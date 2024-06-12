@@ -75,6 +75,11 @@ const uploadMediaUI = (function () {
     //     });
     // }
 
+
+
+
+
+    
     function collectSelectedMedia() {
         selectedMediaTexts = []
         selectedMedia = [];
@@ -85,20 +90,23 @@ const uploadMediaUI = (function () {
             
             if (checkbox.checked) {
                 var src = mediaElement.getAttribute('src');          
+                // selectedMedia.push(mediaElement);  
                 selectedMedia.push(src);  
             }
         });
 
         selectedMedia = selectedMedia.filter((item, index, array) => array.indexOf(item) === index);
-        return selectedMedia;
+        
+        // return selectedMedia;
     }
 
-    // function offCanvasDoneListener(offCanvasDoneBtn) {
-    //     offCanvasDoneBtn.addEventListener('click', function() {
-    //         console.log(selectedMedia);
-    //         // selectedMedia = collectSelectedMedia();  
-    //     });
-    // }
+    function offCanvasDoneListener(offCanvasDoneBtn) {
+        offCanvasDoneBtn.addEventListener('click', function() {
+            // selectedMedia = collectSelectedMedia();  
+            collectSelectedMedia();  
+            console.log(selectedMedia);
+        });
+    }
     function offCanvasSelectAllListener(offCanvasSelectAllBtn) {
         const offCanvasBody = document.getElementById('offcanvas-uploader-body');
 
@@ -171,7 +179,7 @@ const uploadMediaUI = (function () {
             const uploadCards = document.querySelectorAll('.media-upload-card');
             this.toggleCheckboxListener(uploadCards);
             tabListener();
-            // offCanvasDoneListener(offCanvasDoneBtn);
+            offCanvasDoneListener(offCanvasDoneBtn);
             offCanvasSelectAllListener(offCanvasSelectAllBtn);
             offCanvasClearListener(offCanvasClearBtn);
         },
@@ -183,11 +191,9 @@ const uploadMediaUI = (function () {
                 const checkbox = card.querySelector('input[type="checkbox"]');
                 card.addEventListener('click', () => {
                     checkbox.checked = !checkbox.checked; 
-                    collectSelectedMedia();
+                    // collectSelectedMedia();
                     
                     var text = card.querySelector('.card-text').textContent;
-                    console.log("card-text: " + text);
-                    console.log("uploadCards: " + uploadCards);
                     const duplicateCards =  Array.from(uploadCards).filter(duplicate => duplicate.querySelector('.card-text').textContent === text && duplicate !== card);
                     duplicateCards.map(card => card.querySelector('input[type="checkbox"]').checked = !card.querySelector('input[type="checkbox"]').checked);
                     collectSelectedMedia();
@@ -203,7 +209,6 @@ const uploadMediaUI = (function () {
                 msg.style.display = 'none';
             }
         },
-
 
         getSelectedMedia: function() {
             return selectedMedia;
