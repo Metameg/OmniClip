@@ -31,25 +31,24 @@
               .mp3, .wav, .aac" multiple>
   </div>
 
-  <div class="offcanvas-body" >
-      <div id="all-uploads" class="tab-pane upload-tab-pane fade show active" role="tabpanel" aria-labelledby="media-tab">
+  <div id="offcanvas-uploader-body" class="offcanvas-body" >
+      <div id="all-uploads" class="tab-pane upload-tab-pane fade show active" role="tabpanel" aria-labelledby="media-tab" aria-controls="all-uploads-content">
           <p id="all-no-uploads-msg">No media files uploaded</p>
           <div id="all-uploads-content" class="row"></div>
       </div>
 
 
-      <div id="video-uploads" class="tab-pane upload-tab-pane fade" role="tabpanel" aria-labelledby="video-tab">
+      <div id="video-uploads" class="tab-pane upload-tab-pane fade" role="tabpanel" aria-labelledby="video-tab" aria-controls="video-uploads-content">
           <p id="video-no-uploads-msg">No video files uploaded.</p>
-          <div id="video-uploads-content" class="row"></div>
-              
+          <div id="video-uploads-content" class="row"></div>      
       </div>
 
-      <div id="audio-uploads" class="tab-pane upload-tab-pane fade" role="tabpanel" aria-labelledby="audio-tab">
+      <div id="audio-uploads" class="tab-pane upload-tab-pane fade" role="tabpanel" aria-labelledby="audio-tab" aria-controls="audio-uploads-content">
           <p id="audio-no-uploads-msg">No audio files uploaded.</p>
           <div id="audio-uploads-content" class="row"></div>
       </div>
 
-      <div id="img-uploads" class="tab-pane upload-tab-pane fade" role="tabpanel" aria-labelledby="img-tab">
+      <div id="img-uploads" class="tab-pane upload-tab-pane fade" role="tabpanel" aria-labelledby="img-tab" aria-controls="img-uploads-content">
           <p id="img-no-uploads-msg">No image files uploaded.</p>
           <div id="img-uploads-content" class="row"></div>
       </div>
@@ -57,8 +56,8 @@
   </div>
   <div class="controls-menu">
     <button id="offcanvas-done" type="button" class="btn btn-primary offcanvas-btn" data-bs-dismiss="offcanvas" aria-label="Accept">Accept</button>
-    <button id="offcanvas-select-all" type="button" class="btn btn-primary offcanvas-btn" data-bs-dismiss="offcanvas" aria-label="Select All" disabled>Select All</button>
-    <button id="offcanvas-clear" type="button" class="btn btn-primary offcanvas-btn" data-bs-dismiss="offcanvas" aria-label="Clear" disabled>Clear</button>
+    <button id="offcanvas-select-all" type="button" class="btn btn-primary offcanvas-btn" aria-label="Select All" >Select All</button>
+    <button id="offcanvas-clear" type="button" class="btn btn-primary offcanvas-btn" aria-label="Clear" disabled>Clear</button>
   </div>
 
 </div>

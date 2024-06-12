@@ -3,77 +3,77 @@ const uploadMediaUI = (function () {
     var selectedMedia = [];
     var selectedMediaTexts = [];
 
-    function uploadFileUI(input, uploadContainer) {
-        input.addEventListener('change', function(event) {
-            const files = event.target.files;
+    // function uploadFileUI(input, uploadContainer) {
+    //     input.addEventListener('change', function(event) {
+    //         const files = event.target.files;
 
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                const fileContainer = document.createElement('div');
-                fileContainer.classList.add('col');
+    //         for (let i = 0; i < files.length; i++) {
+    //             const file = files[i];
+    //             const fileContainer = document.createElement('div');
+    //             fileContainer.classList.add('col');
 
-                // Create a flex container for file name and loading bar
-                const flexContainer = document.createElement('div');
-                flexContainer.style.display = 'flex';
-                flexContainer.style.justifyContent = 'space-between';
-                flexContainer.style.alignItems = 'center';
+    //             // Create a flex container for file name and loading bar
+    //             const flexContainer = document.createElement('div');
+    //             flexContainer.style.display = 'flex';
+    //             flexContainer.style.justifyContent = 'space-between';
+    //             flexContainer.style.alignItems = 'center';
 
-                // File name element
-                const fileName = document.createElement('div');
-                fileName.textContent = file.name;
+    //             // File name element
+    //             const fileName = document.createElement('div');
+    //             fileName.textContent = file.name;
 
-                // Loading bar element
-                const loadingBarContainer = document.createElement('div');
-                const loadingBar = document.createElement('progress');
-                loadingBar.max = 100; // Set the maximum value of the progress bar
+    //             // Loading bar element
+    //             const loadingBarContainer = document.createElement('div');
+    //             const loadingBar = document.createElement('progress');
+    //             loadingBar.max = 100; // Set the maximum value of the progress bar
 
-                // Append loading bar to the container
-                loadingBarContainer.appendChild(loadingBar);
+    //             // Append loading bar to the container
+    //             loadingBarContainer.appendChild(loadingBar);
 
-                // Append file name and loading bar to the flex container
-                flexContainer.appendChild(fileName);
-                flexContainer.appendChild(loadingBarContainer);
+    //             // Append file name and loading bar to the flex container
+    //             flexContainer.appendChild(fileName);
+    //             flexContainer.appendChild(loadingBarContainer);
 
-                // Append flex container to the file container
-                fileContainer.appendChild(flexContainer);
+    //             // Append flex container to the file container
+    //             fileContainer.appendChild(flexContainer);
 
-                uploadContainer.appendChild(fileContainer);
+    //             uploadContainer.appendChild(fileContainer);
 
-                // Simulate loading progress
-                simulateLoading(loadingBar);
-            }
-        });
-    }
+    //             // Simulate loading progress
+    //             simulateLoading(loadingBar);
+    //         }
+    //     });
+    // }
 
     // THIS WILL BE REMOVED WHEN SERVICE IS ADDED 
-    function simulateLoading(progressBar) {
-        let progress = 0;
-        const interval = setInterval(function() {
-            progress += 10; // Increment progress by 10%
-            progressBar.value = progress;
-            if (progress >= 100) {
-                clearInterval(interval);
+    // function simulateLoading(progressBar) {
+    //     let progress = 0;
+    //     const interval = setInterval(function() {
+    //         progress += 10; // Increment progress by 10%
+    //         progressBar.value = progress;
+    //         if (progress >= 100) {
+    //             clearInterval(interval);
 
-                // Set the color of the progress bar to aqua blue when fully loaded
-                progressBar.classList.add('bg-info');
+    //             // Set the color of the progress bar to aqua blue when fully loaded
+    //             progressBar.classList.add('bg-info');
 
-                // Display "Load Complete" inside the progress bar
-                progressBar.innerHTML = 'Load Complete';
-            }
-        }, 500); // Adjust the interval as needed
-    }
+    //             // Display "Load Complete" inside the progress bar
+    //             progressBar.innerHTML = 'Load Complete';
+    //         }
+    //     }, 500); // Adjust the interval as needed
+    // }
 
-    function selectDuplicateCards(cards, cardText) {
-        console.log("texts: " + selectedMediaTexts);
-        console.log("text to match: " + cardText);
-        cards.forEach(card => {
-            if(card.querySelector('.card-text').textContent === cardText) {
-                const checkbox = card.querySelector('.custom-check-input');
-                console.log("checkbox: " + checkbox);
-                checkbox.checked = !checkbox.checked;
-            }
-        });
-    }
+    // function selectDuplicateCards(cards, cardText) {
+    //     console.log("texts: " + selectedMediaTexts);
+    //     console.log("text to match: " + cardText);
+    //     cards.forEach(card => {
+    //         if(card.querySelector('.card-text').textContent === cardText) {
+    //             const checkbox = card.querySelector('.custom-check-input');
+    //             console.log("checkbox: " + checkbox);
+    //             checkbox.checked = !checkbox.checked;
+    //         }
+    //     });
+    // }
 
     function collectSelectedMedia() {
         selectedMediaTexts = []
@@ -93,12 +93,31 @@ const uploadMediaUI = (function () {
         return selectedMedia;
     }
 
-    function offCanvasDoneListener(offCanvasDoneBtn) {
-        offCanvasDoneBtn.addEventListener('click', function() {
+    // function offCanvasDoneListener(offCanvasDoneBtn) {
+    //     offCanvasDoneBtn.addEventListener('click', function() {
+    //         console.log(selectedMedia);
+    //         // selectedMedia = collectSelectedMedia();  
+    //     });
+    // }
+    function offCanvasSelectAllListener(offCanvasSelectAllBtn) {
+        const offCanvasBody = document.getElementById('offcanvas-uploader-body');
+
+        offCanvasSelectAllBtn.addEventListener('click', function() {
+            var checkboxes = offCanvasBody.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = true;
+            });
+        });
+    }
+    function offCanvasClearListener(offCanvasClearBtn) {
+        offCanvasClearBtn.addEventListener('click', function() {
             console.log(selectedMedia);
             // selectedMedia = collectSelectedMedia();  
         });
     }
+    
+
+    
 
     function tabListener() {
         // Click event handler for tab links
@@ -141,10 +160,14 @@ const uploadMediaUI = (function () {
     return {
         configureDOM: function() {
             const offCanvasDoneBtn = document.getElementById('offcanvas-done');
+            const offCanvasSelectAllBtn = document.getElementById('offcanvas-select-all');
+            const offCanvasClearBtn = document.getElementById('offcanvas-clear');
             const uploadCards = document.querySelectorAll('.media-upload-card');
             this.toggleCheckboxListener(uploadCards);
             tabListener();
-            offCanvasDoneListener(offCanvasDoneBtn);
+            // offCanvasDoneListener(offCanvasDoneBtn);
+            offCanvasSelectAllListener(offCanvasSelectAllBtn);
+            offCanvasClearListener(offCanvasClearBtn);
         },
 
         toggleCheckboxListener: function(cards) {
