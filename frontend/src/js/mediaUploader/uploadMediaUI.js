@@ -1,7 +1,6 @@
 const uploadMediaUI = (function () {
     // Private functions and variables
     var selectedMedia = [];
-    var selectedMediaTexts = [];
 
     // function uploadFileUI(input, uploadContainer) {
     //     input.addEventListener('change', function(event) {
@@ -77,11 +76,7 @@ const uploadMediaUI = (function () {
 
 
 
-
-
-    
     function collectSelectedMedia() {
-        // selectedMediaTexts = []
         selectedMedia = [];
         const uploadCards = document.querySelectorAll('#all-uploads-content .media-upload-card');
         uploadCards.forEach(card => {
@@ -97,7 +92,6 @@ const uploadMediaUI = (function () {
         });
 
         selectedMedia = selectedMedia.filter((item, index, array) => array.indexOf(item) === index);
-        
         // return selectedMedia;
     }
 

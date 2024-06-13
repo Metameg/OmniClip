@@ -22,6 +22,7 @@ function uploadFilesListener(mediaFiles, contentContainers, msgElements) {
         }
         
         try {
+            let selectedMedia = uploadMediaUI.getSelectedMedia();
             const response = await mediaUploaderService.submitMediaData(url, mediaData);
             console.log("finished " + response);
             // Add html from server to divs
@@ -36,6 +37,7 @@ function uploadFilesListener(mediaFiles, contentContainers, msgElements) {
             uploadMediaUI.toggleNoUploadsMsg(contentContainers[2], msgElements[2]);
             uploadMediaUI.toggleNoUploadsMsg(contentContainers[3], msgElements[3]);
             
+            restoreSelectedMediaState(selectedMedia);
         } catch (error) {
             // Handle errors if needed
             console.error(error);
@@ -50,9 +52,9 @@ function uploadFilesListener(mediaFiles, contentContainers, msgElements) {
 function offCanvasToggleListener(toggle, contentContainers, msgElements) {
     // toggle.addEventListener('click', function() {
     // document.addEventListener('DOMContentLoaded', (event) => {
+        // let selectedMedia = uploadMediaUI.getSelectedMedia();
         mediaUploaderService.retrieveMedia()
         .then(data => {
-            console.log('Data:', data);
             // Add html from server to divs
             contentContainers[0].innerHTML = data[0]["allMedia"];
             contentContainers[1].innerHTML = data[1]["videos"];
@@ -65,6 +67,7 @@ function offCanvasToggleListener(toggle, contentContainers, msgElements) {
             uploadMediaUI.toggleNoUploadsMsg(contentContainers[2], msgElements[2]);
             uploadMediaUI.toggleNoUploadsMsg(contentContainers[3], msgElements[3]);
 
+            // restoreSelectedMediaState(selectedMedia);
             const cards = document.querySelectorAll('.media-upload-card');
             uploadMediaUI.toggleCheckboxListener(cards);
             configureRemoveMediaListeners(contentContainers, msgElements);
@@ -87,20 +90,15 @@ function configureRemoveMediaListeners(contentContainers, msgElements) {
         deleteBtn.addEventListener('click', async function(event) {
             event.stopPropagation();
             let selectedMedia = uploadMediaUI.getSelectedMedia();
-            console.log("retrieval: " + selectedMedia);
             var src = mediaElement.getAttribute('src');
-            console.log("delete: " + src);
             let indexToRemove = selectedMedia.indexOf(src);
             
             if (indexToRemove !== -1) {
                 selectedMedia.splice(indexToRemove, 1);
-                console.log("after splice: " + selectedMedia + "index: " + indexToRemove);
                 // Update selected media variable in uploadMediaUI instance
                 uploadMediaUI.setSelectedMedia(selectedMedia);
             } 
             
-                
-            // if (user != '') {
             try {
                 const url = `/remove-user-media/${src}`
                 const response = await  mediaUploaderService.removeMediaData(url, src);
@@ -116,25 +114,17 @@ function configureRemoveMediaListeners(contentContainers, msgElements) {
                 uploadMediaUI.toggleNoUploadsMsg(contentContainers[2], msgElements[2]);
                 uploadMediaUI.toggleNoUploadsMsg(contentContainers[3], msgElements[3]);
 
-                
-                selectedMedia.forEach(src => {
-                    let card = getCardBySrc(src);
-                    const checkbox = card.querySelector('input[type="checkbox"]');
-                    checkbox.checked = true;
-                    uploadMediaUI.toggleDuplicateCards(card);
-                });
-
-                // restoreSelectedMediaState(selectedMedia);
+                restoreSelectedMediaState(selectedMedia);
 
             } catch (error) {
                 // Handle errors if needed
                 console.error(error);
             }
             
-            
-            configureRemoveMediaListeners(contentContainers, msgElements);
             const uploadCards = document.querySelectorAll('.media-upload-card');
             uploadMediaUI.toggleCheckboxListener(uploadCards);
+            configureRemoveMediaListeners(contentContainers, msgElements);
+            
         });
     });
 }
