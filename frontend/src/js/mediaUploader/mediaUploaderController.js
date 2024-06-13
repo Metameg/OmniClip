@@ -11,7 +11,6 @@ function nullUploadFilesListener(mediaFiles) {
 
 function uploadFilesListener(mediaFiles, contentContainers, msgElements) {
     mediaFiles.addEventListener('change', async function(event) {
-        console.log(mediaFiles + " changed");
         var files = mediaFiles.files;
         var mediaData = new FormData();
         const url = '/upload-media'
@@ -22,22 +21,9 @@ function uploadFilesListener(mediaFiles, contentContainers, msgElements) {
         }
         
         try {
-            let selectedMedia = uploadMediaUI.getSelectedMedia();
+            // let selectedMedia = uploadMediaUI.getSelectedMedia();
             const response = await mediaUploaderService.submitMediaData(url, mediaData);
-            console.log("finished " + response);
-            // Add html from server to divs
-            contentContainers[0].innerHTML += response[0]["allMedia"];
-            contentContainers[1].innerHTML += response[1]["videos"];
-            contentContainers[2].innerHTML += response[2]["audios"];
-            contentContainers[3].innerHTML += response[3]["images"];
-            
-            // Toggle the no uploads messages for each div
-            uploadMediaUI.toggleNoUploadsMsg(contentContainers[0], msgElements[0]);
-            uploadMediaUI.toggleNoUploadsMsg(contentContainers[1], msgElements[1]);
-            uploadMediaUI.toggleNoUploadsMsg(contentContainers[2], msgElements[2]);
-            uploadMediaUI.toggleNoUploadsMsg(contentContainers[3], msgElements[3]);
-            
-            restoreSelectedMediaState(selectedMedia);
+            handleUIResponse(response, contentContainers, msgElements);
         } catch (error) {
             // Handle errors if needed
             console.error(error);
@@ -50,32 +36,16 @@ function uploadFilesListener(mediaFiles, contentContainers, msgElements) {
 }
 
 function offCanvasToggleListener(toggle, contentContainers, msgElements) {
-    // toggle.addEventListener('click', function() {
-    // document.addEventListener('DOMContentLoaded', (event) => {
-        // let selectedMedia = uploadMediaUI.getSelectedMedia();
-        mediaUploaderService.retrieveMedia()
-        .then(data => {
-            // Add html from server to divs
-            contentContainers[0].innerHTML = data[0]["allMedia"];
-            contentContainers[1].innerHTML = data[1]["videos"];
-            contentContainers[2].innerHTML = data[2]["audios"];
-            contentContainers[3].innerHTML = data[3]["images"];
-
-            // Toggle the no uploads messages for each div
-            uploadMediaUI.toggleNoUploadsMsg(contentContainers[0], msgElements[0]);
-            uploadMediaUI.toggleNoUploadsMsg(contentContainers[1], msgElements[1]);
-            uploadMediaUI.toggleNoUploadsMsg(contentContainers[2], msgElements[2]);
-            uploadMediaUI.toggleNoUploadsMsg(contentContainers[3], msgElements[3]);
-
-            // restoreSelectedMediaState(selectedMedia);
-            const cards = document.querySelectorAll('.media-upload-card');
-            uploadMediaUI.toggleCheckboxListener(cards);
-            configureRemoveMediaListeners(contentContainers, msgElements);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    // });
+    mediaUploaderService.retrieveMedia()
+    .then(response => {
+        handleUIResponse(response, contentContainers, msgElements);
+        const cards = document.querySelectorAll('.media-upload-card');
+        uploadMediaUI.toggleCheckboxListener(cards);
+        configureRemoveMediaListeners(contentContainers, msgElements);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
 
 function configureRemoveMediaListeners(contentContainers, msgElements) {
@@ -102,6 +72,7 @@ function configureRemoveMediaListeners(contentContainers, msgElements) {
             try {
                 const url = `/remove-user-media/${src}`
                 const response = await  mediaUploaderService.removeMediaData(url, src);
+
                 // Add html from server to divs
                 contentContainers[0].innerHTML = response[0]["allMedia"];
                 contentContainers[1].innerHTML = response[1]["videos"];
@@ -117,7 +88,6 @@ function configureRemoveMediaListeners(contentContainers, msgElements) {
                 restoreSelectedMediaState(selectedMedia);
 
             } catch (error) {
-                // Handle errors if needed
                 console.error(error);
             }
             
@@ -136,7 +106,6 @@ function getCardBySrc(src) {
     // If the media element is found, find the associated checkbox
     if (mediaElement) {
         const cardElement = mediaElement.closest('.card');
-        
         return cardElement;
     } else {
         console.error('Media element with the specified src not found.');
@@ -151,6 +120,24 @@ function restoreSelectedMediaState(selectedMedia) {
         checkbox.checked = true;
         uploadMediaUI.toggleDuplicateCards(card);
     });
+}
+
+function handleUIResponse(response, contentContainers, msgElements) {
+    const selectedMedia = uploadMediaUI.getSelectedMedia();
+
+    // Add html from server to divs
+    contentContainers[0].innerHTML += response[0]["allMedia"];
+    contentContainers[1].innerHTML += response[1]["videos"];
+    contentContainers[2].innerHTML += response[2]["audios"];
+    contentContainers[3].innerHTML += response[3]["images"];
+    
+    // Toggle the no uploads messages for each div
+    uploadMediaUI.toggleNoUploadsMsg(contentContainers[0], msgElements[0]);
+    uploadMediaUI.toggleNoUploadsMsg(contentContainers[1], msgElements[1]);
+    uploadMediaUI.toggleNoUploadsMsg(contentContainers[2], msgElements[2]);
+    uploadMediaUI.toggleNoUploadsMsg(contentContainers[3], msgElements[3]);
+    
+    restoreSelectedMediaState(selectedMedia);
 }
 
 export function configureMediaUploader() {

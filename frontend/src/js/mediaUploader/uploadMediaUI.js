@@ -82,7 +82,6 @@ const uploadMediaUI = (function () {
         uploadCards.forEach(card => {
             const checkbox = card.querySelector('.custom-check-input');
             const mediaElement = card.querySelector('video, img, audio');
-            console.log(checkbox.checked);
             if (checkbox.checked) {
                 var src = mediaElement.getAttribute('src');          
                 selectedMedia.push(src);  
@@ -178,7 +177,6 @@ const uploadMediaUI = (function () {
         toggleCheckboxListener: function(cards) {
             
             cards.forEach(card => {
-                console.log("togle " + card);
                 const checkbox = card.querySelector('input[type="checkbox"]');
                 card.addEventListener('click', function(event) {
                     checkbox.checked = !checkbox.checked;
@@ -198,7 +196,6 @@ const uploadMediaUI = (function () {
             const uploadCards = document.querySelectorAll('.media-upload-card');
 
             var text = card.querySelector('.card-text').textContent;
-            console.log("text: " + text);
             const duplicateCards =  Array.from(uploadCards).filter(duplicate => duplicate.querySelector('.card-text').textContent === text && duplicate !== card);
             duplicateCards.map(card => card.querySelector('input[type="checkbox"]').checked = !card.querySelector('input[type="checkbox"]').checked);
         },
@@ -213,7 +210,6 @@ const uploadMediaUI = (function () {
         },
 
         getSelectedMedia: function() {
-            console.log("before: " + selectedMedia);
             collectSelectedMedia();
             return selectedMedia;
         },
