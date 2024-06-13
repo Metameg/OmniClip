@@ -1,6 +1,6 @@
 
     
-
+<!-- onclick="event.stopPropagation();" -->
     <div class="col-lg-4 col-md-4 col-sm-4 col-6 mb-2 media-col">    
         <div class="card media-upload-card">
             {% set encoded_directory = directory | replace('/', '%2F') %}
@@ -10,8 +10,8 @@
             <div class="mt-2">
                 <p class="card-text">{{ filename_trunc }}</p>
                 <div class="d-flex justify-content-around">
-                    <input type="checkbox" class="form-check-input custom-check-input" onclick="event.stopPropagation();">
-                    <button type="button" class="btn btn-danger media-delete" onclick="event.stopPropagation();"><i class='bx bx-trash'></i></button>
+                    <input type="checkbox" class="form-check-input custom-check-input">
+                    <button type="button" class="btn btn-danger media-delete"><i class='bx bx-trash'></i></button>
                 </div>
             </div>
         </div>

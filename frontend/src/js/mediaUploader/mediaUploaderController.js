@@ -84,14 +84,16 @@ function configureRemoveMediaListeners(contentContainers, msgElements) {
         const deleteBtn = card.querySelector('.media-delete');
         const mediaElement = card.querySelector('video, img, audio');
 
-        deleteBtn.addEventListener('click', async function() {
+        deleteBtn.addEventListener('click', async function(event) {
+            event.stopPropagation();
             let selectedMedia = uploadMediaUI.getSelectedMedia();
             var src = mediaElement.getAttribute('src');
-            // let indexToRemove = selectedMedia.indexOf(mediaElement);
+            console.log("delete: " + src);
             let indexToRemove = selectedMedia.indexOf(src);
             
             if (indexToRemove !== -1) {
                 selectedMedia.splice(indexToRemove, 1);
+                console.log("selected" + selectedMedia + "index: " + indexToRemove);
                 // Update selected media variable in uploadMediaUI instance
                 uploadMediaUI.setSelectedMedia(selectedMedia);
             } 
@@ -113,6 +115,7 @@ function configureRemoveMediaListeners(contentContainers, msgElements) {
                 uploadMediaUI.toggleNoUploadsMsg(contentContainers[2], msgElements[2]);
                 uploadMediaUI.toggleNoUploadsMsg(contentContainers[3], msgElements[3]);
 
+                
                 selectedMedia.forEach(src => {
                     let card = getCardBySrc(src);
                     const checkbox = card.querySelector('input[type="checkbox"]');
@@ -120,7 +123,7 @@ function configureRemoveMediaListeners(contentContainers, msgElements) {
                     uploadMediaUI.toggleDuplicateCards(card);
                 });
 
-                
+                // restoreSelectedMediaState(selectedMedia);
             } catch (error) {
                 // Handle errors if needed
                 console.error(error);
@@ -146,6 +149,15 @@ function getCardBySrc(src) {
         console.error('Media element with the specified src not found.');
         return null;
     }
+}
+
+function restoreSelectedMediaState(selectedMedia) { 
+    selectedMedia.forEach(src => {
+        let card = getCardBySrc(src);
+        const checkbox = card.querySelector('input[type="checkbox"]');
+        checkbox.checked = true;
+        uploadMediaUI.toggleDuplicateCards(card);
+    });
 }
 
 export function configureMediaUploader() {

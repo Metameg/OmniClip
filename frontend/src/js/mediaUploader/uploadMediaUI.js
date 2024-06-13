@@ -81,16 +81,17 @@ const uploadMediaUI = (function () {
 
     
     function collectSelectedMedia() {
-        selectedMediaTexts = []
-        selectedMedia = [];
-        const uploadCards = document.querySelectorAll('.media-upload-card');
+        // selectedMediaTexts = []
+        // selectedMedia = [];
+        const uploadCards = document.querySelectorAll('#all-uploads-content .media-upload-card');
         uploadCards.forEach(card => {
             const checkbox = card.querySelector('.custom-check-input');
             const mediaElement = card.querySelector('video, img, audio');
-            
+            console.log(checkbox.checked);
             if (checkbox.checked) {
                 var src = mediaElement.getAttribute('src');          
-                // selectedMedia.push(mediaElement);  
+                // selectedMedia.push(mediaElement); 
+                console.log("pushing") ;
                 selectedMedia.push(src);  
             }
         });
@@ -189,13 +190,15 @@ const uploadMediaUI = (function () {
             cards.forEach(card => {
                 console.log(card);
                 const checkbox = card.querySelector('input[type="checkbox"]');
-                card.addEventListener('click', () => {
-                    checkbox.checked = !checkbox.checked; 
-                    // collectSelectedMedia();
-                    this.toggleDuplicateCards(card);
-                    // var text = card.querySelector('.card-text').textContent;
-                    // const duplicateCards =  Array.from(uploadCards).filter(duplicate => duplicate.querySelector('.card-text').textContent === text && duplicate !== card);
-                    // duplicateCards.map(card => card.querySelector('input[type="checkbox"]').checked = !card.querySelector('input[type="checkbox"]').checked);
+                card.addEventListener('click', function(event) {
+                    checkbox.checked = !checkbox.checked;
+                    uploadMediaUI.toggleDuplicateCards(card);
+                    collectSelectedMedia();
+                });
+
+                checkbox.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    uploadMediaUI.toggleDuplicateCards(card);
                     collectSelectedMedia();
                 });
             })
@@ -203,8 +206,9 @@ const uploadMediaUI = (function () {
     
         toggleDuplicateCards: function(card) {
             const uploadCards = document.querySelectorAll('.media-upload-card');
-            
+
             var text = card.querySelector('.card-text').textContent;
+            console.log("text: " + text);
             const duplicateCards =  Array.from(uploadCards).filter(duplicate => duplicate.querySelector('.card-text').textContent === text && duplicate !== card);
             duplicateCards.map(card => card.querySelector('input[type="checkbox"]').checked = !card.querySelector('input[type="checkbox"]').checked);
         },
@@ -219,6 +223,7 @@ const uploadMediaUI = (function () {
         },
 
         getSelectedMedia: function() {
+            console.log("before: " + selectedMedia);
             return selectedMedia;
         },
 
