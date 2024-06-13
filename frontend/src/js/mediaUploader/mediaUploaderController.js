@@ -11,28 +11,32 @@ function nullUploadFilesListener(mediaFiles) {
 
 function uploadFilesListener(mediaFiles, contentContainers, msgElements) {
     mediaFiles.addEventListener('change', async function(event) {
-        var files = mediaFiles.files;
-        var mediaData = new FormData();
-        const url = '/upload-media'
-        
-        // Add each file to the FormData object
-        for (var i = 0; i < files.length; i++) {
-            mediaData.append('files[]', files[i]);
-        }
-        
-        try {
-            // let selectedMedia = uploadMediaUI.getSelectedMedia();
-            const response = await mediaUploaderService.submitMediaData(url, mediaData);
-            handleUIResponse(response, contentContainers, msgElements);
-        } catch (error) {
-            // Handle errors if needed
-            console.error(error);
-        }
-
-        const cards = document.querySelectorAll('.media-upload-card');
-        uploadMediaUI.toggleCheckboxListener(cards);
-        configureRemoveMediaListeners(contentContainers, msgElements);
+        await uploadFiles(mediaFiles, contentContainers, msgElements);
     });    
+}
+
+function dropZoneListener(mediaFiles, dropZone, contentContainers, msgElements) {
+
+    dropZone.addEventListener('dragover', (event) => {
+        event.preventDefault();
+        dropZone.classList.add('dragover');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+        dropZone.classList.remove('dragover');
+    });
+
+    dropZone.addEventListener('drop', async function(event) {
+        event.preventDefault();
+        dropZone.classList.remove('dragover');
+        
+        const files = event.dataTransfer.files;
+        if (files.length) {
+            mediaFiles.files = files; // This will trigger any change event listeners on the file input
+            console.log(">0");
+            await uploadFiles(mediaFiles, contentContainers, msgElements);
+        }
+    });
 }
 
 function offCanvasToggleListener(toggle, contentContainers, msgElements) {
@@ -99,6 +103,30 @@ function configureRemoveMediaListeners(contentContainers, msgElements) {
     });
 }
 
+async function uploadFiles(mediaFiles, contentContainers, msgElements) {
+    var files = mediaFiles.files;
+    var mediaData = new FormData();
+    const url = '/upload-media'
+    
+    // Add each file to the FormData object
+    for (var i = 0; i < files.length; i++) {
+        mediaData.append('files[]', files[i]);
+    }
+    
+    try {
+        // let selectedMedia = uploadMediaUI.getSelectedMedia();
+        const response = await mediaUploaderService.submitMediaData(url, mediaData);
+        handleUIResponse(response, contentContainers, msgElements);
+    } catch (error) {
+        // Handle errors if needed
+        console.error(error);
+    }
+
+    const cards = document.querySelectorAll('.media-upload-card');
+    uploadMediaUI.toggleCheckboxListener(cards);
+    configureRemoveMediaListeners(contentContainers, msgElements);   
+}
+
 function getCardBySrc(src) {
     // Find the media element by its src attribute
     const mediaElement = document.querySelector(`video[src="${src}"], img[src="${src}"], audio[src="${src}"]`);
@@ -154,6 +182,7 @@ export function configureMediaUploader() {
     const audiosNoUploadsMsg = document.getElementById('audio-no-uploads-msg');
     const imgsNoUploadsMsg = document.getElementById('img-no-uploads-msg');
     const offCanvasToggle = document.getElementById('upload-offcanvas-toggle');
+    const dropZone = document.querySelector('.drop-zone');
     const contentContainers = [allUploadsContent, videoUploadsContent, audioUploadsContent, imgUploadsContent];
     const msgElements = [allNoUploadsMsg, videosNoUploadsMsg, audiosNoUploadsMsg, imgsNoUploadsMsg];
 
@@ -161,6 +190,7 @@ export function configureMediaUploader() {
     uploadFilesListener(mediaFiles, contentContainers, msgElements);
     nullUploadFilesListener(mediaFiles);
     offCanvasToggleListener(offCanvasToggle, contentContainers, msgElements);
+    dropZoneListener(mediaFiles, dropZone, contentContainers, msgElements);
 
     window.addEventListener('beforeunload', function(event) {
         mediaUploaderService.removeGuestMedia();

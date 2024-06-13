@@ -42,9 +42,56 @@
                     </div>
                 </div>
 
-                <div class="offcanvas offcanvas-top " data-bs-backdrop="static"  tabindex="-1" id="offcanvas-media-upload" aria-labelledby="offcanvas-media-uploadLabel">
+                <div class="offcanvas offcanvas-top drop-zone" data-bs-backdrop="static"  tabindex="-1" id="offcanvas-media-upload" aria-labelledby="offcanvas-media-uploadLabel">
                     {% include 'partials/uploader/offcanvas-uploader.html' %}
                 </div>
+
+                
+                <script>
+                    // document.addEventListener('DOMContentLoaded', () => {
+                    //     const dropZone = document.querySelector('.drop-zone');
+                    //     const fileInput = document.getElementById('hidden-file-input');
+                    //     console.log("drop " + dropZone);
+                    
+                    //     dropZone.addEventListener('click', () => {
+                    //         fileInput.click();
+                    //     });
+                    
+                    //     dropZone.addEventListener('dragover', (event) => {
+                    //         event.preventDefault();
+                    //         dropZone.classList.add('dragover');
+                    //     });
+                    
+                    //     dropZone.addEventListener('dragleave', () => {
+                    //         dropZone.classList.remove('dragover');
+                    //     });
+                    
+                    //     dropZone.addEventListener('drop', (event) => {
+                    //         event.preventDefault();
+                    //         dropZone.classList.remove('dragover');
+                    
+                    //         const files = event.dataTransfer.files;
+                    //         if (files.length) {
+                    //             fileInput.files = files; // This will trigger any change event listeners on the file input
+                    //             handleFiles(files); // Optionally handle the files immediately
+                    //         }
+                    //     });
+                    
+                    //     fileInput.addEventListener('change', (event) => {
+                    //         const files = event.target.files;
+                    //         handleFiles(files); // Optionally handle the files when file input changes
+                    //     });
+                    
+                    //     function handleFiles(files) {
+                    //         // Handle the files as needed (e.g., display the file names, upload them, etc.)
+                    //         console.log(files);
+                    //         for (const file of files) {
+                    //             console.log('File:', file.name);
+                    //         }
+                    //     }
+                    // });
+                </script>
+                    
                 
 
             </section>

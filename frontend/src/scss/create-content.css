@@ -281,7 +281,6 @@
 }
 
 #offcanvas-media-upload {
-  background-color: #ffffff;
   margin-top: 9%;
   width: 90%;
   height: 70%;
@@ -331,6 +330,11 @@
 
 .offcanvas-body {
   padding-bottom: 10%;
+}
+
+.drop-zone.dragover {
+  background-color: #cdcdcd;
+  cursor: pointer;
 }
 
 .controls-menu {
