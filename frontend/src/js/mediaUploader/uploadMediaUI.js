@@ -85,8 +85,6 @@ const uploadMediaUI = (function () {
             console.log(checkbox.checked);
             if (checkbox.checked) {
                 var src = mediaElement.getAttribute('src');          
-                // selectedMedia.push(mediaElement); 
-                console.log("pushing: " + src) ;
                 selectedMedia.push(src);  
             }
         });
@@ -95,13 +93,11 @@ const uploadMediaUI = (function () {
         // return selectedMedia;
     }
 
-    function offCanvasDoneListener(offCanvasDoneBtn) {
-        offCanvasDoneBtn.addEventListener('click', function() {
-            // selectedMedia = collectSelectedMedia();  
-            collectSelectedMedia();  
-            console.log(selectedMedia);
-        });
-    }
+    // function offCanvasDoneListener(offCanvasDoneBtn) {
+    //     offCanvasDoneBtn.addEventListener('click', function() {
+    //         collectSelectedMedia();  
+    //     });
+    // }
     function offCanvasSelectAllListener(offCanvasSelectAllBtn) {
         const offCanvasBody = document.getElementById('offcanvas-uploader-body');
 
@@ -168,13 +164,13 @@ const uploadMediaUI = (function () {
     // Public API
     return {
         configureDOM: function() {
-            const offCanvasDoneBtn = document.getElementById('offcanvas-done');
+            // const offCanvasDoneBtn = document.getElementById('offcanvas-done');
             const offCanvasSelectAllBtn = document.getElementById('offcanvas-select-all');
             const offCanvasClearBtn = document.getElementById('offcanvas-clear');
             const uploadCards = document.querySelectorAll('.media-upload-card');
             this.toggleCheckboxListener(uploadCards);
             tabListener();
-            offCanvasDoneListener(offCanvasDoneBtn);
+            // offCanvasDoneListener(offCanvasDoneBtn);
             offCanvasSelectAllListener(offCanvasSelectAllBtn);
             offCanvasClearListener(offCanvasClearBtn);
         },
