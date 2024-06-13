@@ -15,3 +15,4 @@ app/audio_uploads/*
 app/watermark_uploads/*
 app/dist/index-bundle.js
 userData
+*.map

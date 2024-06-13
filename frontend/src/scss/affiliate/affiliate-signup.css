@@ -1,0 +1,37 @@
+#affiliate-signup-container {
+  max-width: 600px;
+  min-width: 280px;
+  margin: 100px auto;
+  padding: 20px;
+  background-color: #0e0e0e;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group-half {
+  display: flex;
+}
+.form-group-half div {
+  margin: 0 2rem 2rem 0;
+}
+
+.social-links {
+  margin: 1.3rem;
+  display: flex;
+}
+.social-links i {
+  margin-right: 1rem;
+}
+
+#affiliate-signup-submit {
+  width: 100%;
+}
+
+.notice-message {
+  text-align: center;
+  color: #555;
+}/*# sourceMappingURL=affiliate-signup.css.map */

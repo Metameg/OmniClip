@@ -1,0 +1,12 @@
+@media (min-width: 576px) {
+  .pricing-card-deck {
+    display: flex;
+    justify-content: space-evenly;
+    flex-flow: row wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+}
+.pricing-card:hover {
+  box-shadow: -5px -5px 15px #c2c2c2, 5px -5px 15px #c2c2c2, -5px 5px 15px #c2c2c2, 5px 5px 15px #c2c2c2;
+}/*# sourceMappingURL=pricing.css.map */

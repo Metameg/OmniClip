@@ -252,7 +252,7 @@
 
 #all-uploads-content, #video-uploads-content, #audio-uploads-content, #img-uploads-content {
     margin: 0 auto;
-    padding-left: 7%;
+    // padding-left: 7%;
 }
 
 .media-upload-card {
@@ -261,7 +261,7 @@
     width: 9rem;
     height: 15rem;
     text-align: center;
-    margin: 8px;
+    margin: 8px auto;
 
     video, img, audio {
         width: 5rem;
@@ -298,6 +298,35 @@
 
     border-radius: $border-radius;
     border: $border;
+}
+
+.media-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 100%;
+    .media-col {
+        width: 33%;
+    }
+}
+
+@media (max-width: 768px) {
+    .media-grid {
+        justify-content: flex-start;
+        .media-col {
+            width: 50%;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .media-grid .media-col {
+        width: 100%;
+    }
+
+    .media-upload-card {
+        margin: 8px auto;
+    }
 }
 
 .offcanvas-upload-centered {

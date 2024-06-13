@@ -1,0 +1,13 @@
+.subscription-card {
+  color: #000000;
+  background-color: var(--bs-body-bg);
+}
+
+@media (max-width: 496px) {
+  #renders-container {
+    min-width: 307px;
+  }
+  .subscription-main-section {
+    flex-direction: column;
+  }
+}/*# sourceMappingURL=subscription.css.map */
