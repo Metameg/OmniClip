@@ -87,13 +87,14 @@ function configureRemoveMediaListeners(contentContainers, msgElements) {
         deleteBtn.addEventListener('click', async function(event) {
             event.stopPropagation();
             let selectedMedia = uploadMediaUI.getSelectedMedia();
+            console.log("retrieval: " + selectedMedia);
             var src = mediaElement.getAttribute('src');
             console.log("delete: " + src);
             let indexToRemove = selectedMedia.indexOf(src);
             
             if (indexToRemove !== -1) {
                 selectedMedia.splice(indexToRemove, 1);
-                console.log("selected" + selectedMedia + "index: " + indexToRemove);
+                console.log("after splice: " + selectedMedia + "index: " + indexToRemove);
                 // Update selected media variable in uploadMediaUI instance
                 uploadMediaUI.setSelectedMedia(selectedMedia);
             } 
@@ -124,14 +125,16 @@ function configureRemoveMediaListeners(contentContainers, msgElements) {
                 });
 
                 // restoreSelectedMediaState(selectedMedia);
+
             } catch (error) {
                 // Handle errors if needed
                 console.error(error);
             }
             
             
-
             configureRemoveMediaListeners(contentContainers, msgElements);
+            const uploadCards = document.querySelectorAll('.media-upload-card');
+            uploadMediaUI.toggleCheckboxListener(uploadCards);
         });
     });
 }

@@ -82,7 +82,7 @@ const uploadMediaUI = (function () {
     
     function collectSelectedMedia() {
         // selectedMediaTexts = []
-        // selectedMedia = [];
+        selectedMedia = [];
         const uploadCards = document.querySelectorAll('#all-uploads-content .media-upload-card');
         uploadCards.forEach(card => {
             const checkbox = card.querySelector('.custom-check-input');
@@ -91,7 +91,7 @@ const uploadMediaUI = (function () {
             if (checkbox.checked) {
                 var src = mediaElement.getAttribute('src');          
                 // selectedMedia.push(mediaElement); 
-                console.log("pushing") ;
+                console.log("pushing: " + src) ;
                 selectedMedia.push(src);  
             }
         });
@@ -188,7 +188,7 @@ const uploadMediaUI = (function () {
         toggleCheckboxListener: function(cards) {
             
             cards.forEach(card => {
-                console.log(card);
+                console.log("togle " + card);
                 const checkbox = card.querySelector('input[type="checkbox"]');
                 card.addEventListener('click', function(event) {
                     checkbox.checked = !checkbox.checked;
@@ -224,6 +224,7 @@ const uploadMediaUI = (function () {
 
         getSelectedMedia: function() {
             console.log("before: " + selectedMedia);
+            collectSelectedMedia();
             return selectedMedia;
         },
 
