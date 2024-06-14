@@ -108,10 +108,9 @@
     align-items: center;
 }
 
-// .import-path {
-//     // min-width: 106px;
-//     max-width: 261px;
-// }
+.range-number-input {
+    width: 75px;
+}
 
 #instructions-params {
     color: $font-color-primary;
@@ -135,6 +134,8 @@
     display: flex;
     flex-direction: row;
     margin-bottom: 40px;
+    padding-left: 10px;
+    
 }
 
 #total-length-container {
@@ -182,10 +183,6 @@
     color: $font-color-primary;
     text-shadow: $text-shadow-xy;
     width: auto;
-}
-
-.range-inputbox {
-    width: 70px;
 }
 
 .margin-right {
@@ -378,6 +375,12 @@
 
 #hidden-file-input {
     display: none;
+}
+
+@media (max-width: 768px) {
+    .slider-container {
+        flex-direction: column;
+    }
 }
 
 @media (max-width: 480px) {
