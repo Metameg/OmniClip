@@ -3,7 +3,9 @@
 .gradient-background-overlay {
     background-color: $background-gradient-overlay-color;
     border: 1px solid $section-divider-color;
-    padding: 25px
+    padding: 25px;
+    width: 100%;
+    margin: 0 auto;
 }
 
 
@@ -18,7 +20,7 @@
 }
 
 
-@media (max-width: 1200px) {
+@media (min-width: 480px) {
     #font-options {
         flex-direction: column;
     }
@@ -79,10 +81,11 @@
 
 .quote-textarea {
     height: 100px!important;
+    min-width: 135px;
 }
 
 
-@media (min-width: 795px) {
+@media (min-width: 768px) {
     .quote-textarea {
         width: 50%;
     }
@@ -134,7 +137,6 @@
     align-items: center;
     overflow: hidden;
     
-
     span {
         position: absolute;
         justify-self: center;
@@ -162,4 +164,49 @@
     width: 150px;
     height: 45px;
     margin: 0px 10px;
+}
+
+.clr-field {
+    button {
+        border-left: solid 2px blue;
+    }
+    input {
+        cursor: pointer;
+    }
+}
+
+@media (max-width: 480px) {
+    .mock-options-container {
+        flex-direction: column;    
+    }
+
+    .font-dropdown, #aspect-ratio{
+        width: 100%;
+    }
+
+    .clr-field {
+        width: 100%;
+        margin-left: 8px;
+    }
+
+    .form-range {
+        width: auto;
+    }
+
+    #num-videos-range {
+        margin-left: -30px;
+    }
+
+    .btn-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #quote-AI-content, #quote-manual-content {
+        margin-top: 2rem;
+    }
+
+    .btn-group-vertical>.btn, .btn-group>.btn {
+        text-align: left;
+    }
 }
