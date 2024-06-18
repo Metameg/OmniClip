@@ -1,7 +1,6 @@
 import os
 from datetime import datetime
 import time
-import ffmpeg
 import random
 from app.tools import utilities
 from . import ffmpeg_commands as fmpgapi
@@ -131,8 +130,9 @@ class AutoEditor():
 
         start_time = time.time()
         
+        cleaned_videos = utilities.decode_and_clean_paths(self.video_folder)
         # Randomly Select Video Clips 
-        video_clips = self._select_random_files(self.video_folder, True)
+        video_clips = self._select_random_files(cleaned_videos, True)
         audio_clips = self._select_random_files(self.audio_folder, True)
         
         # Create Transition Segments
@@ -190,7 +190,7 @@ class AutoEditor():
 
         # if logger.percentage == 100:
         #     st.video(transitions_video)
-
+        print("full_render: " + full_render)
         final_video_filename = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".mp4"
         utilities.move_file_to_output_dir(full_render, final_video_filename)
         # Clean up temp file

@@ -103,6 +103,7 @@ def _insert_silent(file_path):
             out_path
         ]
     
+    print("command: " + ' '.join(ffmpeg_command) )
     subprocess.run(ffmpeg_command)
 
     return out_path
@@ -113,9 +114,10 @@ def _get_random_transition():
         'circleopen','circleclose','vertopen','vertclose','horzopen','horzclose','dissolve','pixelize','diagtl','diagtr',
         'diagbl','diagbr','hlslice','hrslice','vuslice','vdslice','hblur','fadegrays','wipetl','wipetr','wipebl','wipebr',
         'squeezeh','squeezev','zoomin','fadefast','fadeslow','hrwind','vuwind','vdwind','coverleft','coverright',
-        'coverup','coverdown','revealleft','revealright','revealup','revealdown'
+        'coverup','revealright','revealup','revealdown'
     ]
 
+# 'coverdown','revealleft'
     return random.choice(transitions)
 
 def get_video_frame_rate(file_path):
@@ -159,12 +161,12 @@ def preprocess(video_clips, size):
             'ffmpeg',
             '-i', clip,
             '-hide_banner',
-            '-loglevel',
-            'quiet',
+            # '-loglevel',
+            # 'quiet',
             # '-vf', f'scale={size},setsar=1',
-            '-filter_complex', f'[0:v]fps=30,setpts={pts},scale={size},setsar=1[v];[0:a]aresample=async=1[a]',
+            '-filter_complex', f'[0:v]fps=30,setpts={pts},scale={size},setsar=1[v];',
             '-map', '[v]',
-            '-map', '[a]',
+            # '-map', '[a]',
             '-y',
             # '-r', '30',
             '-c:v', 'libx264',
@@ -174,6 +176,7 @@ def preprocess(video_clips, size):
         ]
         # ffmpeg_command_video = [
         #     'ffmpeg',
+        # [0:a]aresample=async=1[a]
         #     '-i', clip,
         #     '-vf', f'[0:v]scale={size},setsar=1[v0];',
         #     '-r', '30',
@@ -183,6 +186,7 @@ def preprocess(video_clips, size):
         #     '-strict', 'experimental',
         #     processed_video
         # ]
+        # ffmpeg_command_str = ' '.join(map(str, ffmpeg_command_video))
         subprocess.run(ffmpeg_command_video)
 
         # ffmpeg_command_audio = [
@@ -318,6 +322,7 @@ def build_transitions(video_clips, target_duration, fadeout_duration, size):
     transition = _get_random_transition()
     inputs = f'-i {file} '
     XFD=fadeout_duration
+    print(file)
     DUR=get_length(file)
     OFS=DUR-XFD
     FCT=1

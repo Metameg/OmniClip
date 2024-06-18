@@ -100,6 +100,19 @@ def decode_path(path_with_percent):
 
     return normalized_path
 
+def decode_and_clean_paths(url_paths):
+    cleaned_paths = []
+    for url_path in url_paths:
+        # Decode the URL-encoded path twice to handle double encoding
+        decoded_path = urllib.parse.unquote(urllib.parse.unquote(url_path))
+        
+        # Replace any remaining %2F with a forward slash
+        # clean_path = decoded_path.replace('%2F', '/')
+        
+        cleaned_paths.append(decoded_path)
+    
+    return cleaned_paths
+
 def remove_guest_temp_files():
     guest_dir = os.path.join(get_root_path(), 'temp', 'guest')
     for file in os.listdir(guest_dir):
