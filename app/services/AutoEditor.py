@@ -131,17 +131,20 @@ class AutoEditor():
         start_time = time.time()
         
         cleaned_videos = utilities.decode_and_clean_paths(self.video_folder)
+        cleaned_audios = utilities.decode_and_clean_paths(self.audio_folder)
         # Randomly Select Video Clips 
         video_clips = self._select_random_files(cleaned_videos, True)
-        audio_clips = self._select_random_files(self.audio_folder, True)
+        audio_clips = self._select_random_files(cleaned_audios, True)
         
         # Create Transition Segments
         print("\n\n\n\n\n Transitions render...")
         transitions_video = fmpgapi.build_transitions(video_clips, self.target_duration, self.fade_duration, '720:1280')
         
         if len(audio_clips) > 0:
+            print("\n\n\n audio found!\n\n\n")
             transitions_with_audio = fmpgapi.add_audio(transitions_video, audio_clips, self.target_duration)
         else:
+            print("\n\n\n audio not found!\n\n\n")
             transitions_with_audio = transitions_video
   
         # logger = MyBarLogger()
@@ -170,15 +173,16 @@ class AutoEditor():
             
 
         if len(self.overlay_folder) > 0:
+            cleaned_overlays = utilities.decode_and_clean_paths(self.overlay_folder)
             # Select Image Overlay
-            img = self._select_random_files(self.overlay_folder, False)
+            img = self._select_random_files(cleaned_overlays, False)
             # imgpath = os.path.join(utilities.get_root_path(), self.overlay_folder, img)
             print("\n\n\n\n\n Watermark render...\n\n\n\n\n")
             if text_videopath is not None:
-                full_render = fmpgapi.add_watermark(img, text_videopath)
+                full_render = fmpgapi.add_watermark(img, text_videopath, self.watermark_opacity)
                 # full_render = fmpgapi.add_watermark(imgpath, text_videopath)
             else: 
-                full_render = fmpgapi.add_watermark(img, transitions_video, self.watermark_opacity)
+                full_render = fmpgapi.add_watermark(img, full_render, self.watermark_opacity)
                 # full_render = fmpgapi.add_watermark(imgpath, transitions_video)
             
 
