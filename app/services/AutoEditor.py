@@ -191,10 +191,7 @@ class AutoEditor():
         time_difference = end_time - start_time
         
         print("Success! Time taken:", time_difference)
-
-        # if logger.percentage == 100:
-        #     st.video(transitions_video)
-        print("full_render: " + full_render)
+        
         final_video_filename = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".mp4"
         utilities.move_file_to_output_dir(full_render, final_video_filename)
         # Clean up temp file

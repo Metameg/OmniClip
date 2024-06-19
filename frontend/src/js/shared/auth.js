@@ -8,6 +8,6 @@ export async function sha256(str) {
     // Convert the hash buffer to a hexadecimal string
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
-    console.log(hashHex);
+
     return hashHex;
 }

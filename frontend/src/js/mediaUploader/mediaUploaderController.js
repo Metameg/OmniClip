@@ -33,7 +33,6 @@ function dropZoneListener(mediaFiles, dropZone, contentContainers, msgElements) 
         const files = event.dataTransfer.files;
         if (files.length) {
             mediaFiles.files = files; // This will trigger any change event listeners on the file input
-            console.log(">0");
             await uploadFiles(mediaFiles, contentContainers, msgElements);
         }
     });
