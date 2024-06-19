@@ -57,7 +57,6 @@ def build_media_html(file_paths):
         directory= os.path.dirname(path)
         filename = os.path.basename(path)
         tag_type = classify_file_type(path)
-        print('dirname', directory + 'filename', filename)
         
         if tag_type == 'video':
             video_content = render_template(template, directory=directory, mediapath=filename, filename_trunc=truncate(filename, 18), tag_type=tag_type)

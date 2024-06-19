@@ -2,6 +2,8 @@
   background-color: rgba(0, 0, 0, 0.4392156863);
   border: 1px solid rgba(145, 145, 145, 0.4784313725);
   padding: 25px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 #fine-tuning-options {
@@ -13,7 +15,7 @@
   flex-direction: row;
 }
 
-@media (max-width: 1200px) {
+@media (min-width: 480px) {
   #font-options {
     flex-direction: column;
   }
@@ -65,9 +67,10 @@
 
 .quote-textarea {
   height: 100px !important;
+  min-width: 135px;
 }
 
-@media (min-width: 795px) {
+@media (min-width: 768px) {
   .quote-textarea {
     width: 50%;
   }
@@ -133,4 +136,51 @@
   width: 150px;
   height: 45px;
   margin: 0px 10px;
+}
+
+.clr-field {
+  width: 150px;
+}
+.clr-field button {
+  border-left: solid 2px blue;
+}
+.clr-field input {
+  cursor: pointer;
+}
+
+.form-range {
+  width: 150px;
+}
+
+.voice-input-container {
+  display: flex;
+}
+
+@media (max-width: 480px) {
+  .mock-options-container {
+    flex-direction: column;
+  }
+  .font-dropdown, #aspect-ratio {
+    width: 100%;
+  }
+  .clr-field {
+    width: 100%;
+    margin-left: 8px;
+  }
+  .btn-group {
+    display: flex;
+    flex-direction: column;
+  }
+  #quote-AI-content, #quote-manual-content {
+    margin-top: 2rem;
+  }
+  .btn-group-vertical > .btn, .btn-group > .btn {
+    text-align: left;
+  }
+  .voice-input-container {
+    display: block;
+  }
+  #voice-select-btn {
+    margin-top: 5px;
+  }
 }/*# sourceMappingURL=fine-tuning-box.css.map */

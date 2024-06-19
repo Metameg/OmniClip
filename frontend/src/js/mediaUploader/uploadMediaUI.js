@@ -193,11 +193,19 @@ const uploadMediaUI = (function () {
         },
     
         toggleDuplicateCards: function(card) {
-            const uploadCards = document.querySelectorAll('.media-upload-card');
-
-            var text = card.querySelector('.card-text').textContent;
-            const duplicateCards =  Array.from(uploadCards).filter(duplicate => duplicate.querySelector('.card-text').textContent === text && duplicate !== card);
+            const duplicateCards =  uploadMediaUI.getDuplicateCards(card);
+            console.log(duplicateCards);
             duplicateCards.map(card => card.querySelector('input[type="checkbox"]').checked = !card.querySelector('input[type="checkbox"]').checked);
+        },
+
+        getDuplicateCards: function(card) {
+            const uploadCards = document.querySelectorAll('.media-upload-card');
+            
+            var text = card.querySelector('.card-text').textContent;
+            console.log("dup: " + text);
+            const duplicateCards =  Array.from(uploadCards).filter(duplicate => duplicate.querySelector('.card-text').textContent === text && duplicate !== card);
+
+            return duplicateCards;
         },
 
         toggleNoUploadsMsg: function(content, msg) {

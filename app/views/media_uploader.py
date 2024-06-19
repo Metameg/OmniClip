@@ -97,13 +97,12 @@ def remove_media(path):
         print("username: ", username)
         database.remove(db, Media, path)
         os.remove(path)
-        medias = database.retrieve_from_join(db, User, Media, username)
-        file_paths = [database.retrieve(Media, media_id=media.media_id).path for media in medias]
+        # medias = database.retrieve_from_join(db, User, Media, username)
+        # file_paths = [database.retrieve(Media, media_id=media.media_id).path for media in medias]
 
         s3_urls = [f"https://<bucket_name>.s3.amazonaws.com/{file_path}" for file_path in file_paths]
 
     else:
-        print("path: ", path)
         os.remove(path)
         guest_dir = os.path.join(get_root_path(), 'temp', 'guest')
         for filename in os.listdir(guest_dir):
@@ -115,13 +114,13 @@ def remove_media(path):
                 # Append the full path to the list
                 file_paths.append(file_path)
     
-    html_data = helpers.build_media_html(file_paths)
+    html_data = "data removed"
+    # html_data = helpers.build_media_html(file_paths)
 
     return jsonify(html_data)
 
 @blueprint.route('/remove-guest-media', methods=['GET'])
 def remove_guest_media():
-    print("removing...\n\n\n\n")
     utilities.remove_guest_temp_files()
 
     return ('', 204)

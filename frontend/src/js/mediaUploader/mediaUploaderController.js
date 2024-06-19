@@ -76,28 +76,32 @@ function configureRemoveMediaListeners(contentContainers, msgElements) {
             try {
                 const url = `/remove-user-media/${src}`
                 const response = await  mediaUploaderService.removeMediaData(url, src);
-
-                // Add html from server to divs
-                contentContainers[0].innerHTML = response[0]["allMedia"];
-                contentContainers[1].innerHTML = response[1]["videos"];
-                contentContainers[2].innerHTML = response[2]["audios"];
-                contentContainers[3].innerHTML = response[3]["images"];
-    
-                // Toggle the no uploads messages for each div
-                uploadMediaUI.toggleNoUploadsMsg(contentContainers[0], msgElements[0]);
-                uploadMediaUI.toggleNoUploadsMsg(contentContainers[1], msgElements[1]);
-                uploadMediaUI.toggleNoUploadsMsg(contentContainers[2], msgElements[2]);
-                uploadMediaUI.toggleNoUploadsMsg(contentContainers[3], msgElements[3]);
-
-                restoreSelectedMediaState(selectedMedia);
-
+                console.log(response);
+                // // Add html from server to divs
+                // contentContainers[0].innerHTML = response[0]["allMedia"];
+                // contentContainers[1].innerHTML = response[1]["videos"];
+                // contentContainers[2].innerHTML = response[2]["audios"];
+                // contentContainers[3].innerHTML = response[3]["images"];
             } catch (error) {
                 console.error(error);
             }
             
-            const uploadCards = document.querySelectorAll('.media-upload-card');
-            uploadMediaUI.toggleCheckboxListener(uploadCards);
-            configureRemoveMediaListeners(contentContainers, msgElements);
+            const duplicateCards = uploadMediaUI.getDuplicateCards(card);
+            card.closest('.media-col').remove();
+            
+            duplicateCards.forEach(duplicate => {
+                duplicate.closest('.media-col').remove();
+            });
+
+            // Toggle the no uploads messages for each div
+            uploadMediaUI.toggleNoUploadsMsg(contentContainers[0], msgElements[0]);
+            uploadMediaUI.toggleNoUploadsMsg(contentContainers[1], msgElements[1]);
+            uploadMediaUI.toggleNoUploadsMsg(contentContainers[2], msgElements[2]);
+            uploadMediaUI.toggleNoUploadsMsg(contentContainers[3], msgElements[3]);
+            // restoreSelectedMediaState(selectedMedia);
+            // const uploadCards = document.querySelectorAll('.media-upload-card');
+            // uploadMediaUI.toggleCheckboxListener(uploadCards);
+            // configureRemoveMediaListeners(contentContainers, msgElements);
             
         });
     });
@@ -142,6 +146,7 @@ function getCardBySrc(src) {
 }
 
 function restoreSelectedMediaState(selectedMedia) { 
+    console.log(selectedMedia);
     selectedMedia.forEach(src => {
         let card = getCardBySrc(src);
         const checkbox = card.querySelector('input[type="checkbox"]');

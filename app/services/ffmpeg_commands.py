@@ -117,7 +117,7 @@ def _get_random_transition():
         'coverup','revealright','revealup','revealdown'
     ]
 
-# 'coverdown','revealleft'
+
     return random.choice(transitions)
 
 def get_video_frame_rate(file_path):
