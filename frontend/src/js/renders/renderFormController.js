@@ -28,10 +28,7 @@ export function configureRenderForm() {
         
         var renderData = new FormData($('#render-form')[0]);
         renderData = appendMediaData(renderData);
-        
-        
-        const hasVideo = contains_video(renderData.getAll('selectedMedia[]'));
-        
+        var hasVideo = contains_video(renderData.getAll('selectedMedia[]'));
 
         if (hasVideo) {
             noVideoMsg.style.display = 'none';
