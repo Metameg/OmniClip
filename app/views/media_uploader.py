@@ -28,7 +28,6 @@ def upload_media():
     for file in files:
         filename = sanitize_filename(file.filename)
         path = os.path.join(media_dir, filename)
-        print("path: ", path)
         
         if helpers.classify_file_type(path) == 'unknown':
             print("Unknown file type in one or more of your files. Only upload media files.")
@@ -54,6 +53,7 @@ def upload_media():
                 file_size = get_file_size(file)
                 database.create(db, Media, user_id=user_id, path=path, filename=filename, size=file_size)
 
+    # html_data = "data removed"
     html_data = helpers.build_media_html(file_paths)
     return jsonify(html_data)
     # threading.Thread(target=simulate_time_consuming_process, args=()).start()

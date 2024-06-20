@@ -119,15 +119,23 @@ async function uploadFiles(mediaFiles, contentContainers, msgElements) {
     try {
         // let selectedMedia = uploadMediaUI.getSelectedMedia();
         const response = await mediaUploaderService.submitMediaData(url, mediaData);
+        console.log("response: " + response);
         handleUIResponse(response, contentContainers, msgElements);
     } catch (error) {
         // Handle errors if needed
         console.error(error);
     }
 
+    
+    restoreSelectedMediaState();
+    
     const cards = document.querySelectorAll('.media-upload-card');
     uploadMediaUI.toggleCheckboxListener(cards);
     configureRemoveMediaListeners(contentContainers, msgElements);   
+    // uploadMediaUI.toggleNoUploadsMsg(contentContainers[0], msgElements[0]);
+    // uploadMediaUI.toggleNoUploadsMsg(contentContainers[1], msgElements[1]);
+    // uploadMediaUI.toggleNoUploadsMsg(contentContainers[2], msgElements[2]);
+    // uploadMediaUI.toggleNoUploadsMsg(contentContainers[3], msgElements[3]);
 }
 
 function getCardBySrc(src) {
@@ -144,8 +152,8 @@ function getCardBySrc(src) {
     }
 }
 
-function restoreSelectedMediaState(selectedMedia) { 
-    console.log(selectedMedia);
+function restoreSelectedMediaState() { 
+    const selectedMedia = uploadMediaUI.getSelectedMedia();
     selectedMedia.forEach(src => {
         let card = getCardBySrc(src);
         const checkbox = card.querySelector('input[type="checkbox"]');
@@ -155,7 +163,7 @@ function restoreSelectedMediaState(selectedMedia) {
 }
 
 function handleUIResponse(response, contentContainers, msgElements) {
-    const selectedMedia = uploadMediaUI.getSelectedMedia();
+    // const selectedMedia = uploadMediaUI.getSelectedMedia();
 
     // Add html from server to divs
     contentContainers[0].innerHTML += response[0]["allMedia"];
@@ -169,7 +177,7 @@ function handleUIResponse(response, contentContainers, msgElements) {
     uploadMediaUI.toggleNoUploadsMsg(contentContainers[2], msgElements[2]);
     uploadMediaUI.toggleNoUploadsMsg(contentContainers[3], msgElements[3]);
     
-    restoreSelectedMediaState(selectedMedia);
+    restoreSelectedMediaState();
 }
 
 export function configureMediaUploader() {
