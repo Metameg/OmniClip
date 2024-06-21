@@ -125,6 +125,7 @@ async function uploadFiles(mediaFiles, contentContainers, msgElements) {
     
     try {
         const response = await mediaUploaderService.submitMediaData(url, mediaData);
+        console.log("response: " + response);
         handleUIResponse(response, contentContainers, msgElements);
     } catch (error) {
         // Handle errors if needed
@@ -154,8 +155,8 @@ function getCardBySrc(src) {
     }
 }
 
-function restoreSelectedMediaState(selectedMedia) { 
-    console.log(selectedMedia);
+function restoreSelectedMediaState() { 
+    const selectedMedia = uploadMediaUI.getSelectedMedia();
     selectedMedia.forEach(src => {
         let card = getCardBySrc(src);
         const checkbox = card.querySelector('input[type="checkbox"]');
@@ -164,10 +165,9 @@ function restoreSelectedMediaState(selectedMedia) {
     });
 }
 
-function handleUIResponse(response, contentContainers, msgElements, wrapperClass=null) {
-    const selectedMedia = uploadMediaUI.getSelectedMedia();
-    
-    
+function handleUIResponse(response, contentContainers, msgElements) {
+    // const selectedMedia = uploadMediaUI.getSelectedMedia();
+
     // Add html from server to divs
     if (wrapperClass) {
         contentContainers[0].innerHTML = response[0]["allMedia"] + contentContainers[0].innerHTML;
