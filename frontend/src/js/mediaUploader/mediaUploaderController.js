@@ -41,7 +41,7 @@ function dropZoneListener(mediaFiles, dropZone, contentContainers, msgElements) 
 function offCanvasToggleListener(toggle, contentContainers, msgElements) {
     mediaUploaderService.retrieveMedia()
     .then(response => {
-        handleUIResponse(response, contentContainers, msgElements, "media-grid");
+        handleUIResponse(response, contentContainers, msgElements, true);
         const cards = document.querySelectorAll('.media-upload-card');
         uploadMediaUI.toggleCheckboxListener(cards);
         configureRemoveMediaListeners(contentContainers, msgElements);
@@ -165,11 +165,11 @@ function restoreSelectedMediaState() {
     });
 }
 
-function handleUIResponse(response, contentContainers, msgElements) {
+function handleUIResponse(response, contentContainers, msgElements, retrieval=false) {
     // const selectedMedia = uploadMediaUI.getSelectedMedia();
 
     // Add html from server to divs
-    if (wrapperClass) {
+    if (retrieval) {
         contentContainers[0].innerHTML = response[0]["allMedia"] + contentContainers[0].innerHTML;
         contentContainers[1].innerHTML = response[1]["videos"] + contentContainers[1].innerHTML;
         contentContainers[2].innerHTML = response[2]["audios"] + contentContainers[2].innerHTML;
