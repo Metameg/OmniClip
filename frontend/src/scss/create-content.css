@@ -291,13 +291,15 @@
   width: 100%;
 }
 .media-grid .media-col {
-  width: 33%;
+  width: 20%;
 }
 
-@media (max-width: 768px) {
-  .media-grid {
-    justify-content: flex-start;
+@media (max-width: 992px) {
+  .media-grid .media-col {
+    width: 25%;
   }
+}
+@media (max-width: 768px) {
   .media-grid .media-col {
     width: 50%;
   }
@@ -383,4 +385,8 @@
     display: flex;
     flex-direction: column;
   }
+}
+#no-video-msg {
+  display: none;
+  color: red;
 }/*# sourceMappingURL=create-content.css.map */

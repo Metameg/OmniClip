@@ -152,17 +152,7 @@
 }
 
 #total-length-container, .num-videos-container {
-    // background-color: $background-color-primary;
-    // border-top: solid 2px $border-color-primary;
-    // border-bottom: solid 2px $border-color-primary;
-    // border-radius: 25px;
-    // padding: 10px;
-    // align-items: center;
     width: 50%;
-}
-
-.total-length-label {
-    // padding: 10px;
 }
 
 #total-length-val {
@@ -180,7 +170,6 @@
 
 #fine-tuning {
     color: $font-color-primary;
-    // min-width: 445px;
     background: $background-gradient-overlay-color;
     padding: 20px;
     border: 2px solid $border-color-primary;
@@ -311,22 +300,25 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     width: 100%;
-    .media-col {
-        width: 33%;
+    .media-col{
+        width: 20%;
     }
 }
 
+@media (max-width: 992px) {
+    .media-grid .media-col {
+        width: 25%;
+    } 
+}
+
 @media (max-width: 768px) {
-    .media-grid {
-        justify-content: flex-start;
-        .media-col {
-            width: 50%;
-        }
+    .media-grid .media-col{
+        width: 50%;
     }
 }
 
 @media (max-width: 480px) {
-    .media-grid .media-col {
+    .media-grid .media-col{
         width: 100%;
     }
 

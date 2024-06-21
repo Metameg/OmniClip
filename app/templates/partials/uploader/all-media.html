@@ -1,5 +1,7 @@
-<div class="col-lg-6 col-md-6 col-sm-6 col-6 mb-2  media-col">    
-    <div class="card media-upload-card">
+<!-- {% if retrieve %} <div> {% endif %} -->
+
+<div class="col-lg-6 col-md-6 col-sm-6 col-6 mb-2  media-col"> 
+    <div class="card media-upload-card new-card">
         {% set encoded_directory = directory | replace('/', '%2F') %}
         {% set media_url = url_for('general.serve_media', user_dir=encoded_directory, filename=mediapath) %}
         <{{tag_type}} src="{{ media_url }}" class="card-img-top w-100" alt="" controls ></{{tag_type}}>
@@ -11,8 +13,10 @@
                 <button type="button" class="btn btn-danger media-delete"><i class='bx bx-trash'></i></button>
             </div>
         </div>
-    </div>
+    </div> 
 </div>
+
+<!-- {% if retrieve %} </div> {% endif %} -->
 
 
 

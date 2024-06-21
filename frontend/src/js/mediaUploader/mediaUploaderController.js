@@ -41,7 +41,7 @@ function dropZoneListener(mediaFiles, dropZone, contentContainers, msgElements) 
 function offCanvasToggleListener(toggle, contentContainers, msgElements) {
     mediaUploaderService.retrieveMedia()
     .then(response => {
-        handleUIResponse(response, contentContainers, msgElements);
+        handleUIResponse(response, contentContainers, msgElements, "media-grid");
         const cards = document.querySelectorAll('.media-upload-card');
         uploadMediaUI.toggleCheckboxListener(cards);
         configureRemoveMediaListeners(contentContainers, msgElements);
@@ -51,11 +51,13 @@ function offCanvasToggleListener(toggle, contentContainers, msgElements) {
     });
 }
 
-function configureRemoveMediaListeners(contentContainers, msgElements) {
-    // const sessionDataDiv = document.getElementById('session-data');
-    // const user = sessionDataDiv.getAttribute('data-user');
-    // console.log("user: " + user);
-    const uploadCards = document.querySelectorAll('.media-upload-card');
+function configureRemoveMediaListeners(contentContainers, msgElements, newCards=null) {
+    let uploadCards = [];
+    if (newCards) {
+        uploadCards = newCards;
+    } else {
+        uploadCards = document.querySelectorAll('.media-upload-card');
+    }
     uploadCards.forEach(card => {
         const deleteBtn = card.querySelector('.media-delete');
         const mediaElement = card.querySelector('video, img, audio');
@@ -110,6 +112,11 @@ async function uploadFiles(mediaFiles, contentContainers, msgElements) {
     var files = mediaFiles.files;
     var mediaData = new FormData();
     const url = '/upload-media'
+    let cards = document.querySelectorAll('.new-card');
+
+    cards.forEach(card => {
+        card.classList.remove('new-card');
+    });
     
     // Add each file to the FormData object
     for (var i = 0; i < files.length; i++) {
@@ -117,7 +124,6 @@ async function uploadFiles(mediaFiles, contentContainers, msgElements) {
     }
     
     try {
-        // let selectedMedia = uploadMediaUI.getSelectedMedia();
         const response = await mediaUploaderService.submitMediaData(url, mediaData);
         handleUIResponse(response, contentContainers, msgElements);
     } catch (error) {
@@ -125,9 +131,13 @@ async function uploadFiles(mediaFiles, contentContainers, msgElements) {
         console.error(error);
     }
 
-    const cards = document.querySelectorAll('.media-upload-card');
+    cards = document.querySelectorAll('.new-card');
+    // const cards = document.querySelectorAll('.media-upload-card');
+    console.log("cards " + cards.length);
     uploadMediaUI.toggleCheckboxListener(cards);
     configureRemoveMediaListeners(contentContainers, msgElements);   
+    // restoreSelectedMediaState(selectedMedia);
+    
 }
 
 function getCardBySrc(src) {
@@ -154,22 +164,40 @@ function restoreSelectedMediaState(selectedMedia) {
     });
 }
 
-function handleUIResponse(response, contentContainers, msgElements) {
+function handleUIResponse(response, contentContainers, msgElements, wrapperClass=null) {
     const selectedMedia = uploadMediaUI.getSelectedMedia();
-
+    
+    
     // Add html from server to divs
-    contentContainers[0].innerHTML += response[0]["allMedia"];
-    contentContainers[1].innerHTML += response[1]["videos"];
-    contentContainers[2].innerHTML += response[2]["audios"];
-    contentContainers[3].innerHTML += response[3]["images"];
+    if (wrapperClass) {
+        contentContainers[0].innerHTML = response[0]["allMedia"] + contentContainers[0].innerHTML;
+        contentContainers[1].innerHTML = response[1]["videos"] + contentContainers[1].innerHTML;
+        contentContainers[2].innerHTML = response[2]["audios"] + contentContainers[2].innerHTML;
+        contentContainers[3].innerHTML = response[3]["images"] + contentContainers[3].innerHTML;
+    } else {
+        prependResponseHTML(response[0]["allMedia"], contentContainers[0]);
+        prependResponseHTML(response[1]["videos"], contentContainers[1]);
+        prependResponseHTML(response[2]["audios"], contentContainers[2]);
+        prependResponseHTML(response[3]["images"], contentContainers[3]);
+    }
     
     // Toggle the no uploads messages for each div
-    uploadMediaUI.toggleNoUploadsMsg(contentContainers[0], msgElements[0]);
-    uploadMediaUI.toggleNoUploadsMsg(contentContainers[1], msgElements[1]);
-    uploadMediaUI.toggleNoUploadsMsg(contentContainers[2], msgElements[2]);
-    uploadMediaUI.toggleNoUploadsMsg(contentContainers[3], msgElements[3]);
+    contentContainers.forEach((container, index) => {
+        uploadMediaUI.toggleNoUploadsMsg(container, msgElements[index]);
+    });
     
-    restoreSelectedMediaState(selectedMedia);
+    // restoreSelectedMediaState(selectedMedia);
+}
+
+function prependResponseHTML(html, container) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    const mediaCols = doc.querySelectorAll('.media-col');
+
+    // Iterate over the mediaCols and prepend to corresponding contentContainers
+    mediaCols.forEach(mediaCol => {
+        container.insertAdjacentHTML('afterbegin', mediaCol.outerHTML);
+    });
 }
 
 export function configureMediaUploader() {
