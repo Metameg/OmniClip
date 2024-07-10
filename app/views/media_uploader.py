@@ -104,7 +104,8 @@ def remove_media(path):
         s3_urls = [f"https://<bucket_name>.s3.amazonaws.com/{file_path}" for file_path in file_paths]
 
     else:
-        os.remove(path)
+        if (os.path.exists(path)):
+            os.remove(path)
         guest_dir = os.path.join(get_root_path(), 'temp', 'guest')
         for filename in os.listdir(guest_dir):
             # Join directory path with each file name to get the full path
