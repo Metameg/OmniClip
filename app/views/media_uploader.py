@@ -53,7 +53,6 @@ def upload_media():
                 file_size = get_file_size(file)
                 database.create(db, Media, user_id=user_id, path=path, filename=filename, size=file_size)
 
-    # html_data = "data removed"
     html_data = helpers.build_media_html(file_paths)
     return jsonify(html_data)
     # threading.Thread(target=simulate_time_consuming_process, args=()).start()
@@ -93,8 +92,7 @@ def remove_media(path):
     if "user" in session:
         username = session["user"]  
         path = path.replace('/', os.path.sep)
-        print("path: ", path)
-        print("username: ", username)
+
         database.remove(db, Media, path)
         if (os.path.exists(path)):
             os.remove(path)

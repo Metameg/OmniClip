@@ -35,7 +35,6 @@ def render():
     if isinstance(selected_media, str):
         selected_media = [form_data['selectedMedia[]']]
     
-    has_video = False
     video_uploads = []
     audio_uploads = []
     watermark_uploads = []
@@ -44,7 +43,6 @@ def render():
         path = decode_path(path)
         print(type(path), path)
         if classify_file_type(path) == 'video':
-            has_video = True
             video_uploads.append(path)
         elif classify_file_type(path) == 'audio':
             audio_uploads.append(path)
@@ -78,16 +76,22 @@ def render():
     numvideos = int(form_data['numvideos'])
 
     
+    # Render the Video
     editor = AutoEditor(outpath, video_uploads, audio_uploads, 
-                        watermark_uploads, fade_duration, target_duration, 
-                        'freedom', font_size, text_primary_color, text_outline_color, 
-                        isBold, isItalic, isUnderline, 
-                        alignment, watermark_opacity,
-                        quote=quote_val, voice=voice, subtitle_ass=True)
-    
+                    watermark_uploads, fade_duration, target_duration, 
+                    'freedom', font_size, text_primary_color, text_outline_color, 
+                    isBold, isItalic, isUnderline, 
+                    alignment, watermark_opacity,
+                    quote=quote_val, voice=voice, subtitle_ass=True)
+
     videopaths = generate_videos(editor, numvideos)
 
+
+    # Add videos to Renders table
     return render_template('partials/video-container.html', videopaths=videopaths)
+
+        
+
 
 @blueprint.route('/upload-media/<int:id>', methods=['GET', 'POST'])
 def upload_media(id):

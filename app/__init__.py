@@ -42,7 +42,7 @@ def create_app():
     return app
 
 def register_blueprints(app):
-    from app.views import general, create_content, affiliate, quote_generator, media_uploader, login, subscriptions, payments
+    from app.views import general, create_content, affiliate, quote_generator, media_uploader, login, subscriptions, payments, profile
     
     app.register_blueprint(general.blueprint)
     app.register_blueprint(create_content.blueprint)
@@ -50,6 +50,7 @@ def register_blueprints(app):
     app.register_blueprint(quote_generator.blueprint, url_prefix='/quote-generator')
     app.register_blueprint(media_uploader.blueprint)
     app.register_blueprint(login.blueprint)
+    app.register_blueprint(profile.blueprint, url_prefix='/profile')
     app.register_blueprint(subscriptions.blueprint)
     app.register_blueprint(payments.blueprint, url_prefix='/payments')
 

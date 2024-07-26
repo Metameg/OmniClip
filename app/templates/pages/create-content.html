@@ -22,7 +22,6 @@
         <h2 class="param-header">Import Video Components</h2>
         <form action="#" method="post" id="render-form" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <script>console.log("{{ csrf_token() }}");</script>
             <section id="imports" class="options-section">
 
                 <div class="select-media-container">
@@ -74,7 +73,7 @@
             <section id="submit-section" class="options-section">
                 <div id="render-carousel" class="carousel slide">
                     <div id="video-content" class="carousel-inner">
-
+                        <!-- Ajax Response Returns Video Data -->
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#render-carousel" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
