@@ -112,5 +112,7 @@ def upload_renders(render_paths):
         for path in render_paths:
             filename = sanitize_filename(path)
             path = os.path.join(media_dir, filename)
+            duration = 0
+            aspect_ratio = "Test"
 
-            database.create(db, Render, user_id=user_id, path=path, filename=filename)
+            database.create(db, Render, user_id=user_id, path=path, duration=duration, aspect_ratio=aspect_ratio, filename=filename)
