@@ -1,12 +1,13 @@
 import json
-from flask import Blueprint, request, flash, render_template, session
+from flask import Blueprint, request, render_template, session
 from app.extensions import db, csrf
 from app.models.User import User
-from app.tools.utilities import generate_videos, get_root_path, decode_path
+from app.tools.utilities import generate_videos, get_root_path, decode_path, get_media_dir, sanitize_filename
 from app.tools.helpers import classify_file_type
+from app.tools import database
 from app.services.AutoEditor import AutoEditor
 import os
-from flask_wtf.csrf import CSRFError
+from app.models.Render import  Render
 
 blueprint = Blueprint('create_content', __name__)
 
@@ -25,7 +26,16 @@ def create_content():
 def render():
     # Validate the CSRF token
     csrf.protect()
-    
+
+    if "user" in session:
+        username = session["user"]
+        user_id = database.retrieve(User, username=username).id
+        media_dir = get_media_dir(username)
+
+    else:
+        user_id = None
+        media_dir = os.path.join(get_root_path(), 'temp', 'guest')
+
     form_data = request.get_json()
 
     for key, value in form_data.items():
@@ -50,7 +60,9 @@ def render():
             watermark_uploads.append(path)
 
     
-    outpath = 'output'
+    # outpath = 'output'
+    outpath = f'../userData/{media_dir}'
+
     fade_duration = float(form_data['fadeoutDuration'])
     target_duration = float(form_data['totalLength'])
     font_name = form_data['fontName']
@@ -84,30 +96,21 @@ def render():
                     alignment, watermark_opacity,
                     quote=quote_val, voice=voice, subtitle_ass=True)
 
-    videopaths = generate_videos(editor, numvideos)
-
+    video_paths = generate_videos(editor, numvideos)
+    upload_renders(video_paths)
 
     # Add videos to Renders table
-    return render_template('partials/video-container.html', videopaths=videopaths)
-
-        
+    return render_template('partials/video-container.html', videopaths=video_paths)
 
 
-@blueprint.route('/upload-media/<int:id>', methods=['GET', 'POST'])
-def upload_media(id):
-    user = User.query.get_or_404(id)
-    if request.method == 'POST':
-        user.name = request.form['name']
-        user.email = request.form['email']
-        user.favorite_color = request.form['favorite_color']
+def upload_renders(render_paths):
+    if "user" in session:
+        username = session["user"]
+        user_id = database.retrieve(User, username=username).id
+        # media_dir = get_media_dir(username)
+        media_dir = os.path.join(get_root_path(), 'output')
+        for path in render_paths:
+            filename = sanitize_filename(path)
+            path = os.path.join(media_dir, filename)
 
-        try:
-            db.session.commit()
-            flash("User Updated Successfully!")
-            return render_template("update.html", user=user)
-        except:
-            flash("Error! Problem...Try Again")
-            return render_template("update.html", user=user)
-
-    else:
-        return render_template("uploads_grid.html", user=user)
+            database.create(db, Render, user_id=user_id, path=path, filename=filename)

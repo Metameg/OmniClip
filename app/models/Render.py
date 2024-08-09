@@ -6,6 +6,7 @@ class Render(db.Model):
     
     render_id = db.Column('render_id', db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column('user_id', db.Integer, db.ForeignKey('users.id'), nullable=False)
+    path = db.Column('path', db.String(255), unique=True, nullable=False)
     timestamp = db.Column('timestamp',db.DateTime, default=datetime.now(timezone.utc))
     duration = db.Column('duration', db.Integer, nullable=False)
     aspect_ratio = db.Column('aspect_ratio', db.String(20), nullable=False)

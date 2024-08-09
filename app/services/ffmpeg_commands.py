@@ -166,7 +166,7 @@ def preprocess(video_clips, size):
             # '-vf', f'scale={size},setsar=1',
             '-filter_complex', f'[0:v]fps=30,setpts={pts},scale={size},setsar=1[v];',
             '-map', '[v]',
-            # '-map', '[a]',
+            '-map', '0:a',
             '-y',
             # '-r', '30',
             '-c:v', 'libx264',
