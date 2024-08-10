@@ -61,8 +61,6 @@ def upload_media():
 def retrieve_medias():
     if "user" in session:
         username = session["user"]
-        print("username: ", username)
-    
         medias = database.retrieve_from_join(db, User, Media, username)
         file_paths = [database.retrieve(Media, media_id=media.media_id).path for media in medias]
  

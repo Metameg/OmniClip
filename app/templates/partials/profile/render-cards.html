@@ -1,0 +1,14 @@
+{% set encoded_directory = directory | replace('/', '%2F') %}
+{% set media_url = url_for('general.serve_media', user_dir=encoded_directory, filename=filename) %}
+<li class="render-card d-flex justify-content-between mb-4 lazy">
+    <video src="#" class="object-fit-cover border rounded video-component"
+        alt="output video 1" controls>
+    </video>
+    <div class="video-details">
+        <p>Created on Jan. 27, 2023 - 17:19:36</p>
+        <p>Generated from Parameters</p>
+        <p><strong>Succeeded!</strong></p>
+        <span class="text-danger"><small>14 days remaining</small></span>
+        <button class="btn btn-danger m-2">Delete Now</button>
+    </div>
+</li>
