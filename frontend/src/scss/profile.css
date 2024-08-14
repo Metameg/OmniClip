@@ -150,6 +150,10 @@
   border-left: 2px solid rgba(145, 145, 145, 0.4784313725);
 }
 
+.nav-item a {
+  cursor: pointer;
+}
+
 #nav-lg-screen {
   display: flex;
 }
