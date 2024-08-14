@@ -29,6 +29,7 @@ import { configureAffiliate } from './affiliate/affiliateController.js';
 import { configureMediaUploader } from './mediaUploader/mediaUploaderController.js';
 import { configureLoginController } from './login/loginController.js';
 import { configureSignupController } from './login/signupController.js';
+import { configureProfileController } from './profile/profileController.js';
 
 
 $(document).ready(function() {
@@ -46,6 +47,9 @@ $(document).ready(function() {
     }  
     if (window.location.pathname.startsWith('/signup')) {
         configureSignupController();
+    }  
+    if (window.location.pathname.startsWith('/profile')) {
+        configureProfileController();
     }  
 }); 
 

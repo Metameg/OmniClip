@@ -15,11 +15,17 @@ def retrieve_renders():
     file_paths = [database.retrieve(Render, render_id=render.render_id).path for render in renders]
     s3_urls = [f"https://<bucket_name>.s3.amazonaws.com/{file_path}" for file_path in file_paths]
     html_data = ""
-    template = "partials/uploader/all-media.html"
+    template = "partials/profile/render-cards.html"
 
     for path in file_paths:
+        path = path.replace('%5C', os.path.sep).replace('\\', os.path.sep)
+        if os.name == 'posix' and not path.startswith('/'):
+            path = '/' + path
         directory= os.path.dirname(path)
         filename = os.path.basename(path)
+        print("path:", path)
+
+        
         html_data += render_template(template, directory=directory, filename=filename)
 
     return jsonify(html_data)
