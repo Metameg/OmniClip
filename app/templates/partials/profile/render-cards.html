@@ -1,6 +1,6 @@
 {% set encoded_directory = directory | replace('/', '%2F') %}
 {% set media_url = url_for('general.serve_media', user_dir=encoded_directory, filename=filename) %}
-<li class="render-card d-flex justify-content-between mb-4 lazy">
+<li class="render-card d-flex mb-4 lazy">
     <video src="{{ media_url }}" class="object-fit-cover border rounded video-component"
         alt="output video 1" controls>
     </video>

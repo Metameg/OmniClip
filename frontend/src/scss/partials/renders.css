@@ -5,22 +5,33 @@
 .render-card {
   color: #000000;
   background: #ffffff;
-  min-width: 190px;
+  width: 100%;
   border: 1px solid #ffffff;
   border-radius: inherit;
   padding: 10px;
   box-shadow: 2px 2px 0 0 rgba(145, 145, 145, 0.4784313725);
+  justify-content: space-around;
 }
 
 .video-component {
-  min-width: 160px;
-  min-height: 127px;
+  width: 33%;
+  max-height: 300px;
+}
+
+.video-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .sub-profile {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+#profile-renders {
+  width: 100%;
 }
 
 @media (max-width: 776px) {
@@ -30,6 +41,7 @@
   .render-card {
     width: 280px;
     flex-direction: column;
+    align-items: center;
   }
 }
 @media (max-width: 575px) {
