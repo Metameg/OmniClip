@@ -53,12 +53,11 @@ export const mediaUploaderService = {
         });
     },
 
-    removeMediaData: function(url, mediaData) {
+    removeMediaData: function(url) {
         return new Promise((resolve, reject) => {
             $.ajax({
                 url: url,  
-                type: 'POST',
-                data: JSON.stringify(mediaData),
+                type: 'GET',
                 headers: {
                     'X-CSRF-TOKEN': this.csrfToken
                 },

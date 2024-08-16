@@ -73,7 +73,7 @@ function configureRemoveMediaListeners(contentContainers, msgElements) {
             
             try {
                 const url = `/remove-user-media/${src}`
-                const response = await  mediaUploaderService.removeMediaData(url, src);
+                const response = await  mediaUploaderService.removeMediaData(url);
             } catch (error) {
                 console.error(error);
             }

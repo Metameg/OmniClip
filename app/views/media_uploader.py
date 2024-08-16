@@ -79,7 +79,7 @@ def retrieve_medias():
 
     return jsonify(html_data)
 
-@blueprint.route('/remove-user-media/<path:path>', methods=['POST'])
+@blueprint.route('/remove-user-media/<path:path>', methods=['GET'])
 def remove_media(path):
     file_paths = []
     path = urllib.parse.unquote(path)
@@ -88,7 +88,6 @@ def remove_media(path):
         path = '/' + path
 
     if "user" in session:
-        username = session["user"]  
         path = path.replace('/', os.path.sep)
 
         database.remove(db, Media, path)

@@ -1,4 +1,5 @@
 export const profileService = {
+    csrfToken: $('input[name="csrf_token"]').val(),
     retrieveRenders: function() {
         return new Promise((resolve, reject) => {
             $.ajax({
@@ -18,12 +19,11 @@ export const profileService = {
         });
     },
 
-    removeMediaData: function(url, renderData) {
+    removeRenderData: function(url) {
         return new Promise((resolve, reject) => {
             $.ajax({
                 url: url,  
-                type: 'POST',
-                data: JSON.stringify(renderData),
+                type: 'GET',
                 headers: {
                     'X-CSRF-TOKEN': this.csrfToken
                 },
@@ -38,7 +38,7 @@ export const profileService = {
                 resetForm: true
             });
         });
-    },
+    }
 }
 
 

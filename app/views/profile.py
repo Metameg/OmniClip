@@ -3,13 +3,14 @@ from app.tools import helpers, database, utilities
 from app.tools.utilities import get_file_size, get_root_path, sanitize_filename, get_media_dir, split_filename
 from app.models.User import  User
 from app.models.Render import  Render
-from app.extensions import db
+from app.extensions import db, csrf
 import os, urllib
 
 blueprint = Blueprint('profile', __name__)
 
 @blueprint.route('/retrieve-renders')
 def retrieve_renders():
+    csrf.protect()
     if "user" in session:
         username = session["user"]
         renders = database.retrieve_from_join(db, User, Render, username)
@@ -23,7 +24,7 @@ def retrieve_renders():
     template = "partials/profile/render-cards.html"
 
     for path in file_paths:
-        path = path.replace('%5C', os.path.sep).replace('\\', os.path.sep)
+        path = path.replace('/', os.path.sep).replace('\\', os.path.sep)
         if os.name == 'posix' and not path.startswith('/'):
             path = '/' + path
         directory= os.path.dirname(path)
@@ -33,16 +34,16 @@ def retrieve_renders():
 
     return jsonify(html_data)
 
-@blueprint.route('/remove-render/<path:path>', methods=['POST'])
+@blueprint.route('/remove-profile-render/<path:path>', methods=['GET'])
 def remove_render(path):
+    csrf.protect()
     file_paths = []
     path = urllib.parse.unquote(path)
     path = path.replace('/', os.path.sep).replace('\\', os.path.sep)
     if os.name == 'posix' and not path.startswith('/'):
         path = '/' + path
 
-    if "user" in session:
-        username = session["user"]  
+    if "user" in session: 
         path = path.replace('/', os.path.sep)
 
         database.remove(db, Render, path)

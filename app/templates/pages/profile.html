@@ -6,7 +6,7 @@
     <i class='bx bx-menu' style="font-size: 2rem; color: white;"></i>
 </button>
 <div id="renders-container" class="d-flex p-1 bg-dark">
-
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
         <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="height: 100%;">
             <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
