@@ -94,8 +94,6 @@ def remove_media(path):
         database.remove(db, Media, path)
         if (os.path.exists(path)):
             os.remove(path)
-        # medias = database.retrieve_from_join(db, User, Media, username)
-        # file_paths = [database.retrieve(Media, media_id=media.media_id).path for media in medias]
 
         s3_urls = [f"https://<bucket_name>.s3.amazonaws.com/{file_path}" for file_path in file_paths]
 

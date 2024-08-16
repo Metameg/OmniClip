@@ -16,7 +16,29 @@ export const profileService = {
                 }
             });
         });
-    }
+    },
+
+    removeMediaData: function(url, renderData) {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: url,  
+                type: 'POST',
+                data: JSON.stringify(renderData),
+                headers: {
+                    'X-CSRF-TOKEN': this.csrfToken
+                },
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function(data) {
+                    resolve(data);
+                },
+                error: function(error) {
+                    reject(error);
+                },
+                resetForm: true
+            });
+        });
+    },
 }
 
 
