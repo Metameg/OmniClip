@@ -6,6 +6,9 @@ export const profileService = {
                 url: '/profile/retrieve-renders',
                 method: 'GET',
                 dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': this.csrfToken
+                },
                 success: function(data) {
                     console.log(data);
                     // Handle the data returned by the server
