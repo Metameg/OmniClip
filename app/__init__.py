@@ -2,10 +2,11 @@ import os
 from dotenv import load_dotenv
 from flask import Flask
 from app.extensions import csrf, db, migrate, jwt
-from datetime import timedelta
+from datetime import datetime, timedelta, timezone
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from flask_cors import CORS
+from apscheduler.schedulers.background import BackgroundScheduler
 # Needed for sqlalchemy mappings
 from app.models import Affiliate, SubscriptionPlan, User, Render, Media  
 
@@ -26,11 +27,14 @@ def create_app():
     app.config['SECRET_KEY'] = flask_key
     app.config['JWT_SECRET_KEY'] = jwt_secret
     
-
     csrf.init_app(app)
     db.init_app(app)
     migrate.init_app(app, db)
     jwt.init_app(app)
+
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(func=delete_old_records, args=[app], trigger="interval", days=1)
+    scheduler.start()
 
     
     # from app.models import Affiliate, SubscriptionPlan, User, Render, Media  # Import your model classes
@@ -54,14 +58,29 @@ def register_blueprints(app):
     app.register_blueprint(subscriptions.blueprint)
     app.register_blueprint(payments.blueprint, url_prefix='/payments')
 
-def create_db_session():
-    load_dotenv()
-    mysql_pwd = os.getenv('MYSQL_PWD')
-    db_connection_string = 'mysql+pymysql://root:' + mysql_pwd + '@localhost/omniclip_users_dev'
-    # Create the SQLAlchemy engine
-    engine = create_engine(db_connection_string)
+def delete_old_records(app):
+    with app.app_context():
+        threshold_date = datetime.now(timezone.utc) - timedelta(days=14)
+        try:
+            old_records = Render.Render.query.filter(Render.Render.timestamp < threshold_date).all()
+            print("or:" , threshold_date, old_records)
+            for record in old_records:
+                db.session.delete(record)
+            db.session.commit()
 
-    # Create a sessionmaker bound to the engine
-    Session = sessionmaker(bind=engine)
+        except Exception as e:
+            print("Error querying old records:", e)
+        
+        
 
-    return Session()
+# def create_db_session():
+#     load_dotenv()
+#     mysql_pwd = os.getenv('MYSQL_PWD')
+#     db_connection_string = 'mysql+pymysql://root:' + mysql_pwd + '@localhost/omniclip_users_dev'
+#     # Create the SQLAlchemy engine
+#     engine = create_engine(db_connection_string)
+
+#     # Create a sessionmaker bound to the engine
+#     Session = sessionmaker(bind=engine)
+
+#     return Session()

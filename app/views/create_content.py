@@ -1,4 +1,5 @@
 import json
+from datetime import datetime, timedelta
 from flask import Blueprint, request, render_template, session
 from app.extensions import db, csrf
 from app.models.User import User
@@ -7,7 +8,7 @@ from app.tools.helpers import classify_file_type
 from app.tools import database
 from app.services.AutoEditor import AutoEditor
 import os
-from app.models.Render import  Render
+from app.models.Render import Render
 
 blueprint = Blueprint('create_content', __name__)
 
@@ -80,7 +81,7 @@ def render():
     isBold = form_data['isBold']
     isItalic = form_data['isItalic']
     isUnderline = form_data['isUnderline']
-    # aspect_ratio = form_data['aspectRatio']
+    aspect_ratio = form_data['aspectRatio']
     alignment = int(form_data['subtitleAlignment'])
     watermark_opacity = form_data['watermarkOpacity']
     quote_val = form_data['quoteVal']
@@ -97,13 +98,13 @@ def render():
                     quote=quote_val, voice=voice, subtitle_ass=True)
 
     video_paths = generate_videos(editor, numvideos)
-    upload_renders(video_paths)
+    upload_renders(video_paths, aspect_ratio)
 
     # Add videos to Renders table
     return render_template('partials/video-container.html', videopaths=video_paths)
 
 
-def upload_renders(render_paths):
+def upload_renders(render_paths, aspect_ratio):
     if "user" in session:
         username = session["user"]
         user_id = database.retrieve(User, username=username).id
@@ -113,6 +114,6 @@ def upload_renders(render_paths):
             filename = sanitize_filename(path)
             path = os.path.join(media_dir, filename)
             duration = 0
-            aspect_ratio = "Test"
 
+            
             database.create(db, Render, user_id=user_id, path=path, duration=duration, aspect_ratio=aspect_ratio, filename=filename)
