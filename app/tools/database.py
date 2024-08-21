@@ -4,9 +4,11 @@ def create(db, model, **params):
     db.session.add(new_entry)
     db.session.commit()
 
-def retrieve(model, **filters):
-    record = model.query.filter_by(**filters).first()
-    return record
+def retrieve(model, *complex_filters, **kwargs):
+    query = model.query.filter_by(**kwargs)
+    if complex_filters:
+        query = query.filter(*complex_filters)  # Handles more complex filters
+    return query.first()
 
 def retrieve_from_join(db, model1, model2, username):
     db.session.query(

@@ -5,18 +5,34 @@ from app.models.User import  User
 from app.models.Render import  Render
 from app.extensions import db, csrf
 import os, urllib
+from datetime import datetime, timedelta, timezone
 
 blueprint = Blueprint('profile', __name__)
 
-@blueprint.route('/retrieve-renders')
-def retrieve_renders():
+@blueprint.route('/retrieve-renders/<string:time_filter>')
+def retrieve_renders(time_filter):
     csrf.protect()
     if "user" in session:
         username = session["user"]
-        renders = database.retrieve_from_join(db, User, Render, username)
-        file_paths = [database.retrieve(Render, render_id=render.render_id).path for render in renders]
-        # Reverse the order of the files so that the newest render shows first
-        file_paths = file_paths[::-1]
+
+        # Get threshold date for time filter selected by user    
+        units = time_filter[time_filter.index('=')+1:]
+        if 'days' in time_filter:
+            threshold_date = datetime.now(timezone.utc) - timedelta(days=int(units)) 
+        elif 'hours' in time_filter:
+            threshold_date = datetime.now(timezone.utc) - timedelta(hours=int(units)) 
+
+        print("units:", units)
+        #FIXME Should be possible to combine these two retrieve queries into one
+        try:
+            renders = database.retrieve_from_join(db, User, Render, username)
+            file_paths = [database.retrieve(Render, Render.timestamp > threshold_date, render_id=render.render_id).path for render in renders]
+            # Reverse the order of the files so that the newest render shows first
+            file_paths = file_paths[::-1]
+        except:
+            file_paths = []
+            print("No renders found!")
+
     else:
         return redirect(url_for('login.login'))
     
@@ -54,18 +70,6 @@ def remove_render(path):
     else:
         return redirect(url_for('login.login'))
 
-    # else:
-    #     if (os.path.exists(path)):
-    #         os.remove(path)
-    #     guest_dir = os.path.join(get_root_path(), 'temp', 'guest')
-    #     for filename in os.listdir(guest_dir):
-    #         # Join directory path with each file name to get the full path
-    #         file_path = os.path.join(guest_dir, filename)
-            
-    #         # Check if the path points to a file (and not a directory)
-    #         if os.path.isfile(file_path):
-    #             # Append the full path to the list
-    #             file_paths.append(file_path)
     
     html_data = "data removed"
     # html_data = helpers.build_media_html(file_paths)

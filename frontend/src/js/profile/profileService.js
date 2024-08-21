@@ -1,16 +1,16 @@
 export const profileService = {
     csrfToken: $('input[name="csrf_token"]').val(),
-    retrieveRenders: function() {
+
+    retrieveRenders: function(url) {
         return new Promise((resolve, reject) => {
             $.ajax({
-                url: '/profile/retrieve-renders',
+                url: url,
                 method: 'GET',
                 dataType: 'json',
                 headers: {
                     'X-CSRF-TOKEN': this.csrfToken
                 },
                 success: function(data) {
-                    console.log(data);
                     // Handle the data returned by the server
                     resolve(data);
                 },

@@ -32,14 +32,10 @@ def create_app():
     migrate.init_app(app, db)
     jwt.init_app(app)
 
+    # Start scheduler for removing old render records
     scheduler = BackgroundScheduler()
     scheduler.add_job(func=delete_old_records, args=[app], trigger="interval", days=1)
     scheduler.start()
-
-    
-    # from app.models import Affiliate, SubscriptionPlan, User, Render, Media  # Import your model classes
-    # migrate = Migrate(app, db)
-
 
     register_blueprints(app)
 

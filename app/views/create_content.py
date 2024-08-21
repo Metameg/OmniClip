@@ -1,5 +1,5 @@
 import json
-from datetime import datetime, timedelta
+from datetime import datetime, timezone
 from flask import Blueprint, request, render_template, session
 from app.extensions import db, csrf
 from app.models.User import User
@@ -116,4 +116,11 @@ def upload_renders(render_paths, aspect_ratio):
             duration = 0
 
             
-            database.create(db, Render, user_id=user_id, path=path, duration=duration, aspect_ratio=aspect_ratio, filename=filename)
+            database.create(db, 
+                            Render, 
+                            user_id=user_id, 
+                            path=path, 
+                            duration=duration, 
+                            timestamp=datetime.now(),
+                            aspect_ratio=aspect_ratio, 
+                            filename=filename)
