@@ -8,9 +8,15 @@ def get_root_path():
     return root_path
 
 def clean_temp():
-    transitions = os.listdir(os.path.join(get_root_path(), 'temp'))
-    for transition in transitions:
-        os.remove(os.path.join(get_root_path(), 'temp', transition))
+    # renders = os.listdir(get_media_dir('guest'))
+    files = os.listdir(os.path.join(get_root_path(), 'temp'))
+    for file in files:
+        print(f"files to remove in temp: {file}, osFile: {os.path.isfile(os.path.join(get_root_path(), 'temp', file))}")
+        if os.path.isfile(os.path.join(get_root_path(), 'temp', file)):
+            os.remove(os.path.join(get_root_path(), 'temp', file))
+
+    # for render in renders:
+    #     os.remove(os.path.join(get_root_path(), '..', 'userData', 'guest', render))
 
 def clear_directory(directory):
     # Iterate over all files in the directory
@@ -21,15 +27,15 @@ def clear_directory(directory):
             # Remove the file
             os.remove(file_path)
 
-def move_file_to_output_dir(file, filename):
-    output_path = os.path.join(get_root_path(), 'output', filename)
-    os.rename(file, output_path)
+def move_file_to_output_dir(username, from_name, to_name):
+    output_path = os.path.join(username, to_name)
+    os.rename(from_name, output_path)
 
-def get_output_count():
-    files = os.listdir('output')
-    num_files = len(files)
+# def get_output_count():
+#     files = os.listdir('output')
+#     num_files = len(files)
 
-    return num_files
+#     return num_files
 
 def get_media_dir(username):
     
@@ -58,15 +64,16 @@ def upload_files(files, export_folder):
         file.save(os.path.join(export_folder, sanitized_filename))
         # print(test_jpeg(file.getvalue()))
 
-def generate_videos(editor, numvideos):
+def generate_videos(editor, numvideos, out_dir):
     videos = []
-    outpath = os.path.join(get_root_path(), 'output')
+    outpath = os.path.join(get_root_path(), '..', 'userData', out_dir)
     for _ in range(numvideos):
         # thread = threading.Thread(target=render_video, args=(editor,))
         # thread.start()
         # thread.join()
         editor.render()
-        videopath = sorted(os.listdir(outpath))[-1]
+        print(f"out_dir: {os.listdir(out_dir)}")
+        videopath = sorted(os.listdir(out_dir))[-1]
         videos.append(videopath)
 
     return videos
@@ -113,9 +120,5 @@ def decode_and_clean_paths(url_paths):
     
     return cleaned_paths
 
-def remove_guest_temp_files():
-    guest_dir = os.path.join(get_root_path(), 'temp', 'guest')
-    for file in os.listdir(guest_dir):
-        os.remove(os.path.join(guest_dir, file))
 
 

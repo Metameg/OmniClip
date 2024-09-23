@@ -22,17 +22,17 @@ def page_not_found(e):
 def internal_server_error(e):
     return render_template("pages/500.html"), 500
 
-@blueprint.route('/output/<filename>')
-def serve_output(filename):
-    return send_from_directory(os.path.join(utilities.get_root_path(), 'output'), filename)
+# @blueprint.route('/output/<filename>')
+# def serve_output(filename):
+#     return send_from_directory(os.path.join(utilities.get_root_path(), 'output'), filename)
 
 
 @blueprint.route('/<user_dir>/<filename>')
 def serve_media(user_dir, filename):
     user_dir = urllib.parse.unquote(user_dir)
-    full_path = os.path.join(utilities.get_root_path(), user_dir)
+    # full_path = os.path.join(utilities.get_root_path(), user_dir)
 
-    return send_from_directory(full_path, filename)
+    return send_from_directory(user_dir, filename)
 
 @blueprint.route('/loading_container_partial', methods=['GET'])
 def loading_container_partial():

@@ -18,11 +18,11 @@ def retrieve_renders(time_filter):
         # Get threshold date for time filter selected by user    
         units = time_filter[time_filter.index('=')+1:]
         if 'days' in time_filter:
-            threshold_date = datetime.now(timezone.utc) - timedelta(days=int(units)) 
+            threshold_date = datetime.now() - timedelta(days=int(units)) 
         elif 'hours' in time_filter:
-            threshold_date = datetime.now(timezone.utc) - timedelta(hours=int(units)) 
+            print(f"time_filter: {time_filter}")
+            threshold_date = datetime.now() - timedelta(hours=int(units)) 
 
-        print("units:", units)
         #FIXME Should be possible to combine these two retrieve queries into one
         try:
             renders = database.retrieve_from_join(db, User, Render, username)

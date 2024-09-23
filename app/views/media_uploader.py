@@ -116,6 +116,7 @@ def remove_media(path):
 
 @blueprint.route('/remove-guest-media', methods=['GET'])
 def remove_guest_media():
-    utilities.remove_guest_temp_files()
+    utilities.clear_directory(os.path.join(get_root_path(), 'temp', 'guest'))
+    utilities.clear_directory(os.path.join(get_root_path(), '..', 'userData', 'guest'))
 
     return ('', 204)

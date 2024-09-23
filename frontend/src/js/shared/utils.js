@@ -22,7 +22,6 @@ function contains_video(paths) {
     const mime = require('mime');
 
     // Decode the URL-encoded path
-    console.log(paths);
     for (let path of paths) {
         var decodedPath = decodeURIComponent(path);
         var mimeType = mime.getType(decodedPath);

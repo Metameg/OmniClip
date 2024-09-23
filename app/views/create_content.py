@@ -30,12 +30,12 @@ def render():
 
     if "user" in session:
         username = session["user"]
-        user_id = database.retrieve(User, username=username).id
-        media_dir = get_media_dir(username)
+        # user_id = database.retrieve(User, username=username).id
+        outpath = os.path.join(get_media_dir(username), 'renders')
 
     else:
         user_id = None
-        media_dir = os.path.join(get_root_path(), 'temp', 'guest')
+        outpath = os.path.join(get_root_path(), '..', 'userData', 'guest')
 
     form_data = request.get_json()
 
@@ -62,7 +62,7 @@ def render():
 
     
     # outpath = 'output'
-    outpath = f'../userData/{media_dir}'
+    # outpath = media_dir
 
     fade_duration = float(form_data['fadeoutDuration'])
     target_duration = float(form_data['totalLength'])
@@ -90,26 +90,27 @@ def render():
 
     
     # Render the Video
-    editor = AutoEditor(outpath, video_uploads, audio_uploads, 
+    editor = AutoEditor(video_uploads, audio_uploads, 
                     watermark_uploads, fade_duration, target_duration, 
                     'freedom', font_size, text_primary_color, text_outline_color, 
                     isBold, isItalic, isUnderline, 
-                    alignment, watermark_opacity,
+                    alignment, watermark_opacity, output_dir=outpath,
                     quote=quote_val, voice=voice, subtitle_ass=True)
 
-    video_paths = generate_videos(editor, numvideos)
+    video_paths = generate_videos(editor, numvideos, outpath)
+    print(f"videopaths uploading: {video_paths}")
     upload_renders(video_paths, aspect_ratio)
 
     # Add videos to Renders table
-    return render_template('partials/video-container.html', videopaths=video_paths)
+    return render_template('partials/video-container.html', user_dir=outpath, videopaths=video_paths)
 
 
 def upload_renders(render_paths, aspect_ratio):
     if "user" in session:
         username = session["user"]
         user_id = database.retrieve(User, username=username).id
-        # media_dir = get_media_dir(username)
-        media_dir = os.path.join(get_root_path(), 'output')
+        media_dir = os.path.join(get_media_dir(username), 'renders')
+        # media_dir = os.path.join(get_root_path(), 'output')
         for path in render_paths:
             filename = sanitize_filename(path)
             path = os.path.join(media_dir, filename)

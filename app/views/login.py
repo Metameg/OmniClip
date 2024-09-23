@@ -70,7 +70,9 @@ def signup():
 
             # Create Media Directory
             media_dir = os.path.join(get_root_path(), '..', 'userData', username)
+            render_dir = os.path.join(get_root_path(), '..', 'userData', username, 'renders')
             os.mkdir(media_dir)
+            os.mkdir(render_dir)
 
             # Start User Session
             session.permanent = True  

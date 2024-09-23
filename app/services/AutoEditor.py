@@ -21,19 +21,19 @@ from app.services.shotstacktts import generate_tts
 
 
 class AutoEditor():
-    def __init__(self, export_folder, video_folder, audio_folder, 
+    def __init__(self, video_folder, audio_folder, 
                  overlay_folder, fade_duration, target_duration, 
                  font_name, font_size, text_primary_color, text_outline_color,
                  isBold, isItalic, isUnderline, alignment,
-                 watermark_opacity, quote=None, voice=None, subtitle_ass=True):
+                 watermark_opacity, output_dir='guest', quote=None, voice=None, subtitle_ass=True):
         
-        self.export_folder = export_folder
         self.fade_duration = fade_duration
         self.target_duration = target_duration
         self.video_folder = video_folder
         self.audio_folder = audio_folder
         self.overlay_folder = overlay_folder
         self.watermark_opacity = watermark_opacity
+        self.export_folder = output_dir
         self.quote = quote
         self.voice = voice
         self.subtitle_ass = subtitle_ass
@@ -191,10 +191,10 @@ class AutoEditor():
         time_difference = end_time - start_time
         
         print("Success! Time taken:", time_difference)
-        
+        print(f"full filename {full_render}")
         final_video_filename = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".mp4"
-        utilities.move_file_to_output_dir(full_render, final_video_filename)
+        utilities.move_file_to_output_dir(self.export_folder, full_render, final_video_filename)
         # Clean up temp file
-        # utilities.clean_temp()
+        utilities.clean_temp()
         
         
