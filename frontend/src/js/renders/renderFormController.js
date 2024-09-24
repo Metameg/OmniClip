@@ -21,6 +21,7 @@ export function configureRenderForm() {
     videoStylerUI.configureDOM();
     const renderForm = document.getElementById('render-form');
     const noVideoMsg = document.getElementById('no-video-msg');
+    const renderBox = document.getElementById('render-carousel')
 
     renderForm.addEventListener('submit', async function(event) {
         
@@ -56,6 +57,9 @@ export function configureRenderForm() {
             } catch (error) {
                 // Handle errors if needed
                 console.error(error);
+                noVideoMsg.innerHTML = 'Something went wrong. Please try again.';
+                noVideoMsg.style.display = 'block';
+                renderBox.style.display = 'none';
             }
         }
 

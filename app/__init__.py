@@ -56,10 +56,9 @@ def register_blueprints(app):
 
 def delete_old_records(app):
     with app.app_context():
-        threshold_date = datetime.now(timezone.utc) - timedelta(days=14)
+        threshold_date = datetime.now() - timedelta(days=14)
         try:
             old_records = Render.Render.query.filter(Render.Render.timestamp < threshold_date).all()
-            print("or:" , threshold_date, old_records)
             for record in old_records:
                 db.session.delete(record)
             db.session.commit()

@@ -4,15 +4,13 @@ from flask import Blueprint, request, render_template, session
 from app.extensions import db, csrf
 from app.models.User import User
 from app.tools.utilities import generate_videos, get_root_path, decode_path, get_media_dir, sanitize_filename
-from app.tools.helpers import classify_file_type
+from app.tools.helpers import classify_custom_upload_files
 from app.tools import database
 from app.services.AutoEditor import AutoEditor
 import os
 from app.models.Render import Render
 
 blueprint = Blueprint('create_content', __name__)
-
-
 
 
 @blueprint.route('/create-content', methods=['GET'])
@@ -46,23 +44,7 @@ def render():
     if isinstance(selected_media, str):
         selected_media = [form_data['selectedMedia[]']]
     
-    video_uploads = []
-    audio_uploads = []
-    watermark_uploads = []
-
-    for path in selected_media:
-        path = decode_path(path)
-        print(type(path), path)
-        if classify_file_type(path) == 'video':
-            video_uploads.append(path)
-        elif classify_file_type(path) == 'audio':
-            audio_uploads.append(path)
-        elif classify_file_type(path) == 'img':
-            watermark_uploads.append(path)
-
-    
-    # outpath = 'output'
-    # outpath = media_dir
+    uploaded_files = classify_custom_upload_files(selected_media)
 
     fade_duration = float(form_data['fadeoutDuration'])
     target_duration = float(form_data['totalLength'])
@@ -90,15 +72,14 @@ def render():
 
     
     # Render the Video
-    editor = AutoEditor(video_uploads, audio_uploads, 
-                    watermark_uploads, fade_duration, target_duration, 
+    editor = AutoEditor(uploaded_files['video_uploads'], uploaded_files['audio_uploads'], 
+                    uploaded_files['watermark_uploads'], fade_duration, target_duration, 
                     'freedom', font_size, text_primary_color, text_outline_color, 
                     isBold, isItalic, isUnderline, 
                     alignment, watermark_opacity, output_dir=outpath,
                     quote=quote_val, voice=voice, subtitle_ass=True)
 
     video_paths = generate_videos(editor, numvideos, outpath)
-    print(f"videopaths uploading: {video_paths}")
     upload_renders(video_paths, aspect_ratio)
 
     # Add videos to Renders table

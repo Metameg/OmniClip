@@ -1,6 +1,6 @@
 from flask import render_template
 import os
-from app.tools.utilities import truncate
+from app.tools.utilities import truncate, decode_path
 import re
 import mimetypes
 import string
@@ -21,6 +21,26 @@ def classify_file_type(file_path):
     # Check if the MIME type contains 'image'
     elif 'image' in mime_type:
         return 'img'
+    
+def classify_custom_upload_files(selected_media):
+    video_uploads = []
+    audio_uploads = []
+    watermark_uploads = []
+
+    for path in selected_media:
+        path = decode_path(path)
+        
+        if classify_file_type(path) == 'video':
+            video_uploads.append(path)
+        elif classify_file_type(path) == 'audio':
+            audio_uploads.append(path)
+        elif classify_file_type(path) == 'img':
+            watermark_uploads.append(path)
+
+    return {"video_uploads": video_uploads,
+            "audio_uploads": audio_uploads,
+            "watermark_uploads": watermark_uploads}
+            
    
 
 def get_num_copies(filename, files):
