@@ -37,6 +37,13 @@ def classify_custom_upload_files(selected_media):
         elif classify_file_type(path) == 'img':
             watermark_uploads.append(path)
 
+    if len(video_uploads) == 0:
+        video_uploads = None
+    if len(audio_uploads) == 0:
+        audio_uploads = None
+    if len(watermark_uploads) == 0:
+        watermark_uploads = None
+
     return {"video_uploads": video_uploads,
             "audio_uploads": audio_uploads,
             "watermark_uploads": watermark_uploads}

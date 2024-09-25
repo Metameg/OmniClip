@@ -143,6 +143,7 @@ class AutoEditor():
         transitions_video = fmpgapi.build_transitions(video_clips, self.target_duration, self.fade_duration, '720:1280')
         
         if self.audio_folder is not None and len(audio_clips) > 0:
+            print("ok, heres the audio folder:", self.audio_folder)
             print("\n\n\n audio found!\n\n\n")
             transitions_with_audio = fmpgapi.add_audio(transitions_video, audio_clips, self.target_duration)
         else:
@@ -197,6 +198,6 @@ class AutoEditor():
         final_video_filename = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".mp4"
         utilities.move_file_to_output_dir(self.export_folder, full_render, final_video_filename)
         # Clean up temp file
-        # utilities.clean_temp()
+        utilities.clean_temp()
         
         

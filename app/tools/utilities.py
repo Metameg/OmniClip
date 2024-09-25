@@ -31,12 +31,6 @@ def move_file_to_output_dir(username, from_name, to_name):
     output_path = os.path.join(username, to_name)
     os.rename(from_name, output_path)
 
-# def get_output_count():
-#     files = os.listdir('output')
-#     num_files = len(files)
-
-#     return num_files
-
 def get_media_dir(username):
     
     return os.path.join(get_root_path(), '..', 'userData', username)
@@ -66,13 +60,11 @@ def upload_files(files, export_folder):
 
 def generate_videos(editor, numvideos, out_dir):
     videos = []
-    outpath = os.path.join(get_root_path(), '..', 'userData', out_dir)
     for _ in range(numvideos):
         # thread = threading.Thread(target=render_video, args=(editor,))
         # thread.start()
         # thread.join()
         editor.render()
-        print(f"out_dir: {os.listdir(out_dir)}")
         videopath = sorted(os.listdir(out_dir))[-1]
         videos.append(videopath)
 

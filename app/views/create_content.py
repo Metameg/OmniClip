@@ -30,10 +30,12 @@ def render():
         username = session["user"]
         # user_id = database.retrieve(User, username=username).id
         outpath = os.path.join(get_media_dir(username), 'renders')
+        user_dir = username
 
     else:
         user_id = None
-        outpath = os.path.join(get_root_path(), '..', 'userData', 'guest')
+        outpath = os.path.join(get_media_dir('guest'))
+        user_dir = 'guest'
 
     form_data = request.get_json()
 
@@ -47,7 +49,7 @@ def render():
     
         uploaded_files = classify_custom_upload_files(selected_media)
         video_files = uploaded_files['video_uploads']
-        audio_files = uploaded_files['video_uploads']
+        audio_files = uploaded_files['audio_uploads']
         watermark_files = uploaded_files['watermark_uploads']
     else:
         clippack = form_data['clippack']
@@ -82,7 +84,6 @@ def render():
     voice = os.path.join('static', 'voices', form_data['voice'] + '.mp3')
     numvideos = int(form_data['numvideos'])
 
-    print("video filess: ", video_files)
     # Render the Video
     editor = AutoEditor(video_files, audio_files, 
                     watermark_files, fade_duration, target_duration, 
@@ -93,9 +94,9 @@ def render():
 
     video_paths = generate_videos(editor, numvideos, outpath)
     upload_renders(video_paths, aspect_ratio)
-
+    
     # Add videos to Renders table
-    return render_template('partials/video-container.html', user_dir=outpath, videopaths=video_paths)
+    return render_template('partials/video-container.html', user_dir=user_dir, videopaths=video_paths)
     
 
 

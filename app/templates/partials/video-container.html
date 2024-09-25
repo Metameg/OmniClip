@@ -10,7 +10,7 @@
             
             
             <div id="video-container" class="d-flex justify-content-center">
-                <video id="video-preview" src="{{ url_for('general.serve_media', user_dir=user_dir, filename=videopath) }}" class="border rounded"
+                <video id="video-preview" src="{{ url_for('general.serve_user_render', user_dir=user_dir, filename=videopath) }}" class="border rounded"
                     alt="output video" width="320" height="240" controls>
                 </video>
             </div>        

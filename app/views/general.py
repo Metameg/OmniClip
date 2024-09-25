@@ -26,8 +26,18 @@ def internal_server_error(e):
 # def serve_output(filename):
 #     return send_from_directory(os.path.join(utilities.get_root_path(), 'output'), filename)
 
+@blueprint.route('/renders/<user_dir>/<filename>')
+def serve_user_render(user_dir, filename):
+    BASE_DIR = '/home/wicker/OmniClip/userData'
+    full_dir_path = os.path.join(BASE_DIR, user_dir)
 
-@blueprint.route('/<user_dir>/<filename>')
+    # user_dir = urllib.parse.unquote(user_dir)
+    if not os.path.isdir(user_dir):
+        print("Directory not found:", user_dir)
+        
+    return send_from_directory(full_dir_path, filename)
+
+@blueprint.route('/<path:user_dir>/<filename>')
 def serve_media(user_dir, filename):
     user_dir = urllib.parse.unquote(user_dir)
     # full_path = os.path.join(utilities.get_root_path(), user_dir)
