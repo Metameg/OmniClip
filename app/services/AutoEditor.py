@@ -102,7 +102,7 @@ class AutoEditor():
             text (str): The input text.
             max_width (int): The maximum width for each line.
 
-        Returns:
+        Returns:    
             str: The wrapped text.
         """
         words = text.split()  # Split the text into words
@@ -131,16 +131,18 @@ class AutoEditor():
         start_time = time.time()
         
         cleaned_videos = utilities.decode_and_clean_paths(self.video_folder)
-        cleaned_audios = utilities.decode_and_clean_paths(self.audio_folder)
-        # Randomly Select Video Clips 
         video_clips = self._select_random_files(cleaned_videos, True)
-        audio_clips = self._select_random_files(cleaned_audios, True)
+        
+        if self.audio_folder is not None:
+            cleaned_audios = utilities.decode_and_clean_paths(self.audio_folder)
+            audio_clips = self._select_random_files(cleaned_audios, True)
+        # Randomly Select Video Clips 
         
         # Create Transition Segments
         print("\n\n\n\n\n Transitions render...")
         transitions_video = fmpgapi.build_transitions(video_clips, self.target_duration, self.fade_duration, '720:1280')
         
-        if len(audio_clips) > 0:
+        if self.audio_folder is not None and len(audio_clips) > 0:
             print("\n\n\n audio found!\n\n\n")
             transitions_with_audio = fmpgapi.add_audio(transitions_video, audio_clips, self.target_duration)
         else:
@@ -172,7 +174,7 @@ class AutoEditor():
             full_render = text_videopath 
             
 
-        if len(self.overlay_folder) > 0:
+        if self.overlay_folder is not None and len(self.overlay_folder) > 0:
             cleaned_overlays = utilities.decode_and_clean_paths(self.overlay_folder)
             # Select Image Overlay
             img = self._select_random_files(cleaned_overlays, False)
@@ -195,6 +197,6 @@ class AutoEditor():
         final_video_filename = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".mp4"
         utilities.move_file_to_output_dir(self.export_folder, full_render, final_video_filename)
         # Clean up temp file
-        utilities.clean_temp()
+        # utilities.clean_temp()
         
         

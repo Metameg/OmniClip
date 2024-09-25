@@ -1,6 +1,6 @@
 import json
 from datetime import datetime, timezone
-from flask import Blueprint, request, render_template, session
+from flask import Blueprint, request, render_template, session, url_for
 from app.extensions import db, csrf
 from app.models.User import User
 from app.tools.utilities import generate_videos, get_root_path, decode_path, get_media_dir, sanitize_filename
@@ -40,11 +40,23 @@ def render():
     for key, value in form_data.items():
         print(f"{key}: {value}")
 
-    selected_media = form_data['selectedMedia[]']
-    if isinstance(selected_media, str):
-        selected_media = [form_data['selectedMedia[]']]
+    if 'selectedMedia[]' in form_data.keys():
+        selected_media = form_data['selectedMedia[]']
+        if isinstance(selected_media, str):
+            selected_media = [form_data['selectedMedia[]']]
     
-    uploaded_files = classify_custom_upload_files(selected_media)
+        uploaded_files = classify_custom_upload_files(selected_media)
+        video_files = uploaded_files['video_uploads']
+        audio_files = uploaded_files['video_uploads']
+        watermark_files = uploaded_files['watermark_uploads']
+    else:
+        clippack = form_data['clippack']
+        clippack_path = os.path.join(get_root_path(), 'static', 'clippacks', clippack)
+        video_files = [os.path.normpath(str(clippack_path + os.sep + f)) for f in os.listdir(clippack_path) if f.endswith(('.mp4'))]
+        # video_files = [url_for('static', filename=f"clippacks/{clippack}/{file}") for file in video_paths]
+
+        audio_files = None
+        watermark_files = None
 
     fade_duration = float(form_data['fadeoutDuration'])
     target_duration = float(form_data['totalLength'])
@@ -70,10 +82,10 @@ def render():
     voice = os.path.join('static', 'voices', form_data['voice'] + '.mp3')
     numvideos = int(form_data['numvideos'])
 
-    
+    print("video filess: ", video_files)
     # Render the Video
-    editor = AutoEditor(uploaded_files['video_uploads'], uploaded_files['audio_uploads'], 
-                    uploaded_files['watermark_uploads'], fade_duration, target_duration, 
+    editor = AutoEditor(video_files, audio_files, 
+                    watermark_files, fade_duration, target_duration, 
                     'freedom', font_size, text_primary_color, text_outline_color, 
                     isBold, isItalic, isUnderline, 
                     alignment, watermark_opacity, output_dir=outpath,
@@ -84,6 +96,7 @@ def render():
 
     # Add videos to Renders table
     return render_template('partials/video-container.html', user_dir=outpath, videopaths=video_paths)
+    
 
 
 def upload_renders(render_paths, aspect_ratio):

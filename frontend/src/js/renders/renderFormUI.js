@@ -84,12 +84,10 @@ const renderFormDOM = (function () {
     // Public API
     return {
         configureDOM: function() {
-            // const clippackPath = document.getElementById('clippack-path');
             const manualClippackBln = document.getElementById('clippack-checkbox');
             const manualClippackBlnHidden = document.getElementById('clippack-checkbox-value');
             const clippack = document.getElementById('clippack');
-            // const audioPath = document.getElementById('audio-path');
-            // const watermarkPath = document.getElementById('watermark-path');
+            const uploadBtn = document.getElementById('upload-offcanvas-toggle');
             const totalLength = document.getElementById('total-length-val');
             const numvideos = document.getElementById('num-videos-val');
             const numvideosRange = document.getElementById('num-videos-range');
@@ -121,10 +119,7 @@ const renderFormDOM = (function () {
             const underlineBlnHidden = document.getElementById('underline-value');
 
             enableFromCheckbox(manualClippackBln, clippack);
-            // notEnableFromCheckbox(manualClippackBln, clippackPath);
-            // Validators.imports.validateVideo(clippackPath);
-            // Validators.imports.validateAudio(audioPath);
-            // Validators.imports.validateImage(watermarkPath);
+            notEnableFromCheckbox(manualClippackBln, uploadBtn);
             Validators.inputField.validateNumber(totalLength);
             Validators.slides.validateRange(numvideosRange, numvideos, false);
             Validators.slides.validateRange(fadeDurationRange, fadeDuration, false);

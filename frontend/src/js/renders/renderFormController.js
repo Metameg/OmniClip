@@ -21,17 +21,22 @@ export function configureRenderForm() {
     videoStylerUI.configureDOM();
     const renderForm = document.getElementById('render-form');
     const noVideoMsg = document.getElementById('no-video-msg');
-    const renderBox = document.getElementById('render-carousel')
+    const renderBox = document.getElementById('render-carousel');
+    const clippackCheckbox = document.getElementById('clippack-checkbox')
 
     renderForm.addEventListener('submit', async function(event) {
         
         event.preventDefault();
         
         var renderData = new FormData($('#render-form')[0]);
-        renderData = appendMediaData(renderData);
-        var hasVideo = contains_video(renderData.getAll('selectedMedia[]'));
+        var hasVideo = false;
 
-        if (hasVideo) {
+        if (!clippackCheckbox.checked) {
+            renderData = appendMediaData(renderData);
+            hasVideo = contains_video(renderData.getAll('selectedMedia[]'));
+        }
+
+        if (hasVideo || clippackCheckbox.checked) {
             noVideoMsg.style.display = 'none';
             var renderDataObject = {};
             renderData.forEach(function(value, key){

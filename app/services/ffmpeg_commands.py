@@ -143,12 +143,105 @@ def get_video_frame_rate(file_path):
         print(f"Error running ffprobe: {e}")
         return None
 
+
+
+# def get_total_frames(video_path):
+#     """Use ffprobe to get the total number of frames in a video."""
+#     cmd = [
+#         "ffprobe",
+#         "-v", "error",
+#         "-select_streams", "v:0",
+#         "-count_frames",
+#         "-show_entries", "stream=nb_frames",
+#         "-of", "json",
+#         video_path
+#     ]
+#     result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+#     data = json.loads(result.stdout)
+#     return int(data['streams'][0]['nb_frames'])
+
+
+
+# def fix_video_timestamps(video_path):
+#     # Create directories for frames
+#     frames_dir = os.path.join(utilities.get_root_path(), 'temp', 'frames')
+#     os.makedirs(frames_dir, exist_ok=True)
+
+#     temp_video_path = os.path.join(utilities.get_root_path(), 'temp', "video_tmp.mp4")
+#     temp_audio_path = os.path.join(utilities.get_root_path(), 'temp', "temp_audio.aac")
+#     final_output_path = os.path.join(utilities.get_root_path(), 'temp', "output_audio.mp4")
+#     pts_file_path = os.path.join(utilities.get_root_path(), 'temp', "pts.txt")
+    
+#     # Step 1: Extract audio and video
+#     print("Extracting audio...")
+#     subprocess.run([
+#         "ffmpeg",
+#         "-i", video_path,
+#         "-q:a", "0",  # Best audio quality
+#         "-map", "a",
+#         temp_audio_path
+#     ], check=True)
+
+#     print("Extracting video...")
+#     subprocess.run([
+#         "ffmpeg",
+#         "-i", video_path,
+#         "-c:v", "copy",
+#         "-an",  # No audio
+#         temp_video_path
+#     ], check=True)
+
+    
+    
+#     total_frames = get_total_frames(temp_video_path)
+
+#     # Create the pts.txt with corrected timestamps
+#     with open(pts_file_path, "w") as pts_file:
+#         for i in range(total_frames):
+#             pts_file.write(f"{i / 30:.3f}\n")
+
+#     print("Fixing video timestamps...")
+#     subprocess.run([
+#         "D:\Programs\mp4fpsmod\mp4fpsmod64.exe",
+#         temp_video_path,
+#         "-t", pts_file_path,
+#         "-o", temp_video_path
+#     ], check=True)
+
+#     print("Muxing audio and video...")
+#     subprocess.run([
+#         "ffmpeg",
+#         "-i", temp_video_path,
+#         "-i", temp_audio_path,
+#         "-c:v", "copy",
+#         "-c:a", "aac",  # Use AAC codec for audio
+#         "-strict", "experimental",  # Allow experimental codecs
+#         final_output_path
+#     ], check=True)
+
+
+#     print(f"Processed video saved as: {final_output_path}")
+
+#     return final_output_path
+
+
+
 def preprocess(video_clips, size):
     processed_paths = []
     for i, clip in enumerate(video_clips, 1):
         old_fps = get_video_frame_rate(clip)
-        if abs(29.97 - old_fps) < 0.001: 
-            pts = f'PTS/1.001'
+        if old_fps == 60:
+            pts = 'PTS/2'
+        elif old_fps == 29.97:
+            pts = 'PTS/1.001'
+        elif old_fps == 25:
+            pts = 'PTS*1.2'
+        elif old_fps == 24:
+            pts = 'PTS*1.25'
+        elif old_fps == 15:
+            pts = 'PTS*2'
+        elif old_fps == 12:
+            pts = 'PTS*2.5'
         else:
             pts = 'PTS-STARTPTS'
 
@@ -156,21 +249,29 @@ def preprocess(video_clips, size):
         outpath = os.path.join(utilities.get_root_path(), 'temp', f'processed{i}.mp4')
         # processed_video = os.path.join(utilities.get_root_path(), 'temp', f'video_processed{i}.mp4')
         # processed_audio = os.path.join(utilities.get_root_path(), 'temp', f'audio_processed{i}.mp3')
+        if _has_audio(clip):
+            audio_flag = ';[0:a]asetpts=N/SR/TB[a]'
+            audio_map = '[a]'
+        else:
+            audio_flag = ';'
+            audio_map = '0:a?'
 
         ffmpeg_command_video = [
             'ffmpeg',
+            '-fflags', '+genpts', 
             '-i', clip,
             '-hide_banner',
             # '-loglevel',
             # 'quiet',
             # '-vf', f'scale={size},setsar=1',
-            '-filter_complex', f'[0:v]fps=30,setpts={pts},scale={size},setsar=1[v];',
+            '-filter_complex', f'[0:v]fps=30,setpts=N/FRAME_RATE/TB,scale={size},setsar=1[v]{audio_flag}',
             '-map', '[v]',
-            '-map', '0:a',
+            '-map', audio_map,
             '-y',
             # '-r', '30',
             '-c:v', 'libx264',
             '-c:a', 'aac',
+            '-async', '1',
             '-strict', 'experimental',
             outpath
         ]
@@ -403,6 +504,8 @@ def build_transitions(video_clips, target_duration, fadeout_duration, size):
         # command = 'ffmpeg ' + inputs + ' -filter_complex ' + '"' + PDV + FLV  + PDA + FLA + '"' + f' -map [vout] -map [aout] -t {target_duration} -c:v libx264  -c:a aac  -map_metadata -1 {outpath} -y -hide_banner'
         print(comb_cmd)
         os.system(comb_cmd)
+
+    # fixed_outpath = fix_video_timestamps(outpath)
 
     return outpath
 

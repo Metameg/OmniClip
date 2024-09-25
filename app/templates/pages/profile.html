@@ -32,7 +32,7 @@
             <hr>
             <div class="dropdown">
                 <a href="#" class="align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                    <img src="{{url_for('static', filename='images/user.svg')}}" alt="" width="32" height="32" class="rounded-circle me-2">
                     <strong>{{ user }}</strong>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser">
@@ -72,7 +72,7 @@
         <hr>
         <div class="dropdown">
             <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                <img src="{{url_for('static', filename='images/user.svg')}}" alt="" width="32" height="32" class="rounded-circle me-2">
                 <strong>{{ user }}</strong>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser">
