@@ -28,10 +28,15 @@ def internal_server_error(e):
 
 @blueprint.route('/renders/<user_dir>/<filename>')
 def serve_user_render(user_dir, filename):
-    BASE_DIR = '/home/wicker/OmniClip/userData'
-    full_dir_path = os.path.join(BASE_DIR, user_dir)
+    env = os.getenv('ENVIRONMENT')
+    if env == 'WINDOWS_DEV':
+        BASE_DIR = r'D:\\FlaskDemo\\userData\\'
+    elif env == 'LINUX_DEV':
+        BASE_DIR = '/home/wicker/OmniClip/userData/'
+    elif env == 'PRODUCTION':
+        BASE_DIR = '/home/wicker/OmniClip/userData/'
 
-    # user_dir = urllib.parse.unquote(user_dir)
+    full_dir_path = os.path.join(BASE_DIR, user_dir)
     if not os.path.isdir(user_dir):
         print("Directory not found:", user_dir)
         
