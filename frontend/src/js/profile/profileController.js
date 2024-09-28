@@ -37,7 +37,7 @@ function configureRemoveRenderListeners() {
             var src = video.getAttribute('src');
                
             try {
-                const url = `/profile/remove-profile-render/${src}`
+                const url = `/profile/remove-profile-render${src}`
                 const response = await  profileService.removeRenderData(url);
                 console.log(response);
             } catch (error) {

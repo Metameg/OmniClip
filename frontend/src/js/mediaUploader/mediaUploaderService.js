@@ -2,6 +2,7 @@ export const mediaUploaderService = {
     csrfToken: $('input[name="csrf_token"]').val(),
     
     submitMediaData: function(url, mediaData) {
+        const uploadError = document.getElementById('upload-error');
         $('#uploader-loading-container').show();
         $('#offcanvas-uploader-container').css('opacity', '0.15');
         return new Promise((resolve, reject) => {
@@ -17,12 +18,21 @@ export const mediaUploaderService = {
                 success: function(data) {
                     $('#uploader-loading-container').hide();
                     $('#offcanvas-uploader-container').css('opacity', '1.0');
+                    uploadError.style.display = 'none';
                     resolve(data);
                 },
-                error: function(error) {
+                error: function(jqXHR, textStatus, errorThrown) {
                     $('#uploader-loading-container').hide();
                     $('#offcanvas-uploader-container').css('opacity', '1.0');
-                    reject(error);
+
+                    // Check for specific status code (e.g., 413 Payload Too Large)
+                    if (jqXHR.status === 413) {
+                        $('#upload-error').html('File size cannot exceed 20MB')
+                        uploadError.style.display = 'block';
+                    } else {
+                        alert("An error occurred: " + textStatus);  // Fallback for other errors
+                    }
+                    reject(jqXHR);
                 },
                 resetForm: true
             });

@@ -37,8 +37,7 @@ def serve_user_render(user_dir, filename):
         BASE_DIR = '/home/wicker/OmniClip/userData/'
 
     full_dir_path = os.path.join(BASE_DIR, user_dir)
-    if not os.path.isdir(user_dir):
-        print("Directory not found:", user_dir)
+    full_dir_path = urllib.parse.unquote(full_dir_path)
         
     return send_from_directory(full_dir_path, filename)
 
@@ -46,6 +45,7 @@ def serve_user_render(user_dir, filename):
 def serve_media(user_dir, filename):
     user_dir = urllib.parse.unquote(user_dir)
     # full_path = os.path.join(utilities.get_root_path(), user_dir)
+    print("full_dir_path:", user_dir)
 
     return send_from_directory(user_dir, filename)
 

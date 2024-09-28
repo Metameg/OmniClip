@@ -25,13 +25,24 @@ def upload_media():
     file_paths = []
     media_files = os.listdir(media_dir)
 
+
     for file in files:
+        print("This is the file!!!: ", file)
         filename = sanitize_filename(file.filename)
         path = os.path.join(media_dir, filename)
+        print("This is the path!!!: ", path)
         
         if helpers.classify_file_type(path) == 'unknown':
             print("Unknown file type in one or more of your files. Only upload media files.")
-            break
+            continue
+
+        if helpers.file_too_big(file):
+            error_message = {
+                "status": "error",
+                "message": f"File {file.filename} exceeds the size limit of 20 MB."
+            }
+            print(f"File {file.filename} exceeds the size limit of 20 MB.")
+            return jsonify(error_message), 413 
 
         if filename not in media_files:
             file_paths.append(path)
@@ -54,8 +65,8 @@ def upload_media():
                 database.create(db, Media, user_id=user_id, path=path, filename=filename, size=file_size)
 
     html_data = helpers.build_media_html(file_paths)
+
     return jsonify(html_data)
-    # threading.Thread(target=simulate_time_consuming_process, args=()).start()
     
 @blueprint.route('/retrieve-user-media')
 def retrieve_medias():
@@ -64,7 +75,7 @@ def retrieve_medias():
         medias = database.retrieve_from_join(db, User, Media, username)
         file_paths = [database.retrieve(Media, media_id=media.media_id).path for media in medias]
  
-        s3_urls = [f"https://<bucket_name>.s3.amazonaws.com/{file_path}" for file_path in file_paths]
+        # s3_urls = [f"https://<bucket_name>.s3.amazonaws.com/{file_path}" for file_path in file_paths]
    
     else:
         html_data = [
@@ -81,11 +92,15 @@ def retrieve_medias():
 
 @blueprint.route('/remove-user-media/<path:path>', methods=['GET'])
 def remove_media(path):
+    print("REMOVE YOY FAGGGOT" + path)
     file_paths = []
     path = urllib.parse.unquote(path)
     path = path.replace('/', os.path.sep).replace('\\', os.path.sep)
+    print("path:  ::\n\n\n" , path)
     if os.name == 'posix' and not path.startswith('/'):
         path = '/' + path
+    elif path.startswith('/'):
+        path[0] = ''
 
     if "user" in session:
         path = path.replace('/', os.path.sep)
@@ -94,7 +109,7 @@ def remove_media(path):
         if (os.path.exists(path)):
             os.remove(path)
 
-        s3_urls = [f"https://<bucket_name>.s3.amazonaws.com/{file_path}" for file_path in file_paths]
+        # s3_urls = [f"https://<bucket_name>.s3.amazonaws.com/{file_path}" for file_path in file_paths]
 
     else:
         if (os.path.exists(path)):
@@ -109,8 +124,8 @@ def remove_media(path):
                 # Append the full path to the list
                 file_paths.append(file_path)
     
-    html_data = "data removed"
-    # html_data = helpers.build_media_html(file_paths)
+    # html_data = "data removed"
+    html_data = helpers.build_media_html(file_paths)
 
     return jsonify(html_data)
 

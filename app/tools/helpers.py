@@ -110,3 +110,18 @@ def generate_key(length):
     random_string = ''.join(secrets.choice(alphabet) for i in range(length))
 
     return random_string
+
+
+def file_too_big(file):
+    MAX_FILE_SIZE_MB = 20
+    MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024
+    file.seek(0, 2)  # Seek to the end of the file
+    file_size = file.tell()
+    file.seek(0)  # Seek to beggining so file can be saved
+    print(f"file size: {file_size}, max: {MAX_FILE_SIZE}")
+    
+    if file_size > MAX_FILE_SIZE:
+        return True
+    else: 
+        return False
+    

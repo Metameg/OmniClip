@@ -72,8 +72,10 @@ function configureRemoveMediaListeners(contentContainers, msgElements) {
             } 
             
             try {
-                const url = `/remove-user-media/${src}`
+                const url = `/remove-user-media${src}`
                 const response = await  mediaUploaderService.removeMediaData(url);
+                console.log(response);
+                
             } catch (error) {
                 console.error(error);
             }
@@ -111,7 +113,6 @@ async function uploadFiles(mediaFiles, contentContainers, msgElements) {
     
     try {
         const response = await mediaUploaderService.submitMediaData(url, mediaData);
-        console.log("response: " + response);
         handleUIResponse(response, contentContainers, msgElements);
     } catch (error) {
         // Handle errors if needed

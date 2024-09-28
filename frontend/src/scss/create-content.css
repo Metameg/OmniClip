@@ -186,6 +186,10 @@
 #offcanvas-uploader-container {
   overflow-y: scroll;
 }
+#offcanvas-uploader-container #upload-error {
+  color: red;
+  display: none;
+}
 
 #uploader-loading-container {
   position: absolute;
