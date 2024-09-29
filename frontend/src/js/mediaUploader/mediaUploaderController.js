@@ -74,7 +74,6 @@ function configureRemoveMediaListeners(contentContainers, msgElements) {
             try {
                 const url = `/remove-user-media${src}`
                 const response = await  mediaUploaderService.removeMediaData(url);
-                console.log(response);
                 
             } catch (error) {
                 console.error(error);
@@ -120,12 +119,8 @@ async function uploadFiles(mediaFiles, contentContainers, msgElements) {
     }
 
     cards = document.querySelectorAll('.new-card');
-    // const cards = document.querySelectorAll('.media-upload-card');
-    console.log("cards " + cards.length);
     uploadMediaUI.toggleCheckboxListener(cards);
     configureRemoveMediaListeners(contentContainers, msgElements);   
-    // restoreSelectedMediaState(selectedMedia);
-    
 }
 
 function getCardBySrc(src) {

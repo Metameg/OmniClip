@@ -27,7 +27,7 @@ export const mediaUploaderService = {
 
                     // Check for specific status code (e.g., 413 Payload Too Large)
                     if (jqXHR.status === 413) {
-                        $('#upload-error').html('File size cannot exceed 20MB')
+                        $('#upload-error').html(jqXHR.responseText);
                         uploadError.style.display = 'block';
                     } else {
                         alert("An error occurred: " + textStatus);  // Fallback for other errors
@@ -64,6 +64,7 @@ export const mediaUploaderService = {
     },
 
     removeMediaData: function(url) {
+        const uploadError = document.getElementById('upload-error');
         return new Promise((resolve, reject) => {
             $.ajax({
                 url: url,  
@@ -75,6 +76,7 @@ export const mediaUploaderService = {
                 dataType: 'json',
                 success: function(data) {
                     resolve(data);
+                    uploadError.style.display = 'none';
                 },
                 error: function(error) {
                     reject(error);
@@ -91,7 +93,7 @@ export const mediaUploaderService = {
                 type: 'GET',
                 contentType: 'application/json',
                 success: function(response) {
-                    // Handle success response if needed
+                    uploadError.style.display = 'none';
                 },
                 error: function(xhr, status, error) {
                     console.error('Error triggering Flask route:', error);

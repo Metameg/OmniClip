@@ -52,19 +52,19 @@ def classify_custom_upload_files(selected_media):
 
 def get_num_copies(filename, files):
     # Initialize a counter for files containing the substring
-    count = 0
+    numbers = []
     basename = os.path.splitext(filename)[0]
     # Iterate over all files in the directory
     for path in files:
         # Check if the filename contains the substring
-        pattern = rf'^{re.escape(basename)}(\(\d+\))*\..*'
-        # # Use re.sub to replace the matched substring with an empty string
-        # base = re.sub(pattern, '', path)
-        # print("base:", base)
-        if  re.match(pattern, path):
-            count += 1
+        pattern = rf'^{re.escape(basename)}\((\d+)\)\..*'
 
-    return count
+        match = re.match(pattern, path)
+        if  match:
+            num = int(match.group(1))
+            numbers.append(num)
+
+    return max(numbers) + 1 if numbers else 0
 
 def build_media_html(file_paths):
     tag_type = ''
@@ -111,17 +111,49 @@ def generate_key(length):
 
     return random_string
 
-
-def file_too_big(file):
-    MAX_FILE_SIZE_MB = 20
-    MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024
+def _get_file_size(file):
     file.seek(0, 2)  # Seek to the end of the file
     file_size = file.tell()
     file.seek(0)  # Seek to beggining so file can be saved
-    print(f"file size: {file_size}, max: {MAX_FILE_SIZE}")
-    
+
+    return file_size
+
+def check_storage(file, media_dir, media_files):
+    MAX_FILE_SIZE_MB = 20
+    MAX_DIRECTORY_SIZE_MB = 100
+    MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024
+    MAX_DIRECTORY_SIZE = MAX_DIRECTORY_SIZE_MB * 1024 * 1024
+    response = {
+        "status": "ok",
+        "message": ""
+    }
+
+    file_size = _get_file_size(file)
+
     if file_size > MAX_FILE_SIZE:
-        return True
-    else: 
-        return False
+        response = {
+            "status": "error",
+            "message": f"File {file.filename} exceeds the size limit of 20 MB."
+        }
+
+        return response
+    
+    directory_size = 0
+    for filename in media_files:
+        file_path = os.path.join(media_dir, filename)
+
+        with open(file_path, 'rb') as file:
+            f_size = _get_file_size(file)
+        directory_size += f_size
+
+    if directory_size + file_size > MAX_DIRECTORY_SIZE:
+        response = {
+            "status": "error",
+            "message": f"Insufficient Storage. Storage capacity greater than 100MB."
+        }
+    
+    return response
+    
+    
+    
     

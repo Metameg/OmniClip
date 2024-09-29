@@ -23,28 +23,24 @@ def upload_media():
         media_dir = os.path.join(get_root_path(), 'temp', 'guest')
 
     file_paths = []
-    media_files = os.listdir(media_dir)
+    media_files = [f for f in os.listdir(media_dir) if os.path.isfile(os.path.join(media_dir, f))]
 
 
     for file in files:
-        print("This is the file!!!: ", file)
         filename = sanitize_filename(file.filename)
         path = os.path.join(media_dir, filename)
-        print("This is the path!!!: ", path)
         
         if helpers.classify_file_type(path) == 'unknown':
             print("Unknown file type in one or more of your files. Only upload media files.")
-            continue
+            break
 
-        if helpers.file_too_big(file):
-            error_message = {
-                "status": "error",
-                "message": f"File {file.filename} exceeds the size limit of 20 MB."
-            }
-            print(f"File {file.filename} exceeds the size limit of 20 MB.")
-            return jsonify(error_message), 413 
+        storage_check = helpers.check_storage(file, media_dir, media_files)
 
-        if filename not in media_files:
+        if storage_check['status'] == 'error':
+            print(storage_check['message'])
+            return jsonify(storage_check['message']), 413 
+
+        if filename not in os.listdir(media_dir):
             file_paths.append(path)
             file.save(path)
         else:

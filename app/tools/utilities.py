@@ -8,15 +8,11 @@ def get_root_path():
     return root_path
 
 def clean_temp():
-    # renders = os.listdir(get_media_dir('guest'))
     files = os.listdir(os.path.join(get_root_path(), 'temp'))
     for file in files:
-        print(f"files to remove in temp: {file}, osFile: {os.path.isfile(os.path.join(get_root_path(), 'temp', file))}")
+        # print(f"files to remove in temp: {file}, osFile: {os.path.isfile(os.path.join(get_root_path(), 'temp', file))}")
         if os.path.isfile(os.path.join(get_root_path(), 'temp', file)):
             os.remove(os.path.join(get_root_path(), 'temp', file))
-
-    # for render in renders:
-    #     os.remove(os.path.join(get_root_path(), '..', 'userData', 'guest', render))
 
 def clear_directory(directory):
     # Iterate over all files in the directory
@@ -32,7 +28,6 @@ def move_file_to_output_dir(username, from_name, to_name):
     os.rename(from_name, output_path)
 
 def get_media_dir(username):
-    
     return os.path.join(get_root_path(), '..', 'userData', username)
 
 
@@ -43,7 +38,6 @@ def get_file_extension(file_path):
 def split_filename(file_path):
     return os.path.splitext(file_path)
     
-
 
 def sanitize_filename(filename):
     # Replace spaces with underscores and remove other special characters

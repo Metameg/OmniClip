@@ -44,9 +44,7 @@ def serve_user_render(user_dir, filename):
 @blueprint.route('/<path:user_dir>/<filename>')
 def serve_media(user_dir, filename):
     user_dir = urllib.parse.unquote(user_dir)
-    # full_path = os.path.join(utilities.get_root_path(), user_dir)
-    print("full_dir_path:", user_dir)
-
+    
     return send_from_directory(user_dir, filename)
 
 @blueprint.route('/loading_container_partial', methods=['GET'])
