@@ -15,18 +15,18 @@
             </a>
             <hr>
             <ul class="nav nav-pills flex-column">
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a id="dashboard-link" class="nav-link dark-hover active" aria-current="page" >Dashboard</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
-                    <a id="renders-link" class="nav-link dark-hover" aria-current="page" >Renders</a>
+                    <a id="renders-link" class="nav-link dark-hover active" aria-current="page" >My Renders</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a id="subscription-link" class="nav-link dark-hover" aria-current="page" >Subscription</a>
-                </li>
-                <li class="nav-item">
+                </li> -->
+                <!-- <li class="nav-item">
                     <a id="settings-link" class="nav-link dark-hover" aria-current="page" >Settings</a>
-                </li>
+                </li> -->
             </ul>
 
             <hr>
@@ -51,18 +51,18 @@
         </a>
         <hr>
         <ul id="profile-pills" class="nav nav-pills flex-column">
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a id="dashboard-link" class="nav-link dark-hover {% if selected_pill != 'subscription' %}active{% endif %}" aria-current="page"  data-bs-toggle="pill" href="#dashboard-content">Dashboard</a>
-            </li>
+            </li> -->
             <li class="nav-item">
-                <a id="renders-link" class="nav-link dark-hover renders-link" aria-current="page" data-bs-toggle="pill" href="#renders-content">Renders</a>
+                <a id="renders-link" class="nav-link dark-hover renders-link active" aria-current="page" data-bs-toggle="pill" href="#renders-content" active>My Renders</a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a id="subscription-link" class="nav-link dark-hover {% if selected_pill == 'subscription' %}active{% endif %}" aria-current="page" data-bs-toggle="pill" href="#subscription-content">Subscription</a>
             </li>
             <li class="nav-item">
                 <a id="settings-link" class="nav-link dark-hover" aria-current="page" data-bs-toggle="pill" href="#settings-content">Settings</a>
-            </li>
+            </li> -->
         </ul>
 
         <hr>
@@ -84,18 +84,10 @@
 
     <div class="tab-content mt-2" id="content-container" style="width: 100%;">
 
-        <div id="dashboard-content" class="profile-tab-pane bg-light tab-pane fade {% if selected_pill != 'subscription' %}show active{% endif %}" aria-labelledby="dashboard-link" style="min-width: 180px;">
-            {% include 'partials/profile/dashboard.html' %}
-        </div>
-        <div id="renders-content" class="profile-tab-pane tab-pane fade m-1" aria-labelledby="renders-link">
+        <div id="renders-content" class="profile-tab-pane tab-pane fade m-1 show active" aria-labelledby="renders-link">
             {% include 'partials/profile/renders.html' %}
         </div>
-        <div id="subscription-content" class="profile-tab-pane bg-light tab-pane fade {% if selected_pill == 'subscription' %}show active{% endif %}" aria-labelledby="subscription-link" style="min-width: 180px;">
-            {% include 'partials/profile/subscription.html' %}
-        </div>
-        <div id="settings-content" class="profile-tab-pane tab-pane fade" aria-labelledby="settings-link" style="min-width: 180px;">
-            {% include 'partials/profile/settings.html' %}
-        </div>
+       
     </div>
 </div>
 <script>
