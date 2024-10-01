@@ -78,7 +78,7 @@
     <div id="voice-container">
         <label for="voice-val">Voice</label>
         <p class="voice-input-container  gap-1">
-            <input id="voice-val" type="text" class="form-control" value="Callum">
+            <input id="voice-val" type="text" class="form-control" value="Joey">
             <button id="voice-select-btn" class="btn btn-light" type="button">
                 Select Voice
             </button>
@@ -90,11 +90,11 @@
     <div class="collapse" id="collapse-voices">
         <button id="voice-btn-close" type="button" class="btn-close" aria-label="Close"></button>
         <div class="voices-body card card-body text-center">
-            <label>Select AI voice to read your quote.</label>
+            <label>Select AI voice to read your quote</label>
             {% for voice in voices %}
                 <div class="voice">
                     <div>
-                        {% if voice.name == 'Callum' %}
+                        {% if voice.name == 'Joey' %}
                             <input class="m-2" type="radio" name="voice" value="{{ voice.name }}" checked/>
                         {% else %}    
                             <input class="m-2" type="radio" name="voice" value="{{ voice.name }}"/>

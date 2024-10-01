@@ -152,9 +152,7 @@ const Validators = (function() {
 
         voice: {
             validate: (voice) => {
-                const voices = ["callum", "charlie", "charlotte", "clyde", "daniel",
-                 "dave", "emily", "ethan", "fin", "freya", "gigi", "giovanni", 
-                 "glinda", "grace"];
+                const voices = ["joey", "amy", "arthur", "kendra", "pedro"];
                 
                 var value = voice.value.toLowerCase();
                 voices.includes(value) ? addValid(voice) : addInvalid(voice);   

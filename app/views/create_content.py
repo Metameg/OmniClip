@@ -70,13 +70,10 @@ def render():
     font_name = form_data['fontName']
     font_size = int(form_data['fontSize'])
     text_primary_color = form_data['primaryColor']
-    
     try:
         text_outline_color = form_data['outlineColor']
     except Exception:
         text_outline_color = '#00000000'
-
-
     isBold = form_data['isBold']
     isItalic = form_data['isItalic']
     isUnderline = form_data['isUnderline']
@@ -84,7 +81,7 @@ def render():
     alignment = int(form_data['subtitleAlignment'])
     watermark_opacity = form_data['watermarkOpacity']
     quote_val = form_data['quoteVal']
-    voice = os.path.join('static', 'voices', form_data['voice'] + '.mp3')
+    voice = form_data['voice']
     numvideos = int(form_data['numvideos'])
 
 
@@ -93,10 +90,11 @@ def render():
     if num_user_renders + numvideos > MAX_RENDERS_ALLOWED:
         return jsonify('Cannot create more renders. Max allowed (5) reached. Please delete some renders from profile to make room for more.'), 413 
     
+
     # Render the Video
     editor = AutoEditor(video_files, audio_files, 
                     watermark_files, fade_duration, target_duration, 
-                    'freedom', font_size, text_primary_color, text_outline_color, 
+                    font_name, font_size, text_primary_color, text_outline_color, 
                     isBold, isItalic, isUnderline, 
                     alignment, watermark_opacity, output_dir=outpath,
                     quote=quote_val, voice=voice, subtitle_ass=True)

@@ -8,7 +8,7 @@
     "flask-dev": "cd .. && flask --debug run",
     "webpack-watch": "webpack --config webpack.dev.js --watch",
     "webpack-dev": "webpack-dev-server --open --config webpack.dev.js",
-    "build": "set NODE_ENV=production&& webpack --config webpack.prod.js"
+    "build": "set NODE_ENV=production && webpack --config webpack.prod.js"
   },
   "keywords": [],
   "author": "",

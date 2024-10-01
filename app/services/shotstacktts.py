@@ -31,11 +31,8 @@ def _curl_from_cdn(url):
 
 def _write_file(url):  
     data = _curl_from_cdn(url)
-    # Create audios directory inside temp folder if it doesn't already exist
-    # if not os.path.exists('./temp/audios'):
-    #     os.makedirs('./temp/audios')
-
     tts_path = os.path.join(utilities.get_root_path(), 'temp', 'tts_audio.mp3')
+    
     # Save the raw data to a temporary file
     with open(tts_path, 'wb') as temp_file:
         temp_file.write(data.getvalue())
@@ -45,8 +42,8 @@ def _write_file(url):
 def generate_tts(text, voice):
     dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
     load_dotenv(dotenv_path)
-    shotstack_api_key = os.getenv('SHOTSTACK_KEY')
-    print("sstck api key: ", shotstack_api_key)
+    shotstack_api_key = os.getenv('SHOTSTACK_API_KEY')
+    print("sstck api key: ", shotstack_api_key, "\n", os.getenv('ENVIRONMENT'))
     # Audio request url and headers
     req_url = "https://api.shotstack.io/create/stage/assets/"
     audio_headers = {'content-type': 'application/json',

@@ -8,7 +8,6 @@ const renderFormDOM = (function () {
         radios.forEach(function (radioButton) {
             radioButton.addEventListener('click', function () {
                 if (radioButton.checked) {
-                    console.log(radioButton.value);
                     voice.value = radioButton.value;
                     Validators.voice.validate(voice);
                 }
