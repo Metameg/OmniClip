@@ -32,34 +32,34 @@ export function configureQuoteGenerator() {
         }
     });
 
-    quoteCategorySubmitBtn.addEventListener('click', async function() {
-        // Load category data for quote generation into js object
-        const quoteCategoryData = {
-            // submitType: $('#submit-type').val(),
-            category: $('#quote-category-value').val(),
-            sameCategoryBln: $('#same-category-value').val(),
-            clippack: $('#clippack').val()
-        };
+    // quoteCategorySubmitBtn.addEventListener('click', async function() {
+    //     // Load category data for quote generation into js object
+    //     const quoteCategoryData = {
+    //         // submitType: $('#submit-type').val(),
+    //         category: $('#quote-category-value').val(),
+    //         sameCategoryBln: $('#same-category-value').val(),
+    //         clippack: $('#clippack').val()
+    //     };
 
-        const url = '/quote-generator/category';
-        // Convert quote data to json string
-        const quoteDataString = JSON.stringify(quoteCategoryData);
-        // Show loading spinner
-        quoteDOM.showCategorySpinner();
+    //     const url = '/quote-generator/category';
+    //     // Convert quote data to json string
+    //     const quoteDataString = JSON.stringify(quoteCategoryData);
+    //     // Show loading spinner
+    //     quoteDOM.showCategorySpinner();
         
-        try {
-            const response = await quoteService.submitQuoteData(url, quoteDataString);
-            console.log(response);
-            quoteDOM.hideCategorySpinner();
-            quoteDOM.updateQuote(response);
-            quoteDOM.displayQuote(response);
+    //     try {
+    //         const response = await quoteService.submitQuoteData(url, quoteDataString);
+    //         console.log(response);
+    //         quoteDOM.hideCategorySpinner();
+    //         quoteDOM.updateQuote(response);
+    //         quoteDOM.displayQuote(response);
             
-        } catch (error) {
-            // Handle errors if needed
-            console.error(error);
-        }
+    //     } catch (error) {
+    //         // Handle errors if needed
+    //         console.error(error);
+    //     }
 
-    });
+    // });
 
     
 }

@@ -16,7 +16,6 @@ const renderFormDOM = (function () {
     }
 
     function syncCatgorySelections(quote, clippack) {
-        console.log("quote: " + quote);
         clippack.addEventListener('change', function () {
             quote.innerHTML = clippack.value;
         });
@@ -94,18 +93,17 @@ const renderFormDOM = (function () {
             const sameCategoryBlnHidden = document.getElementById('same-category-value');
             const selectedCategorySpan = document.getElementById('selected-category-span');
             const quoteRadios = document.querySelectorAll('.quote-method-btn');
-            const quoteRadioDivs = document.querySelectorAll(['#quote-AI-content','#quote-category-content','#quote-manual-content']);
+            const quoteRadioDivs = document.querySelectorAll(['#quote-AI-content','#quote-manual-content']);
             const quoteResponse = document.getElementById('quote-response');
             const quoteValue = document.getElementById('quote-val');
-            const quoteCategory = document.getElementById('quote-category');
-            const quoteCategoryHidden = document.getElementById('quote-category-value');
+            // const quoteCategory = document.getElementById('quote-category');
+            // const quoteCategoryHidden = document.getElementById('quote-category-value');
             const quoteManualInput = document.getElementById('quote-manual');
             const quoteManualConfirmBtn = document.getElementById('manual-confirm-btn');
             const quoteManualRetryBtn = document.getElementById('manual-retry-btn');
             const fadeDuration = document.getElementById('fade-duration-val');
             const fadeDurationRange = document.getElementById('fade-duration-range');
             const voice = document.getElementById('voice-val');
-            const collapseMenu = document.getElementById('collapse-voices');
             const voiceRadios = document.querySelectorAll('input[type="radio"][name="voice"]');
             const voiceCloseBtn = document.getElementById('voice-btn-close');
             const voiceSelectBtn = document.getElementById('voice-select-btn');
@@ -122,13 +120,13 @@ const renderFormDOM = (function () {
             Validators.inputField.validateNumber(totalLength);
             Validators.slides.validateRange(numvideosRange, numvideos, false);
             Validators.slides.validateRange(fadeDurationRange, fadeDuration, false);
-            notEnableFromCheckbox(sameCategoryBln, quoteCategory);
+            // notEnableFromCheckbox(sameCategoryBln, quoteCategory);
             voiceSelect(voice, voiceRadios);
             Validators.voice.validate(voice);
-            syncCatgorySelections(selectedCategorySpan, clippack);
+            // syncCatgorySelections(selectedCategorySpan, clippack);
             showDivFromRadio(quoteRadios, quoteRadioDivs);
-            updateHiddenInput(quoteCategoryHidden, quoteCategory);
-            updateHiddenBln(sameCategoryBlnHidden, sameCategoryBln);
+            // updateHiddenInput(quoteCategoryHidden, quoteCategory);
+            // updateHiddenBln(sameCategoryBlnHidden, sameCategoryBln);
             updateHiddenBln(manualClippackBlnHidden, manualClippackBln);
             updateHiddenBln(boldBlnHidden, boldBln);
             updateHiddenBln(italicBlnHidden, italicBln);

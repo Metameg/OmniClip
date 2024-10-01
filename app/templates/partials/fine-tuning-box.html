@@ -4,12 +4,12 @@
         <p class="m-1 mt-3">I want to:</p>
         <div class="btn-group btn-group-sm" role="group" aria-label="Quote Methods">
             <input id="quote-AI-btn" type="radio" class="btn-check quote-method-btn" name="quote-method"  autocomplete="off">
-            <label class="btn btn-outline-primary" for="quote-AI-btn" >Generate using AI
+            <label class="btn btn-outline-primary" for="quote-AI-btn" >Generate from ChatGPT Prompt
                 <i class='bx bxs-magic-wand' style="color: #7056ff"></i>
             </label>
         
-            <input id="quote-category-btn" type="radio" class="btn-check quote-method-btn" name="quote-method" autocomplete="off">
-            <label class="btn btn-outline-primary" for="quote-category-btn" >Choose from Category</label>
+            <!-- <input id="quote-category-btn" type="radio" class="btn-check quote-method-btn" name="quote-method" autocomplete="off">
+            <label class="btn btn-outline-primary" for="quote-category-btn" >Choose from Category</label> -->
         
             <input id="quote-manual-btn" type="radio" class="btn-check quote-method-btn" name="quote-method"  autocomplete="off">
             <label class="btn btn-outline-primary" for="quote-manual-btn">Write it Myself</label>
@@ -31,7 +31,7 @@
             </div>       
         </div>
 
-        <div id="quote-category-content" class="d-none">
+        <!-- <div id="quote-category-content" class="d-none">
             <div class="form-check">
                 <input type="hidden" id="same-category-value" value="true" >
                 <input id="same-category" class="form-check-input mt-3 mx-2" type="checkbox" value="true" checked >
@@ -40,12 +40,12 @@
             </div>
         
             <input type="hidden" id="quote-category-value" value="luxury" >
-            <select id="quote-category" class="form-select mt-2" aria-label="Quote Category" disabled>
+            <select id="quote-category" class="form-select mt-2" name="quoteCategory" aria-label="Quote Category" disabled>
                 {% include 'partials/quote-categories.html' %}
             </select>
 
             <button type="button" id="category-btn-loading" class="btn btn-primary mt-2">Submit{% include 'partials/btn-spinner.html' %}</button>
-        </div>
+        </div> -->
 
         <div id="quote-manual-content" class="d-none mt-2">
             <p>Write out your quote here.</p>
