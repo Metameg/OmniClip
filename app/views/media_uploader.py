@@ -88,11 +88,9 @@ def retrieve_medias():
 
 @blueprint.route('/remove-user-media/<path:path>', methods=['GET'])
 def remove_media(path):
-    print("REMOVE YOY FAGGGOT" + path)
     file_paths = []
     path = urllib.parse.unquote(path)
     path = path.replace('/', os.path.sep).replace('\\', os.path.sep)
-    print("path:  ::\n\n\n" , path)
     if os.name == 'posix' and not path.startswith('/'):
         path = '/' + path
     elif path.startswith('/'):
@@ -120,7 +118,6 @@ def remove_media(path):
                 # Append the full path to the list
                 file_paths.append(file_path)
     
-    # html_data = "data removed"
     html_data = helpers.build_media_html(file_paths)
 
     return jsonify(html_data)

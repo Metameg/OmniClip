@@ -364,4 +364,9 @@
 #no-video-msg {
   display: none;
   color: red;
+}
+
+#render-error {
+  display: none;
+  color: red;
 }/*# sourceMappingURL=create-content.css.map */

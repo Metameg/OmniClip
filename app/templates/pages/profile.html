@@ -37,7 +37,6 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser">
                     <li><a class="dropdown-item" href="/">Create New...</a></li>
-                    <li><a class="dropdown-item" href="/">API Keys</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="{{ url_for('login.logout') }}">Sign out</a></li>
                 </ul>
@@ -54,9 +53,6 @@
         <ul id="profile-pills" class="nav nav-pills flex-column">
             <li class="nav-item">
                 <a id="dashboard-link" class="nav-link dark-hover {% if selected_pill != 'subscription' %}active{% endif %}" aria-current="page"  data-bs-toggle="pill" href="#dashboard-content">Dashboard</a>
-            </li>
-            <li class="nav-item">
-                <a id="affiliate-link" class="nav-link dark-hover redirect-link" href="{{ url_for('affiliate.affiliate_dashboard')}}">My Affiliate Account</a>
             </li>
             <li class="nav-item">
                 <a id="renders-link" class="nav-link dark-hover renders-link" aria-current="page" data-bs-toggle="pill" href="#renders-content">Renders</a>
@@ -77,8 +73,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser">
                 <li><a class="dropdown-item" href="/">Create New...</a></li>
-                <li><a class="dropdown-item" href="/">Security</a></li>
-                <li><a class="dropdown-item" href="/">API Keys</a></li>
+                <!-- <li><a class="dropdown-item" href="/">API Keys</a></li> -->
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="{{ url_for('login.logout') }}">Sign out</a></li>
             </ul>

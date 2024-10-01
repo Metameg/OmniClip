@@ -22,11 +22,8 @@ def page_not_found(e):
 def internal_server_error(e):
     return render_template("pages/500.html"), 500
 
-# @blueprint.route('/output/<filename>')
-# def serve_output(filename):
-#     return send_from_directory(os.path.join(utilities.get_root_path(), 'output'), filename)
 
-@blueprint.route('/renders/<user_dir>/<filename>')
+@blueprint.route('/renders/<path:user_dir>/<filename>')
 def serve_user_render(user_dir, filename):
     env = os.getenv('ENVIRONMENT')
     if env == 'WINDOWS_DEV':
@@ -36,8 +33,9 @@ def serve_user_render(user_dir, filename):
     elif env == 'PRODUCTION':
         BASE_DIR = '/home/wicker/OmniClip/userData/'
 
-    full_dir_path = os.path.join(BASE_DIR, user_dir)
+    full_dir_path = os.path.join(BASE_DIR, user_dir, 'renders')
     full_dir_path = urllib.parse.unquote(full_dir_path)
+    print("full_dir_path; ", full_dir_path)
         
     return send_from_directory(full_dir_path, filename)
 
@@ -51,6 +49,6 @@ def serve_media(user_dir, filename):
 def loading_container_partial():
     return render_template("partials/loading-container.html")
 
-@blueprint.route('/profile_subscription/<selected_pill>/<username>')
-def login_subscription(username, selected_pill):
-    return render_template('pages/profile.html', selected_pill=selected_pill, user=username)
+# @blueprint.route('/profile_subscription/<selected_pill>/<username>')
+# def login_subscription(username, selected_pill):
+#     return render_template('pages/profile.html', selected_pill=selected_pill, user=username)

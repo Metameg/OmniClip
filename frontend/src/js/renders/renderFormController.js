@@ -22,12 +22,14 @@ export function configureRenderForm() {
     const renderForm = document.getElementById('render-form');
     const noVideoMsg = document.getElementById('no-video-msg');
     const renderBox = document.getElementById('render-carousel');
-    const clippackCheckbox = document.getElementById('clippack-checkbox')
+    const clippackCheckbox = document.getElementById('clippack-checkbox');
+    const renderError = document.getElementById('render-error');
 
     renderForm.addEventListener('submit', async function(event) {
         
         event.preventDefault();
         
+        renderError.style.display = 'none';
         var renderData = new FormData($('#render-form')[0]);
         var hasVideo = false;
 

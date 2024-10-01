@@ -154,6 +154,7 @@ def check_storage(file, media_dir, media_files):
     
     return response
     
+
+def get_num_user_renders(path):
     
-    
-    
+    return len(os.listdir(path))
