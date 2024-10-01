@@ -79,23 +79,23 @@ class AutoEditor():
         Returns:    
             str: The wrapped text.
         """
-        words = text.split()  # Split the text into words
-        lines = []  # List to store lines of wrapped text
-        current_line = ''  # Current line being constructed
+        words = text.split()  
+        lines = []  
+        current_line = ''  
 
         for word in words:
-            if len(current_line) + len(word) + 1 <= max_width:  # Check if adding the word exceeds max_width
-                if current_line:  # If current_line is not empty, add a space before adding the word
+            if len(current_line) + len(word) + 1 <= max_width:  
+                if current_line: 
                     current_line += ' '
                 current_line += word
             else:
-                lines.append(current_line)  # Add the current_line to lines
-                current_line = word  # Start a new line with the current word
+                lines.append(current_line) 
+                current_line = word  
 
-        if current_line:  # Add the remaining line
+        if current_line: 
             lines.append(current_line)
 
-        return '\n'.join(lines)  # Join the lines with newline characters
+        return '\n'.join(lines) 
     
     
     def render(self):
@@ -142,14 +142,12 @@ class AutoEditor():
             cleaned_overlays = utilities.decode_and_clean_paths(self.overlay_folder)
             # Select Image Overlay
             img = self._select_random_files(cleaned_overlays, False)
-            # imgpath = os.path.join(utilities.get_root_path(), self.overlay_folder, img)
-            print("\n\n\n\n\n Watermark render...\n\n\n\n\n")
+
             if text_videopath is not None:
                 full_render = fmpgapi.add_watermark(img, text_videopath, self.watermark_opacity)
-                # full_render = fmpgapi.add_watermark(imgpath, text_videopath)
             else: 
                 full_render = fmpgapi.add_watermark(img, full_render, self.watermark_opacity)
-                # full_render = fmpgapi.add_watermark(imgpath, transitions_video)
+                
             
 
         end_time = time.time()
@@ -161,6 +159,6 @@ class AutoEditor():
         final_video_filename = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".mp4"
         utilities.move_file_to_output_dir(self.export_folder, full_render, final_video_filename)
         # Clean up temp file
-        # utilities.clean_temp()
+        utilities.clean_temp()
         
         

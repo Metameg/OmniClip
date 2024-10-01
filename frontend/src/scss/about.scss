@@ -4,14 +4,17 @@
     text-align: center;
     color: $font-color-primary;
     .header img {
-        width: 100%; /* Adjust the width as needed */
-        max-width: 800px; /* Set a maximum width if necessary */
+        width: 50%; 
+        height: auto;
+        max-width: 800px; 
         display: block;
         margin: 0 auto;
     }
     .content {
         max-width: 800px;
         margin: 20px auto;
+        font-size: 18px;
+        line-height: 1.6em;
     }
 }
 

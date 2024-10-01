@@ -42,20 +42,27 @@ def _write_file(url):
 def generate_tts(text, voice):
     dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
     load_dotenv(dotenv_path)
-    shotstack_api_key = os.getenv('SHOTSTACK_API_KEY')
-    print("sstck api key: ", shotstack_api_key, "\n", os.getenv('ENVIRONMENT'))
+    shotstack_api_key = os.getenv('SHOTSTACK_KEY')
+    print("sstck api kesy: ", shotstack_api_key, "\n", os.getenv('ENVIRONMENT'))
+
+    if voice == 'Joey' or voice == 'Kendra':
+         language = 'en-US'
+    if voice == 'Arthur' or voice == 'Amy':
+         language = 'en-GB'
+    if voice == 'Pedro':
+         language = 'es-US'
     # Audio request url and headers
     req_url = "https://api.shotstack.io/create/stage/assets/"
     audio_headers = {'content-type': 'application/json',
-                    'x-api-key': shotstack_api_key
+                    'x-api-key': f'{shotstack_api_key}'
                     }
     audio_data = {
         "provider": "shotstack",
         "options": {
             "type": "text-to-speech",
             "text": f'''{text}''',
-
-            "voice": f'{voice}'
+            "voice": f'{voice}',
+            "language": f'{language}'
         },       
     }
 

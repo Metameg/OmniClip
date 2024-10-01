@@ -10,7 +10,6 @@ def get_root_path():
 def clean_temp():
     files = os.listdir(os.path.join(get_root_path(), 'temp'))
     for file in files:
-        # print(f"files to remove in temp: {file}, osFile: {os.path.isfile(os.path.join(get_root_path(), 'temp', file))}")
         if os.path.isfile(os.path.join(get_root_path(), 'temp', file)):
             os.remove(os.path.join(get_root_path(), 'temp', file))
 
