@@ -50,23 +50,15 @@ def signup():
     if "user" in session:
         return redirect(url_for('login.user'))
     
+    username_error = ""
+    email_error = ""
+    
     if request.method == 'POST':
         fname = request.form['fname']
         lname = request.form['lname']
         email = request.form['email']
         username = request.form['username']
         password = request.form['password']
-
-        pwd_error = ""
-        username_error = ""
-        email_error = ""
-
-        if len(password) >= 8:
-            pwd_error = "Password must be at least 8 characters long."
-            return render_template("pages/login/signup.html", 
-                                   pwd_error=pwd_error, 
-                                   username_error=username_error,
-                                   email_error=email_error)
 
         referral = request.form['referral'] if request.form['referral'] != '' else None
         
@@ -93,19 +85,16 @@ def signup():
         elif user_username:
             username_error = "Username already taken"
             return render_template("pages/login/signup.html", 
-                                   pwd_error=pwd_error, 
                                    username_error=username_error,
                                    email_error=email_error)
         else:
             email_error = "Email already taken"
             return render_template("pages/login/signup.html", 
-                                   pwd_error=pwd_error, 
                                    username_error=username_error,
                                    email_error=email_error)
             
 
-    return render_template("pages/login/signup.html", 
-                                   pwd_error=pwd_error, 
+    return render_template("pages/login/signup.html",  
                                    username_error=username_error,
                                    email_error=email_error)
 

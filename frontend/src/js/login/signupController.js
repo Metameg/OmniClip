@@ -5,13 +5,17 @@ export function configureSignupController() {
 
     signupForm.addEventListener('submit', async function(event) {
         const pwd = document.getElementById("signup-pwd").value;
+        const pwdError = document.getElementById("pwd_error");
         const signupHash  = document.getElementById('signup-hash');
-        console.log(pwd);
         event.preventDefault();
         let hash = await sha256(pwd);
         signupHash.value = hash;
-        console.log(signupHash.value);
+        if (pwd.length < 8) {
+            pwdError.style.display = 'block';
+        }
 
-        this.submit();
+        else {
+            this.submit();
+        }
     });  
 } 

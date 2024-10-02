@@ -18,4 +18,8 @@
 .notice-message {
   text-align: center;
   color: #555;
+}
+
+#pwd_error {
+  display: none;
 }/*# sourceMappingURL=signup.css.map */

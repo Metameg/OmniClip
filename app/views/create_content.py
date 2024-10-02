@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
 from flask import Blueprint, request, render_template, session, jsonify
-from app.extensions import db, csrf, limiter
+from app.extensions import db, csrf
 from app.models.User import User
 from app.tools.utilities import generate_videos, get_root_path, get_media_dir, sanitize_filename
 from app.tools.helpers import classify_custom_upload_files, get_num_user_renders

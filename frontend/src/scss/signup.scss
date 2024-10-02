@@ -15,8 +15,11 @@
     width: 100%;
 }
 
-
 .notice-message {
     text-align: center;
     color: #555;
+}
+
+#pwd_error {
+    display: none;
 }
