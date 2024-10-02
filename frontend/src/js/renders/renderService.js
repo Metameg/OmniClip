@@ -24,6 +24,11 @@ export const renderService = {
                         $('#render-error').html(jqXHR.responseText);
                         renderError.style.display = 'block';
                         renderCarousel.style.display = 'none';
+                    } else if (jqXHR.status === 429) {
+                        // Handle rate limit exceeded error (429)
+                        $('#render-error').html("You've made too many requests. Please try again later.");
+                        renderError.style.display = 'block';
+                        renderCarousel.style.display = 'none';
                     } else {
                         alert("An error occurred: " + textStatus);  // Fallback for other errors
                     }

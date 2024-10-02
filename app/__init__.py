@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from flask import Flask
 from app.extensions import csrf, db, migrate, jwt
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from flask_cors import CORS
@@ -31,6 +31,7 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
     jwt.init_app(app)
+    
 
     # Start scheduler for removing old render records
     scheduler = BackgroundScheduler()

@@ -1,7 +1,7 @@
 import json
-from datetime import datetime, timezone
+from datetime import datetime
 from flask import Blueprint, request, render_template, session, jsonify
-from app.extensions import db, csrf
+from app.extensions import db, csrf, limiter
 from app.models.User import User
 from app.tools.utilities import generate_videos, get_root_path, get_media_dir, sanitize_filename
 from app.tools.helpers import classify_custom_upload_files, get_num_user_renders
@@ -9,6 +9,8 @@ from app.tools import database
 from app.services.AutoEditor import AutoEditor
 import os
 from app.models.Render import Render
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 blueprint = Blueprint('create_content', __name__)
 
@@ -19,7 +21,6 @@ def create_content():
         voices = json.load(f)['voices']
     
     return render_template("pages/create-content.html", voices=voices)
-
 
 @blueprint.route('/create-content', methods=['POST'])
 def render():

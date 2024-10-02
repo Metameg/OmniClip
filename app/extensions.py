@@ -7,3 +7,4 @@ csrf = CSRFProtect()
 db = SQLAlchemy()
 migrate = Migrate()
 jwt = JWTManager()
+
