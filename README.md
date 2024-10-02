@@ -31,8 +31,18 @@ Before you begin, ensure you have met the following requirements:
 2. **Create virtual environment**
   python -m venv venv
   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+
 3. **Install the dependencies**
    pip install -r requirements.txt
+
+4. **FFMPEG Installation**
+   **For Windows**
+  - Download the FFmpeg executable from the official website: [FFmpeg Downloads](https://ffmpeg.org/download.html)
+  -  Extract the downloaded ZIP file.
+  -  Add the bin directory (where ffmpeg.exe is located) to your system's PATH environment variable.
+
+   **For Linux / Debian**
+  - sudo apt-get install ffmpeg
 
 ## Running the Application in Development Mode
 To run the Flask application in development mode, follow these steps:
