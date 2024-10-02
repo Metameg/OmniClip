@@ -19,10 +19,12 @@
         <div class="form-group">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" class="form-control form-control-lg fs-6" placeholder="Email" required>
+            <p class="text-danger">{{ email_error }}</p>
         </div>
         <div class="form-group">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" class="form-control form-control-lg fs-6" placeholder="Username">
+            <p class="text-danger">{{ username_error }}</p>
         </div>
         <div class="form-group">
             <label for="referral">Referral Code</label>
@@ -32,6 +34,7 @@
             <label for="password">Password</label>
             <input type="password" id="signup-pwd" class="form-control form-control-lg fs-6" placeholder="Password"  required>
             <input type="hidden" id="signup-hash" name="password" class="form-control form-control-lg fs-6" placeholder="Password"  required>
+            <p class="text-danger">{{ pwd_error }}</p>
         </div>
         <div class="form-group">
             <label for="confirm_password">Confirm Password</label>

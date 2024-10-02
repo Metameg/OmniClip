@@ -13,7 +13,6 @@ blueprint = Blueprint('login', __name__)
 def login():
     csrf.protect()
     referrer = session.get('referrer', None)
-    print("parsed: ", referrer)
 
     if request.method == 'POST':
         # Authenticate User
@@ -43,8 +42,6 @@ def login():
     else:
         referrer = request.referrer
         session['referrer'] = urlparse(referrer).path if referrer else None
-        print("Referrer: " , request.referrer)
-        print("Parsed: " , session['referrer'])
 
         return render_template("pages/login/login.html", error_msg="")
 
@@ -59,6 +56,18 @@ def signup():
         email = request.form['email']
         username = request.form['username']
         password = request.form['password']
+
+        pwd_error = ""
+        username_error = ""
+        email_error = ""
+
+        if len(password) >= 8:
+            pwd_error = "Password must be at least 8 characters long."
+            return render_template("pages/login/signup.html", 
+                                   pwd_error=pwd_error, 
+                                   username_error=username_error,
+                                   email_error=email_error)
+
         referral = request.form['referral'] if request.form['referral'] != '' else None
         
         hashed_pw = generate_password_hash(password)
@@ -82,14 +91,23 @@ def signup():
             return render_template("pages/profile.html", user=username)
         
         elif user_username:
-            print("Username already exists!")
-            flash("Username already exists!")
+            username_error = "Username already taken"
+            return render_template("pages/login/signup.html", 
+                                   pwd_error=pwd_error, 
+                                   username_error=username_error,
+                                   email_error=email_error)
         else:
-            print("This email is already taken!")
-            flash("This email is already taken!")
+            email_error = "Email already taken"
+            return render_template("pages/login/signup.html", 
+                                   pwd_error=pwd_error, 
+                                   username_error=username_error,
+                                   email_error=email_error)
             
 
-    return render_template("pages/login/signup.html")
+    return render_template("pages/login/signup.html", 
+                                   pwd_error=pwd_error, 
+                                   username_error=username_error,
+                                   email_error=email_error)
 
 @blueprint.route('/profile')
 def user():
