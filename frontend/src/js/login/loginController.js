@@ -11,7 +11,6 @@ export function configureLoginController() {
         // event.preventDefault();
         let hash = await sha256(pwd);
         loginHash.value = hash;
-        console.log(loginHash.value);
 
         this.submit();
     });    

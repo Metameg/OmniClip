@@ -21,8 +21,8 @@ def login():
         entered_password = request.form["password"]
         user = User.query.filter_by(username=username).first()
         if user is None:
-            print("Username not found!")
-            return render_template("pages/login/login.html")
+            error_msg = "Username not Found!"
+            return render_template("pages/login/login.html", error_msg=error_msg)
 
         passed = check_password_hash(user.password_hash, entered_password)
 
@@ -38,15 +38,15 @@ def login():
             else:
                 return redirect(url_for('login.user'))
         else:
-            print("Incorrect Password!")
-            return render_template("pages/login/login.html")
+            error_msg = "Incorrect Password. Try Again."
+            return render_template("pages/login/login.html", error_msg=error_msg)
     else:
         referrer = request.referrer
         session['referrer'] = urlparse(referrer).path if referrer else None
         print("Referrer: " , request.referrer)
         print("Parsed: " , session['referrer'])
 
-        return render_template("pages/login/login.html")
+        return render_template("pages/login/login.html", error_msg="")
 
 @blueprint.route('/signup', methods=['POST', 'GET'])
 def signup():

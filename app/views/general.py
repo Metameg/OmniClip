@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, send_from_directory, session, redirect, url_for
-from app.tools import utilities
 import os, urllib
 
 blueprint = Blueprint('general', __name__)
