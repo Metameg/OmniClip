@@ -8,6 +8,7 @@ overlays
 stockaudio
 venv
 .env
+.env.prod
 app/temp/*
 app/output/*
 app/video_uploads/*
