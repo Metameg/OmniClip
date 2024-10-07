@@ -8,7 +8,7 @@ overlays
 stockaudio
 venv
 .env
-.env.prod
+.env.local
 app/temp/*
 app/output/*
 app/video_uploads/*
@@ -17,3 +17,4 @@ app/watermark_uploads/*
 app/dist/index-bundle.js
 userData
 *.map
+mysqlData
