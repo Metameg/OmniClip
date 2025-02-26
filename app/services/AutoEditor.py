@@ -127,7 +127,8 @@ class AutoEditor():
 
             if self.subtitle_ass:
                 transcribe_subtitles(voiceover, self.style_options)
-                ass_file = 'temp/subtitles.ass'
+                ass_file = os.path.join(utilities.get_root_path(), 'temp', 'subtitles.ass')
+                ass_file = utilities.convert_ffmpeg_ass_path(ass_file)
                 text_video = fmpgapi.add_text(voice_video, ass_file=ass_file)
             else:
                 quote_wrapped = self._wrap_text(self.quote, 20)

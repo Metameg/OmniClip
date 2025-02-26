@@ -1,5 +1,6 @@
 import os
 import urllib
+import re
 
 def get_root_path():
     this_directory = os.path.dirname(os.path.abspath(__file__))
@@ -104,6 +105,28 @@ def decode_and_clean_paths(url_paths):
         cleaned_paths.append(decoded_path)
     
     return cleaned_paths
+
+import os
+import re
+
+def convert_ffmpeg_ass_path(path):
+    # Normalize the path to resolve '..' properly
+    normalized_path = os.path.normpath(path)
+
+    # Replace backslashes `\` with forward slashes `/`
+    escaped_path = normalized_path.replace("\\", "/")
+
+    # Escape the colon in the drive letter (e.g., `D:` → `D\:`)
+    escaped_path = re.sub(r"^([A-Za-z]):", r"\1\\\:", escaped_path)
+
+    # Add extra `\` before each `/`
+    escaped_path = escaped_path.replace("/", "/\\")
+
+    # Prefix with `ass=`
+    return escaped_path
+
+
+
 
 
 

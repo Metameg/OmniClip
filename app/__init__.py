@@ -22,7 +22,13 @@ def create_app():
     flask_key = os.getenv('FLASK_KEY')
     jwt_secret = os.getenv('JWT_SECRET_KEY')
     # Config MySQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:' + mysql_pwd + '@localhost/omniclip_users_dev'
+    app.config['SQLALCHEMY_DATABASE_URI'] = (
+    'mysql+pymysql://root:' + mysql_pwd +
+    '@localhost/omniclip_users_dev' 
+    # '?ssl_ca=/var/lib/mysql/ca.pem'
+    # '&ssl_cert=/var/lib/mysql/server-cert.pem'
+    # '&ssl_key=/var/lib/mysql/server-key.pem')
+    )
     # Config CSRF for form
     app.config['SECRET_KEY'] = flask_key
     app.config['JWT_SECRET_KEY'] = jwt_secret

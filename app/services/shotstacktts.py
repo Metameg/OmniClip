@@ -41,7 +41,7 @@ def _write_file(url):
 
 def generate_tts(text, voice):
     dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
-    load_dotenv(dotenv_path)
+    load_dotenv(dotenv_path, override=True)
     shotstack_api_key = os.getenv('SHOTSTACK_KEY')
     print("sstck api kesy: ", shotstack_api_key, "\n", os.getenv('ENVIRONMENT'))
 

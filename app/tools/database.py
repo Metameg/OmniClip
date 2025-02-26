@@ -8,7 +8,12 @@ def retrieve(model, *complex_filters, **kwargs):
     query = model.query.filter_by(**kwargs)
     if complex_filters:
         query = query.filter(*complex_filters)  # Handles more complex filters
-    return query.first()
+
+    result = query.first()
+
+    if not result:
+        print(f"No result found for {model.__name__} with filters {kwargs} and {complex_filters}")
+    return result
 
 def retrieve_from_join(db, model1, model2, username):
     db.session.query(

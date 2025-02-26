@@ -1,6 +1,6 @@
 import json
 from datetime import datetime
-from flask import Blueprint, request, render_template, session, jsonify
+from flask import Blueprint, request, render_template, session, jsonify, current_app
 from app.extensions import db, csrf
 from app.models.User import User
 from app.tools.utilities import generate_videos, get_root_path, get_media_dir, sanitize_filename
@@ -15,7 +15,8 @@ blueprint = Blueprint('create_content', __name__)
 
 @blueprint.route('/create-content', methods=['GET'])
 def create_content():
-    with open('voices.json', 'r') as f:
+    voices_path = os.path.join(current_app.root_path, 'static', 'voices.json')
+    with open(voices_path, 'r') as f:
         voices = json.load(f)['voices']
     
     return render_template("pages/create-content.html", voices=voices)

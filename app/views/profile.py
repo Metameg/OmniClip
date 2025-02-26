@@ -22,16 +22,20 @@ def retrieve_renders(time_filter):
         elif 'hours' in time_filter:
             print(f"time_filter: {time_filter}")
             threshold_date = datetime.now() - timedelta(hours=int(units)) 
+            print(f"threshold_date: {threshold_date}")
 
         #FIXME Should be possible to combine these two retrieve queries into one
         try:
             renders = database.retrieve_from_join(db, User, Render, username)
-            file_paths = [database.retrieve(Render, Render.timestamp > threshold_date, render_id=render.render_id).path for render in renders]
+            file_paths = [
+                retrieved.path for render in renders
+                if (retrieved := database.retrieve(Render, Render.timestamp > threshold_date, render_id=render.render_id))
+            ]
             # Reverse the order of the files so that the newest render shows first
             file_paths = file_paths[::-1]
-        except:
+        except Exception as e:
             file_paths = []
-            print("No renders found!")
+            print("No renders found!", e)
 
     else:
         return redirect(url_for('login.login'))

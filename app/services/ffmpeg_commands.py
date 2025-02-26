@@ -631,7 +631,7 @@ def add_text(video, font_name=None, font_size=None, ass_file=None, quote=None):
             'quiet',
             '-i', video,
             '-vf',
-            f"ass='{ass_file}",
+            f"ass={ass_file}",
             '-c:a', 'copy',
             '-y',
             text_out
@@ -654,8 +654,8 @@ def add_text(video, font_name=None, font_size=None, ass_file=None, quote=None):
 
         
         subprocess.run(ffmpeg_command)
-        # ffmpeg_command_str = ' '.join(map(str, ffmpeg_command))
-        # print(ffmpeg_command_str)
+        ffmpeg_command_str = ' '.join(map(str, ffmpeg_command))
+        print("text ffmpeg comd:" , ffmpeg_command_str)
         return text_out
 
 
